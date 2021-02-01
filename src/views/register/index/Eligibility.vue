@@ -8,7 +8,7 @@
       <gov-grid-row>
         <gov-grid-column width="two-thirds">
           <gov-heading size="l">
-            Is your service right for Connected Kingston?
+            Is your service right for One Hounslow Connect?
           </gov-heading>
 
           <gov-body>
@@ -19,8 +19,8 @@
           <gov-form-group>
             <gov-label>
               <strong>
-                The organisation that you want to be listed on Connected
-                Kingston is:
+                The organisation that you want to be listed on One Hounslow
+                Connect is:
               </strong>
             </gov-label>
 
@@ -41,7 +41,7 @@
                 :value="form.organisation_types.includes('council')"
                 id="organisation_types.council"
                 name="organisation_types"
-                label="A Council or other statutory service, e.g. services delivered by the NHS or Kingston CCG)"
+                label="A Council or other statutory service, e.g. services delivered by the NHS or Hounslow CCG)"
                 @input="$emit('input', onInput('council'))"
               />
 
@@ -49,15 +49,17 @@
                 :value="form.organisation_types.includes('commercial')"
                 id="organisation_types.commercial"
                 name="organisation_types"
-                label="A commercial provider offering services to Kingston residents that support health, wellbeing and/or community for free or a reasonable charge"
+                label="A commercial provider offering services to Hounslow residents that support health, wellbeing and/or community for free or a reasonable charge"
                 @input="$emit('input', onInput('commercial'))"
               />
 
               <gov-checkbox
-                :value="form.organisation_types.includes('commercial_contracted')"
+                :value="
+                  form.organisation_types.includes('commercial_contracted')
+                "
                 id="organisation_types.commercial_contracted"
                 name="organisation_types"
-                label="A commercial service that is contracted or spot purchased under a commissioning arrangement with Royal Borough of Kingston (RBK) Council, intended to improve the health, wellbeing or independence of Kingston residents"
+                label="A commercial service that is contracted or spot purchased under a commissioning arrangement with Hounslow Council, intended to improve the health, wellbeing or independence of Hounslow residents"
                 @input="$emit('input', onInput('commercial_contracted'))"
               />
             </gov-checkboxes>
@@ -77,40 +79,44 @@
 </template>
 
 <script>
-export default {
-  props: {
-    form: {
-      type: Object,
-      required: true
+  export default {
+    props: {
+      form: {
+        type: Object,
+        required: true,
+      },
+
+      errors: {
+        type: Object,
+        required: true,
+      },
     },
 
-    errors: {
-      type: Object,
-      required: true
-    }
-  },
+    methods: {
+      onInput(organisationType) {
+        if (this.form.organisation_types.includes(organisationType)) {
+          this.$emit(
+            'input',
+            Object.assign(this.form, {
+              organisation_types: this.form.organisation_types.filter(
+                (type) => type !== organisationType
+              ),
+            })
+          );
+        } else {
+          this.$emit(
+            'input',
+            Object.assign(this.form, {
+              organisation_types: [
+                ...this.form.organisation_types,
+                organisationType,
+              ],
+            })
+          );
+        }
 
-  methods: {
-    onInput(organisationType) {
-      if (this.form.organisation_types.includes(organisationType)) {
-        this.$emit(
-          'input',
-          Object.assign(this.form, {
-            organisation_types: this.form.organisation_types
-              .filter((type) => type !== organisationType)
-          })
-        );
-      } else {
-        this.$emit(
-          'input',
-          Object.assign(this.form, {
-            organisation_types: [...this.form.organisation_types, organisationType]
-          })
-        );
-      }
-
-      this.$emit('clear', 'organisation_types');
-    }
-  }
-}
+        this.$emit('clear', 'organisation_types');
+      },
+    },
+  };
 </script>

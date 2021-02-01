@@ -12,7 +12,7 @@
           </gov-heading>
 
           <gov-body>
-            First, create an account to login to the Connected Kingston
+            First, create an account to login to the One Hounslow Connect
             administration portal
           </gov-body>
 
@@ -63,7 +63,11 @@
 
           <gov-body>
             User account details are held in line with our
-            <gov-link href="https://www.connectedkingston.uk/privacy-policy" target="_blank">privacy policy</gov-link>.
+            <gov-link
+              href="https://onehounslowconnect.london/privacy-policy"
+              target="_blank"
+              >privacy policy</gov-link
+            >.
           </gov-body>
 
           <gov-button start :to="{ name: 'register-index-organisation' }">
@@ -76,29 +80,32 @@
 </template>
 
 <script>
-export default {
-  props: {
-    form: {
-      type: Object,
-      required: true
+  export default {
+    props: {
+      form: {
+        type: Object,
+        required: true,
+      },
+
+      errors: {
+        type: Object,
+        required: true,
+      },
     },
 
-    errors: {
-      type: Object,
-      required: true
-    }
-  },
-
-  methods: {
-    onInput(field, value) {
-      this.$emit('input', Object.assign(this.form, {
-        user: {
-          ...this.form.user,
-          [field]: value
-        }
-      }));
-      this.$emit('clear', `user.${field}`);
-    }
-  }
-}
+    methods: {
+      onInput(field, value) {
+        this.$emit(
+          'input',
+          Object.assign(this.form, {
+            user: {
+              ...this.form.user,
+              [field]: value,
+            },
+          })
+        );
+        this.$emit('clear', `user.${field}`);
+      },
+    },
+  };
 </script>
