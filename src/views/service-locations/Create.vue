@@ -2,9 +2,19 @@
   <gov-width-container>
     <ck-loader v-if="loading" />
     <template v-else>
-      <vue-headful :title="`Connected Kingston - Add Service Location for: ${service.name}`" />
+      <vue-headful
+        :title="
+          `One Hounslow Connect - Add Service Location for: ${service.name}`
+        "
+      />
 
-      <gov-back-link :to="{ name: 'services-show-locations', params: { service: service.id } }">Back to service</gov-back-link>
+      <gov-back-link
+        :to="{
+          name: 'services-show-locations',
+          params: { service: service.id },
+        }"
+        >Back to service</gov-back-link
+      >
       <gov-main-wrapper>
         <gov-grid-row>
           <gov-grid-column width="one-half">
@@ -35,9 +45,15 @@
 
             <gov-section-break size="l" />
 
-            <gov-button v-if="submitting" disabled type="submit">Creating...</gov-button>
-            <gov-button v-else @click="onSubmit" type="submit">Create</gov-button>
-            <ck-submit-error v-if="form.$errors.any() || locationForm.$errors.any()" />
+            <gov-button v-if="submitting" disabled type="submit"
+              >Creating...</gov-button
+            >
+            <gov-button v-else @click="onSubmit" type="submit"
+              >Create</gov-button
+            >
+            <ck-submit-error
+              v-if="form.$errors.any() || locationForm.$errors.any()"
+            />
           </gov-grid-column>
         </gov-grid-row>
       </gov-main-wrapper>
@@ -46,75 +62,77 @@
 </template>
 
 <script>
-import Form from "@/classes/Form";
-import ServiceLocationForm from "@/views/service-locations/forms/ServiceLocationForm";
-import http from "@/http";
+  import Form from '@/classes/Form';
+  import ServiceLocationForm from '@/views/service-locations/forms/ServiceLocationForm';
+  import http from '@/http';
 
-export default {
-  name: "CreateServiceLocation",
-  components: { ServiceLocationForm },
-  data() {
-    return {
-      location_type: null,
-      form: new Form({
-        service_id: null,
-        location_id: null,
-        name: "",
-        regular_opening_hours: [],
-        holiday_opening_hours: [],
-        image_file_id: null
-      }),
-      locationForm: new Form({
-        address_line_1: "",
-        address_line_2: "",
-        address_line_3: "",
-        city: "",
-        county: "",
-        postcode: "",
-        country: "United Kingdom",
-        accessibility_info: "",
-        has_wheelchair_access: false,
-        has_induction_loop: false
-      }),
-      service: null,
-      loading: false,
-      submitting: false
-    };
-  },
-  methods: {
-    async fetchService() {
-      this.loading = true;
-      const response = await http.get(
-        `/services/${this.$route.params.service}`
-      );
-      this.service = response.data.data;
-      this.form.service_id = this.service.id;
-      this.loading = false;
+  export default {
+    name: 'CreateServiceLocation',
+    components: { ServiceLocationForm },
+    data() {
+      return {
+        location_type: null,
+        form: new Form({
+          service_id: null,
+          location_id: null,
+          name: '',
+          regular_opening_hours: [],
+          holiday_opening_hours: [],
+          image_file_id: null,
+        }),
+        locationForm: new Form({
+          address_line_1: '',
+          address_line_2: '',
+          address_line_3: '',
+          city: '',
+          county: '',
+          postcode: '',
+          country: 'United Kingdom',
+          accessibility_info: '',
+          has_wheelchair_access: false,
+          has_induction_loop: false,
+        }),
+        service: null,
+        loading: false,
+        submitting: false,
+      };
     },
-    async onSubmit() {
-      try {
-        this.submitting = true;
+    methods: {
+      async fetchService() {
+        this.loading = true;
+        const response = await http.get(
+          `/services/${this.$route.params.service}`
+        );
+        this.service = response.data.data;
+        this.form.service_id = this.service.id;
+        this.loading = false;
+      },
+      async onSubmit() {
+        try {
+          this.submitting = true;
 
-        // Post the location if new.
-        if (this.location_type === "new") {
-          const { data: location } = await this.locationForm.post("/locations");
-          this.location_type = "existing";
-          this.form.location_id = location.id;
+          // Post the location if new.
+          if (this.location_type === 'new') {
+            const { data: location } = await this.locationForm.post(
+              '/locations'
+            );
+            this.location_type = 'existing';
+            this.form.location_id = location.id;
+          }
+
+          // Post the service location.
+          const { data: service } = await this.form.post('/service-locations');
+          this.$router.push({
+            name: 'service-locations-show',
+            params: { serviceLocation: service.id },
+          });
+        } catch (error) {
+          this.submitting = false;
         }
-
-        // Post the service location.
-        const { data: service } = await this.form.post("/service-locations");
-        this.$router.push({
-          name: "service-locations-show",
-          params: { serviceLocation: service.id }
-        });
-      } catch (error) {
-        this.submitting = false;
-      }
-    }
-  },
-  created() {
-    this.fetchService();
-  }
-};
+      },
+    },
+    created() {
+      this.fetchService();
+    },
+  };
 </script>

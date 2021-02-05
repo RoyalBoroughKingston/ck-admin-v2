@@ -1,8 +1,10 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Connected Kingston - Add Collection Category" />
+    <vue-headful title="One Hounslow Connect - Add Collection Category" />
 
-    <gov-back-link :to="{ name: 'admin-index-collections' }">Back to collection categories</gov-back-link>
+    <gov-back-link :to="{ name: 'admin-index-collections' }"
+      >Back to collection categories</gov-back-link
+    >
     <gov-main-wrapper>
       <gov-grid-row>
         <gov-grid-column width="one-half">
@@ -28,7 +30,9 @@
             @clear="form.$errors.clear($event)"
           />
 
-          <gov-button v-if="form.$submitting" disabled type="submit">Creating...</gov-button>
+          <gov-button v-if="form.$submitting" disabled type="submit"
+            >Creating...</gov-button
+          >
           <gov-button v-else @click="onSubmit" type="submit">Create</gov-button>
           <ck-submit-error v-if="form.$errors.any()" />
         </gov-grid-column>
@@ -38,29 +42,29 @@
 </template>
 
 <script>
-import CollectionForm from "@/views/collections/categories/forms/CollectionForm";
-import Form from "@/classes/Form";
+  import CollectionForm from '@/views/collections/categories/forms/CollectionForm';
+  import Form from '@/classes/Form';
 
-export default {
-  name: "CreateCollectionCategory",
-  components: { CollectionForm },
-  data() {
-    return {
-      form: new Form({
-        name: "",
-        intro: "",
-        icon: "",
-        order: 1,
-        sideboxes: [],
-        category_taxonomies: []
-      })
-    };
-  },
-  methods: {
-    async onSubmit() {
-      await this.form.post("/collections/categories");
-      this.$router.push({ name: "admin-index-collections" });
-    }
-  }
-};
+  export default {
+    name: 'CreateCollectionCategory',
+    components: { CollectionForm },
+    data() {
+      return {
+        form: new Form({
+          name: '',
+          intro: '',
+          icon: '',
+          order: 1,
+          sideboxes: [],
+          category_taxonomies: [],
+        }),
+      };
+    },
+    methods: {
+      async onSubmit() {
+        await this.form.post('/collections/categories');
+        this.$router.push({ name: 'admin-index-collections' });
+      },
+    },
+  };
 </script>

@@ -1,10 +1,14 @@
 <template>
   <gov-width-container>
-    <gov-back-link :to="{ name: 'referrals-index' }">Back to referrals</gov-back-link>
+    <gov-back-link :to="{ name: 'referrals-index' }"
+      >Back to referrals</gov-back-link
+    >
     <gov-main-wrapper>
       <ck-loader v-if="loadingReferral" />
       <template v-else>
-        <vue-headful :title="`Connected Kingston - Referral: ${referral.name}`" />
+        <vue-headful
+          :title="`One Hounslow Connect - Referral: ${referral.name}`"
+        />
 
         <gov-grid-row>
           <gov-grid-column width="two-thirds">
@@ -39,8 +43,12 @@
               :error="form.$errors.get('comments')"
             />
 
-            <gov-button v-if="form.$submitting" disabled type="submit">Updating...</gov-button>
-            <gov-button v-else @click="onSubmit" type="submit">Update</gov-button>
+            <gov-button v-if="form.$submitting" disabled type="submit"
+              >Updating...</gov-button
+            >
+            <gov-button v-else @click="onSubmit" type="submit"
+              >Update</gov-button
+            >
             <ck-submit-error v-if="form.$errors.any()" />
           </gov-grid-column>
         </gov-grid-row>
@@ -50,12 +58,20 @@
             <gov-heading size="m">Previous comments</gov-heading>
             <ck-loader v-if="loadingStatusUpdates" />
             <template v-else>
-              <gov-grid-row v-for="(statusUpdate, key) in statusUpdates" :key="key">
+              <gov-grid-row
+                v-for="(statusUpdate, key) in statusUpdates"
+                :key="key"
+              >
                 <gov-grid-column width="full">
                   <gov-grid-row>
                     <gov-grid-column width="two-thirds">
-                      <gov-body>{{ statusUpdate.user.first_name }} {{ statusUpdate.user.last_name }}</gov-body>
-                      <gov-body>{{ formatDateTime(statusUpdate.created_at) }}</gov-body>
+                      <gov-body
+                        >{{ statusUpdate.user.first_name }}
+                        {{ statusUpdate.user.last_name }}</gov-body
+                      >
+                      <gov-body>{{
+                        formatDateTime(statusUpdate.created_at)
+                      }}</gov-body>
                     </gov-grid-column>
                     <gov-grid-column width="one-third" class="text-right">
                       <gov-tag>{{ statusUpdate.to | status }}</gov-tag>
@@ -71,8 +87,12 @@
               </gov-grid-row>
               <gov-body>
                 Page {{ currentPage }} of {{ lastPage }}
-                <gov-link v-if="currentPage > 1" @click="onPrevious">Back</gov-link>&nbsp;<!--
-              --><gov-link v-if="currentPage < lastPage" @click="onNext">Next</gov-link>
+                <gov-link v-if="currentPage > 1" @click="onPrevious"
+                  >Back</gov-link
+                >&nbsp;<!--
+              --><gov-link v-if="currentPage < lastPage" @click="onNext"
+                  >Next</gov-link
+                >
               </gov-body>
             </template>
           </gov-grid-column>
@@ -83,7 +103,10 @@
             <gov-grid-column width="two-thirds">
               <gov-heading size="m">Delete referral</gov-heading>
 
-              <gov-body>Please be certain of the action before deleting a referral</gov-body>
+              <gov-body
+                >Please be certain of the action before deleting a
+                referral</gov-body
+              >
 
               <gov-section-break size="l" />
 
@@ -101,103 +124,103 @@
 </template>
 
 <script>
-import http from "@/http";
-import Form from "@/classes/Form";
+  import http from '@/http';
+  import Form from '@/classes/Form';
 
-export default {
-  name: "ShowReferral",
-  data() {
-    return {
-      loadingReferral: false,
-      loadingStatusUpdates: false,
-      referral: null,
-      statusUpdates: [],
-      currentPage: 1,
-      lastPage: 1,
-      statusOptions: [
-        { text: "New", value: "new" },
-        { text: "In progress", value: "in_progress" },
-        { text: "Completed", value: "completed" },
-        { text: "Incomplete", value: "incompleted" }
-      ],
-      form: new Form({
-        status: null,
-        comments: ""
-      })
-    };
-  },
-  methods: {
-    fetchReferral() {
-      this.loadingReferral = true;
-
-      http
-        .get(`/referrals/${this.$route.params.referral}`, {
-          params: {
-            include: "service"
-          }
-        })
-        .then(({ data }) => {
-          this.referral = data.data;
-          this.form.status = this.referral.status;
-          this.loadingReferral = false;
-        });
-    },
-    fetchStatusUpdates() {
-      this.loadingStatusUpdates = true;
-
-      const config = {
-        params: {
-          "filter[referral_id]": this.$route.params.referral,
-          include: "user"
-        }
+  export default {
+    name: 'ShowReferral',
+    data() {
+      return {
+        loadingReferral: false,
+        loadingStatusUpdates: false,
+        referral: null,
+        statusUpdates: [],
+        currentPage: 1,
+        lastPage: 1,
+        statusOptions: [
+          { text: 'New', value: 'new' },
+          { text: 'In progress', value: 'in_progress' },
+          { text: 'Completed', value: 'completed' },
+          { text: 'Incomplete', value: 'incompleted' },
+        ],
+        form: new Form({
+          status: null,
+          comments: '',
+        }),
       };
+    },
+    methods: {
+      fetchReferral() {
+        this.loadingReferral = true;
 
-      http.get("/status-updates", config).then(({ data }) => {
-        this.statusUpdates = data.data;
-        this.currentPage = data.meta.current_page;
-        this.lastPage = data.meta.last_page;
-        this.loadingStatusUpdates = false;
-      });
-    },
-    onNext() {
-      this.currentPage++;
-      this.fetchStatusUpdates();
-    },
-    onPrevious() {
-      this.currentPage--;
-      this.fetchStatusUpdates();
-    },
-    onSubmit() {
-      this.form.put(`/referrals/${this.referral.id}`).then(() => {
-        this.form.comments = "";
-        this.form.$errors.clear();
-        this.fetchReferral();
+        http
+          .get(`/referrals/${this.$route.params.referral}`, {
+            params: {
+              include: 'service',
+            },
+          })
+          .then(({ data }) => {
+            this.referral = data.data;
+            this.form.status = this.referral.status;
+            this.loadingReferral = false;
+          });
+      },
+      fetchStatusUpdates() {
+        this.loadingStatusUpdates = true;
+
+        const config = {
+          params: {
+            'filter[referral_id]': this.$route.params.referral,
+            include: 'user',
+          },
+        };
+
+        http.get('/status-updates', config).then(({ data }) => {
+          this.statusUpdates = data.data;
+          this.currentPage = data.meta.current_page;
+          this.lastPage = data.meta.last_page;
+          this.loadingStatusUpdates = false;
+        });
+      },
+      onNext() {
+        this.currentPage++;
         this.fetchStatusUpdates();
-      });
+      },
+      onPrevious() {
+        this.currentPage--;
+        this.fetchStatusUpdates();
+      },
+      onSubmit() {
+        this.form.put(`/referrals/${this.referral.id}`).then(() => {
+          this.form.comments = '';
+          this.form.$errors.clear();
+          this.fetchReferral();
+          this.fetchStatusUpdates();
+        });
+      },
+      onDelete() {
+        this.$router.push({ name: 'referrals-index' });
+      },
     },
-    onDelete() {
-      this.$router.push({ name: "referrals-index" });
-    }
-  },
-  filters: {
-    status(status) {
-      switch (status) {
-        case "new":
-          return "New";
-        case "in_progress":
-          return "In progress";
-        case "completed":
-          return "Completed";
-        case "incompleted":
-          return "Incomplete";
-        default:
-          return "Invalid status";
-      }
-    }
-  },
-  created() {
-    this.fetchReferral();
-    this.fetchStatusUpdates();
-  }
-};
+    filters: {
+      status(status) {
+        switch (status) {
+          case 'new':
+            return 'New';
+          case 'in_progress':
+            return 'In progress';
+          case 'completed':
+            return 'Completed';
+          case 'incompleted':
+            return 'Incomplete';
+          default:
+            return 'Invalid status';
+        }
+      },
+    },
+    created() {
+      this.fetchReferral();
+      this.fetchStatusUpdates();
+    },
+  };
 </script>

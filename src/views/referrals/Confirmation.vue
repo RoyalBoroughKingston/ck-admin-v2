@@ -1,8 +1,10 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Connected Kingston - View Referral" />
+    <vue-headful title="One Hounslow Connect - View Referral" />
 
-    <gov-back-link :to="{ name: 'referrals-index' }">Back to referrals</gov-back-link>
+    <gov-back-link :to="{ name: 'referrals-index' }"
+      >Back to referrals</gov-back-link
+    >
     <gov-main-wrapper>
       <gov-grid-row>
         <gov-grid-column width="one-half">
@@ -18,15 +20,15 @@
 </template>
 
 <script>
-export default {
-  name: "ShowReferralConfirmation",
-  methods: {
-    onContinue() {
-      this.$router.push({
-        name: "referrals-show",
-        params: { referral: this.$route.params.referral }
-      });
-    }
-  }
-};
+  export default {
+    name: 'ShowReferralConfirmation',
+    methods: {
+      onContinue() {
+        this.$router.push({
+          name: 'referrals-show',
+          params: { referral: this.$route.params.referral },
+        });
+      },
+    },
+  };
 </script>

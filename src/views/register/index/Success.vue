@@ -4,7 +4,7 @@
       <gov-grid-row>
         <gov-grid-column width="two-thirds">
           <gov-heading size="l">
-            Thank you for adding your service to Connected Kingston
+            Thank you for adding your service to One Hounslow Connect
           </gov-heading>
 
           <gov-body>
@@ -14,7 +14,9 @@
 
           <gov-body>
             For further information, please contact:
-            <gov-link href="mailto:info@connectedkingston.uk">info@connectedkingston.uk</gov-link>
+            <gov-link href="mailto:onehounslowconnect@hounslow.gov.uk"
+              >onehounslowconnect@hounslow.gov.uk</gov-link
+            >
           </gov-body>
 
           <gov-button :to="{ name: 'dashboard' }" start>Home</gov-button>

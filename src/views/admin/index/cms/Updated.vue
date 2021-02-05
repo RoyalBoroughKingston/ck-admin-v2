@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful :title="`Connected Kingston - Admin: CMS Updated`" />
+    <vue-headful :title="`One Hounslow Connect - Admin: CMS Updated`" />
 
     <gov-main-wrapper>
       <gov-grid-row>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-export default {
-  name: "CmsUpdated"
-};
+  export default {
+    name: 'CmsUpdated',
+  };
 </script>

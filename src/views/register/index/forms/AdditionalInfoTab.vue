@@ -6,7 +6,6 @@
 
     <gov-grid-row>
       <gov-grid-column width="one-half">
-
         <gov-body>
           This section allows you to add more information to your
           {{ service.type }} page. The more detail that can be provided, the
@@ -67,7 +66,9 @@
             @input="$emit('input', { field: 'fees_text', value: $event })"
             id="fees_text"
             label="How much does it cost? (if applicable)"
-            :hint='`Please indicate the basic cost of the ${service.type}. If there are multiple price points, please provide an indicative range (eg. "5-10 per session").`'
+            :hint="
+              `Please indicate the basic cost of the ${service.type}. If there are multiple price points, please provide an indicative range (eg. &quot;5-10 per session&quot;).`
+            "
             type="text"
             :error="errors.get('service.fees_text')"
             :maxlength="75"
@@ -93,14 +94,14 @@
           :error="errors.get('service.testimonial')"
         >
           <template slot="hint">
-              <gov-hint for="testimonial">
-                Please enter a quote from a service user highlighting a positive
-                outcome to help promote your good work. For example:
-              </gov-hint>
+            <gov-hint for="testimonial">
+              Please enter a quote from a service user highlighting a positive
+              outcome to help promote your good work. For example:
+            </gov-hint>
 
-              <gov-hint for="testimonial">
-                This {{ service.type }} changed my life!
-              </gov-hint>
+            <gov-hint for="testimonial">
+              This {{ service.type }} changed my life!
+            </gov-hint>
           </template>
         </ck-textarea-input>
 
@@ -133,7 +134,7 @@
       </gov-grid-column>
     </gov-grid-row>
 
-    <gov-section-break size="m" visible/>
+    <gov-section-break size="m" visible />
 
     <gov-heading size="l">Contact details</gov-heading>
     <gov-grid-row>
@@ -141,7 +142,7 @@
         <gov-body>
           Please provide your {{ service.type }}’s public-facing contact
           details. These will be displayed on your {{ service.type }}’s page on
-          the Connected Kingston website.
+          the One Hounslow Connect website.
         </gov-body>
 
         <gov-section-break size="l" />
@@ -151,7 +152,9 @@
           @input="$emit('input', { field: 'contact_name', value: $event })"
           id="contact_name"
           label="Contact name"
-          :hint="`Provide the contact name (First name & Surname) for this ${service.type}, or a generic entry if this isn’t applicable e.g. ‘Enquiries’, or ‘Helpdesk’.`"
+          :hint="
+            `Provide the contact name (First name & Surname) for this ${service.type}, or a generic entry if this isn’t applicable e.g. ‘Enquiries’, or ‘Helpdesk’.`
+          "
           type="text"
           :error="errors.get('service.contact_name')"
         />
@@ -172,7 +175,7 @@
 
             <gov-hint for="contact_phone">
               Please use the following formatting:
-              <br>
+              <br />
               020 8XXX XXXX for landline or 07XXX XXXXXX for mobile.
             </gov-hint>
           </template>
@@ -183,7 +186,9 @@
           @input="$emit('input', { field: 'contact_email', value: $event })"
           id="contact_email"
           :label="`Public ${service.type} email address`"
-          :hint="`Please provide the contact email address for the ${service.type}.`"
+          :hint="
+            `Please provide the contact email address for the ${service.type}.`
+          "
           type="email"
           :error="errors.get('service.contact_email')"
         />
@@ -215,57 +220,56 @@
 </template>
 
 <script>
-import SocialMediasInput from "@/views/services/inputs/SocialMediasInput";
+  import SocialMediasInput from '@/views/services/inputs/SocialMediasInput';
 
-export default {
-  components: {
-    SocialMediasInput
-  },
-
-  props: {
-    service: {
-      type: Object,
-      required: true
+  export default {
+    components: {
+      SocialMediasInput,
     },
 
-    errors: {
-      type: Object,
-      required: true
-    }
-  },
+    props: {
+      service: {
+        type: Object,
+        required: true,
+      },
 
-  computed: {
-    waitTimeOptions() {
-      return [
-        { text: `Not applicable for this ${this.service.type}`, value: null },
-        { text: "One week", value: "one_week" },
-        { text: "Two weeks", value: "two_weeks" },
-        { text: "Three weeks", value: "three_weeks" },
-        { text: "One month", value: "month" },
-        { text: "Longer than a month", value: "longer" }
-      ]
+      errors: {
+        type: Object,
+        required: true,
+      },
     },
 
-    isFreeOptions() {
-      return [
-        { value: true, label: `Yes - The ${this.service.type} is free` },
-        {
-          value: false,
-          label: `No - there are elements of this ${this.service.type} that must be paid for`
-        }
-      ];
+    computed: {
+      waitTimeOptions() {
+        return [
+          { text: `Not applicable for this ${this.service.type}`, value: null },
+          { text: 'One week', value: 'one_week' },
+          { text: 'Two weeks', value: 'two_weeks' },
+          { text: 'Three weeks', value: 'three_weeks' },
+          { text: 'One month', value: 'month' },
+          { text: 'Longer than a month', value: 'longer' },
+        ];
+      },
+
+      isFreeOptions() {
+        return [
+          { value: true, label: `Yes - The ${this.service.type} is free` },
+          {
+            value: false,
+            label: `No - there are elements of this ${this.service.type} that must be paid for`,
+          },
+        ];
+      },
+
+      videoEmbedHelpHref() {
+        const to = 'onehounslowconnect@hounslow.gov.uk';
+        const subject = `Make a video for my ${this.service.type}`;
+        const body = `My ${this.service.type} is: xxx\n\nI am interested in making a video for my ${this.service.type} page on One Hounslow Connect.`;
+
+        return `mailto:${to}?subject=${encodeURIComponent(
+          subject
+        )}&body=${encodeURIComponent(body)}`;
+      },
     },
-
-    videoEmbedHelpHref() {
-      const to = "info@connectedkingston.uk";
-      const subject = `Make a video for my ${this.service.type}`;
-      const body =
-        `My ${this.service.type} is: xxx\n\nI am interested in making a video for my ${this.service.type} page on Connected Kingston.`;
-
-      return `mailto:${to}?subject=${encodeURIComponent(
-        subject
-      )}&body=${encodeURIComponent(body)}`;
-    }
-  }
-};
+  };
 </script>
