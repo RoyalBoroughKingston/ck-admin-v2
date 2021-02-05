@@ -4,16 +4,21 @@
     <gov-main-wrapper>
       <ck-loader v-if="loading" />
       <gov-grid-row v-else>
-        <vue-headful :title="`Connected Kingston - User: ${user.first_name} ${user.last_name}`" />
+        <vue-headful
+          :title="
+            `One Hounslow Connect - User: ${user.first_name} ${user.last_name}`
+          "
+        />
 
         <gov-grid-column width="two-thirds">
-
           <gov-heading size="m">View user</gov-heading>
 
           <ck-user-details :user="user" />
 
           <template v-if="auth.isServiceAdmin()">
-            <gov-body>Please be certain of the action before deleting a user</gov-body>
+            <gov-body
+              >Please be certain of the action before deleting a user</gov-body
+            >
 
             <gov-section-break size="l" />
 
@@ -23,12 +28,16 @@
               @deleted="onDelete"
             />
           </template>
-
         </gov-grid-column>
-        <gov-grid-column v-if="auth.isServiceAdmin()" width="one-third" class="text-right">
-
-          <gov-button :to="{ name: 'users-edit', params: { user: $route.params.user } }">Edit user</gov-button>
-
+        <gov-grid-column
+          v-if="auth.isServiceAdmin()"
+          width="one-third"
+          class="text-right"
+        >
+          <gov-button
+            :to="{ name: 'users-edit', params: { user: $route.params.user } }"
+            >Edit user</gov-button
+          >
         </gov-grid-column>
       </gov-grid-row>
     </gov-main-wrapper>
@@ -36,39 +45,39 @@
 </template>
 
 <script>
-import http from "@/http";
+  import http from '@/http';
 
-export default {
-  name: "ShowUser",
-  data() {
-    return {
-      loading: false,
-      user: null
-    };
-  },
-  methods: {
-    fetchUser() {
-      this.loading = true;
-      http
-        .get(`/users/${this.$route.params.user}`, {
-          params: {
-            include: "user-roles.organisation,user-roles.service"
-          }
-        })
-        .then(({ data }) => {
-          this.user = data.data;
-          this.loading = false;
-        });
+  export default {
+    name: 'ShowUser',
+    data() {
+      return {
+        loading: false,
+        user: null,
+      };
     },
-    onEdit() {
-      alert("Edit");
+    methods: {
+      fetchUser() {
+        this.loading = true;
+        http
+          .get(`/users/${this.$route.params.user}`, {
+            params: {
+              include: 'user-roles.organisation,user-roles.service',
+            },
+          })
+          .then(({ data }) => {
+            this.user = data.data;
+            this.loading = false;
+          });
+      },
+      onEdit() {
+        alert('Edit');
+      },
+      onDelete() {
+        this.$router.push({ name: 'users-index' });
+      },
     },
-    onDelete() {
-      this.$router.push({ name: "users-index" });
-    }
-  },
-  created() {
-    this.fetchUser();
-  }
-};
+    created() {
+      this.fetchUser();
+    },
+  };
 </script>

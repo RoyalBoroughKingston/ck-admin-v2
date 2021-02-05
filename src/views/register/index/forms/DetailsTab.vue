@@ -3,7 +3,6 @@
     <gov-heading size="l">{{ service.type | ucfirst }} details</gov-heading>
     <gov-grid-row>
       <gov-grid-column width="one-half">
-
         <gov-body>
           General details about the {{ service.type }}. (We use
           {{ service.type }} in the broadcast sense, This could be counselling
@@ -17,7 +16,7 @@
           @input="$emit('input', { field: 'type', value: $event })"
           id="type"
           label="What is it?"
-          hint="This option changes how your page is described on Connected Kingston"
+          hint="This option changes how your page is described on One Hounslow Connect"
           :options="typeOptions"
           :error="errors.get('service.type')"
         />
@@ -31,9 +30,9 @@
           :error="errors.get(['service.name', 'service.slug'])"
         >
           <gov-hint slot="hint" for="name">
-            The name of your {{ service.type }} must be unique. The URL
-            of your page will be: <br>
-            www.connectedkingston.uk/services/{{ service.slug }}
+            The name of your {{ service.type }} must be unique. The URL of your
+            page will be: <br />
+            onehounslowconnect.london/services/{{ service.slug }}
           </gov-hint>
         </ck-text-input>
 
@@ -42,7 +41,9 @@
           @input="$emit('input', { field: 'url', value: $event })"
           id="url"
           :label="`What is the web address of your ${service.type}?`"
-          :hint="`This must start with ‘http://’ or ‘https://’. You can use your organisation’s website address if the ${service.type} doesn’t have its own.`"
+          :hint="
+            `This must start with ‘http://’ or ‘https://’. You can use your organisation’s website address if the ${service.type} doesn’t have its own.`
+          "
           type="url"
           :error="errors.get('service.url')"
         />
@@ -54,28 +55,28 @@
 </template>
 
 <script>
-export default {
-  props: {
-    service: {
-      type: Object,
-      required: true
+  export default {
+    props: {
+      service: {
+        type: Object,
+        required: true,
+      },
+
+      errors: {
+        type: Object,
+        required: true,
+      },
     },
 
-    errors: {
-      type: Object,
-      required: true
-    }
-  },
-
-  data() {
-    return {
-      typeOptions: [
-        { text: "It is a Service", value: "service" },
-        { text: "It is an Activity", value: "activity" },
-        { text: "It is a Club", value: "club" },
-        { text: "It is a Group", value: "group" }
-      ]
-    };
-  }
-};
+    data() {
+      return {
+        typeOptions: [
+          { text: 'It is a Service', value: 'service' },
+          { text: 'It is an Activity', value: 'activity' },
+          { text: 'It is a Club', value: 'club' },
+          { text: 'It is a Group', value: 'group' },
+        ],
+      };
+    },
+  };
 </script>

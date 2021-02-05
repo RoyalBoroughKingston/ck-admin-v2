@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-headful title="Connected Kingston - Admin: Search Engine" />
+    <vue-headful title="One Hounslow Connect - Admin: Search Engine" />
 
     <gov-tabs :tabs="tabs">
       <router-view />
@@ -9,21 +9,21 @@
 </template>
 
 <script>
-export default {
-  name: "ListSearchEngine",
-  data() {
-    return {
-      tabs: [
-        {
-          heading: "Thesaurus",
-          to: { name: "admin-index-search-engine" }
-        },
-        {
-          heading: "Stop words",
-          to: { name: "admin-index-search-engine-stop-words" }
-        }
-      ]
-    };
-  }
-};
+  export default {
+    name: 'ListSearchEngine',
+    data() {
+      return {
+        tabs: [
+          {
+            heading: 'Thesaurus',
+            to: { name: 'admin-index-search-engine' },
+          },
+          {
+            heading: 'Stop words',
+            to: { name: 'admin-index-search-engine-stop-words' },
+          },
+        ],
+      };
+    },
+  };
 </script>

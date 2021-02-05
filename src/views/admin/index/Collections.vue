@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-headful title="Connected Kingston - Admin: Collections" />
+    <vue-headful title="One Hounslow Connect - Admin: Collections" />
 
     <gov-tabs :tabs="tabs">
       <router-view />
@@ -9,18 +9,18 @@
 </template>
 
 <script>
-export default {
-  name: "ListCollections",
-  data() {
-    return {
-      tabs: [
-        { heading: "Categories", to: { name: "admin-index-collections" } },
-        {
-          heading: "Personas",
-          to: { name: "admin-index-collections-personas" }
-        }
-      ]
-    };
-  }
-};
+  export default {
+    name: 'ListCollections',
+    data() {
+      return {
+        tabs: [
+          { heading: 'Categories', to: { name: 'admin-index-collections' } },
+          {
+            heading: 'Personas',
+            to: { name: 'admin-index-collections-personas' },
+          },
+        ],
+      };
+    },
+  };
 </script>

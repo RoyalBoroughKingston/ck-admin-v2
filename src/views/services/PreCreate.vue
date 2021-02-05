@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Connected Kingston - Add Service" />
+    <vue-headful title="One Hounslow Connect - Add Service" />
 
     <gov-back-link :to="{ name: 'services-index' }">
       Back to services
@@ -12,8 +12,8 @@
           <gov-heading size="xl">Add a new Service Page</gov-heading>
 
           <gov-body>
-            You’re about to add a service/club/activity/group to Connected
-            Kingston. Here are some things you should know:
+            You’re about to add a service/club/activity/group to One Hounslow
+            Connect. Here are some things you should know:
           </gov-body>
 
           <gov-list bullet>
@@ -36,9 +36,9 @@
             your progress, so please make sure you have enough time.
           </gov-warning-text>
 
-          <gov-button :to="{name: 'services-index'}">
-            Back to services
-          </gov-button><!--
+          <gov-button :to="{ name: 'services-index' }">
+            Back to services </gov-button
+          ><!--
           -->&nbsp;<!--
           --><gov-button :to="{ name: 'services-create' }">
             Continue

@@ -1,8 +1,10 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Connected Kingston - Add Taxonomy Organisation" />
+    <vue-headful title="One Hounslow Connect - Add Taxonomy Organisation" />
 
-    <gov-back-link :to="{ name: 'admin-index-taxonomies-organisations' }">Back to taxonomy organisations</gov-back-link>
+    <gov-back-link :to="{ name: 'admin-index-taxonomies-organisations' }"
+      >Back to taxonomy organisations</gov-back-link
+    >
     <gov-main-wrapper>
       <gov-grid-row>
         <gov-grid-column width="one-half">
@@ -12,8 +14,8 @@
           </gov-heading>
           <gov-heading size="m">Add organisation</gov-heading>
           <gov-body>
-            From this page, you can add the names of the Organisations
-            referrers can select from when completing a referral.
+            From this page, you can add the names of the Organisations referrers
+            can select from when completing a referral.
           </gov-body>
 
           <taxonomy-form
@@ -23,7 +25,9 @@
             @clear="form.$errors.clear($event)"
           />
 
-          <gov-button v-if="form.$submitting" disabled type="submit">Creating...</gov-button>
+          <gov-button v-if="form.$submitting" disabled type="submit"
+            >Creating...</gov-button
+          >
           <gov-button v-else @click="onSubmit" type="submit">Create</gov-button>
           <ck-submit-error v-if="form.$errors.any()" />
         </gov-grid-column>
@@ -33,25 +37,25 @@
 </template>
 
 <script>
-import TaxonomyForm from "@/views/taxonomies/organisations/forms/TaxonomyForm";
-import Form from "@/classes/Form";
+  import TaxonomyForm from '@/views/taxonomies/organisations/forms/TaxonomyForm';
+  import Form from '@/classes/Form';
 
-export default {
-  name: "CreateTaxonomyOrganisation",
-  components: { TaxonomyForm },
-  data() {
-    return {
-      form: new Form({
-        name: "",
-        order: 1
-      })
-    };
-  },
-  methods: {
-    async onSubmit() {
-      await this.form.post("/taxonomies/organisations");
-      this.$router.push({ name: "admin-index-taxonomies-organisations" });
-    }
-  }
-};
+  export default {
+    name: 'CreateTaxonomyOrganisation',
+    components: { TaxonomyForm },
+    data() {
+      return {
+        form: new Form({
+          name: '',
+          order: 1,
+        }),
+      };
+    },
+    methods: {
+      async onSubmit() {
+        await this.form.post('/taxonomies/organisations');
+        this.$router.push({ name: 'admin-index-taxonomies-organisations' });
+      },
+    },
+  };
 </script>

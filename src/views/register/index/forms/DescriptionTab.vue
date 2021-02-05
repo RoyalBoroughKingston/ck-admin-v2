@@ -3,10 +3,9 @@
     <gov-heading size="l">What does your {{ service.type }} offer</gov-heading>
     <gov-grid-row>
       <gov-grid-column width="one-half">
-
         <gov-body>
           These sections should describe what your {{ service.type }} offers and
-          is the main body of content on your page on Connected Kingston.
+          is the main body of content on your page on One Hounslow Connect.
         </gov-body>
 
         <gov-section-break size="l" />
@@ -21,7 +20,7 @@
           :error="errors.get('service.intro')"
         />
 
-          <gov-heading size="m">What you offer</gov-heading>
+        <gov-heading size="m">What you offer</gov-heading>
 
         <gov-body>
           Include a bullet list of some of the things you do as a
@@ -43,7 +42,9 @@
           @input="$emit('input', { field: 'description', value: $event })"
           id="description"
           label="Long description"
-          :hint="`This is the largest body of text on your page. Fill it with everything else someone should know about your ${service.type}. Use headers, bullets and formatting for the maximum effect.`"
+          :hint="
+            `This is the largest body of text on your page. Fill it with everything else someone should know about your ${service.type}. Use headers, bullets and formatting for the maximum effect.`
+          "
           :error="errors.get('service.description')"
           large
           :maxlength="3000"
@@ -56,23 +57,23 @@
 </template>
 
 <script>
-import CkOfferingsInput from '@/views/services/inputs/OfferingsInput.vue';
+  import CkOfferingsInput from '@/views/services/inputs/OfferingsInput.vue';
 
-export default {
-  components: {
-    CkOfferingsInput
-  },
-
-  props: {
-    service: {
-      type: Object,
-      required: true
+  export default {
+    components: {
+      CkOfferingsInput,
     },
 
-    errors: {
-      type: Object,
-      required: true
-    }
-  }
-};
+    props: {
+      service: {
+        type: Object,
+        required: true,
+      },
+
+      errors: {
+        type: Object,
+        required: true,
+      },
+    },
+  };
 </script>

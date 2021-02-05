@@ -26,8 +26,10 @@
           >
             <gov-hint slot="hint" for="name">
               The name of your organisation must be unique. The URL of your page
-              will be: <br>
-              www.connectedkingston.uk/organisations/{{ form.organisation.slug }}
+              will be: <br />
+              onehounslowconnect.london/organisations/{{
+                form.organisation.slug
+              }}
             </gov-hint>
           </ck-text-input>
 
@@ -78,29 +80,32 @@
 </template>
 
 <script>
-export default {
-  props: {
-    form: {
-      type: Object,
-      required: true
+  export default {
+    props: {
+      form: {
+        type: Object,
+        required: true,
+      },
+
+      errors: {
+        type: Object,
+        required: true,
+      },
     },
 
-    errors: {
-      type: Object,
-      required: true
-    }
-  },
-
-  methods: {
-    onInput(field, value) {
-      this.$emit('input', Object.assign(this.form, {
-        organisation: {
-          ...this.form.organisation,
-          [field]: value
-        }
-      }));
-      this.$emit('clear', `organisation.${field}`);
-    }
-  }
-}
+    methods: {
+      onInput(field, value) {
+        this.$emit(
+          'input',
+          Object.assign(this.form, {
+            organisation: {
+              ...this.form.organisation,
+              [field]: value,
+            },
+          })
+        );
+        this.$emit('clear', `organisation.${field}`);
+      },
+    },
+  };
 </script>
