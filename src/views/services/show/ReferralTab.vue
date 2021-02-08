@@ -4,7 +4,9 @@
     <gov-table>
       <template slot="body">
         <gov-table-row>
-          <gov-table-header scope="row" top>Display disclaimer</gov-table-header>
+          <gov-table-header scope="row" top
+            >Display disclaimer</gov-table-header
+          >
           <gov-table-cell>{{ displayDisclaimer }}</gov-table-cell>
         </gov-table-row>
         <gov-table-row>

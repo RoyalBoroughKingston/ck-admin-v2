@@ -1,7 +1,11 @@
 <template>
-    <gov-list bullet>
-        <li v-for="(synonym, index) in synonyms" :key="index" v-text="synonym.join(', ')"></li>
-    </gov-list>
+  <gov-list bullet>
+    <li
+      v-for="(synonym, index) in synonyms"
+      :key="index"
+      v-text="synonym.join(', ')"
+    ></li>
+  </gov-list>
 </template>
 
 <script>

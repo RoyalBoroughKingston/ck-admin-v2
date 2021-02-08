@@ -11,7 +11,7 @@
       <gov-back-link
         :to="{
           name: 'service-locations-show',
-          params: { serviceLocation: serviceLocation.id },
+          params: { serviceLocation: serviceLocation.id }
         }"
         >Back to service location</gov-back-link
       >
@@ -28,7 +28,7 @@
             <gov-button
               :to="{
                 name: 'service-locations-show',
-                params: { serviceLocation: this.$route.params.serviceLocation },
+                params: { serviceLocation: this.$route.params.serviceLocation }
               }"
               >Back to service location</gov-button
             >
@@ -40,28 +40,28 @@
 </template>
 
 <script>
-  import http from '@/http';
+import http from "@/http";
 
-  export default {
-    name: 'OrganisationUpdated',
-    data() {
-      return {
-        loading: false,
-        serviceLocation: null,
-      };
-    },
-    methods: {
-      async fetchServiceLocation() {
-        this.loading = true;
-        const response = await http.get(
-          `/service-locations/${this.$route.params.serviceLocation}`
-        );
-        this.serviceLocation = response.data.data;
-        this.loading = false;
-      },
-    },
-    created() {
-      this.fetchServiceLocation();
-    },
-  };
+export default {
+  name: "OrganisationUpdated",
+  data() {
+    return {
+      loading: false,
+      serviceLocation: null
+    };
+  },
+  methods: {
+    async fetchServiceLocation() {
+      this.loading = true;
+      const response = await http.get(
+        `/service-locations/${this.$route.params.serviceLocation}`
+      );
+      this.serviceLocation = response.data.data;
+      this.loading = false;
+    }
+  },
+  created() {
+    this.fetchServiceLocation();
+  }
+};
 </script>

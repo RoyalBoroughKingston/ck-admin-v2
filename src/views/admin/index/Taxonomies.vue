@@ -9,18 +9,18 @@
 </template>
 
 <script>
-  export default {
-    name: 'ListTaxonomies',
-    data() {
-      return {
-        tabs: [
-          { heading: 'Categories', to: { name: 'admin-index-taxonomies' } },
-          {
-            heading: 'Organisations',
-            to: { name: 'admin-index-taxonomies-organisations' },
-          },
-        ],
-      };
-    },
-  };
+export default {
+  name: "ListTaxonomies",
+  data() {
+    return {
+      tabs: [
+        { heading: "Categories", to: { name: "admin-index-taxonomies" } },
+        {
+          heading: "Organisations",
+          to: { name: "admin-index-taxonomies-organisations" }
+        }
+      ]
+    };
+  }
+};
 </script>

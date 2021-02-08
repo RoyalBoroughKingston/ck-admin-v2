@@ -80,32 +80,32 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      form: {
-        type: Object,
-        required: true,
-      },
-
-      errors: {
-        type: Object,
-        required: true,
-      },
+export default {
+  props: {
+    form: {
+      type: Object,
+      required: true
     },
 
-    methods: {
-      onInput(field, value) {
-        this.$emit(
-          'input',
-          Object.assign(this.form, {
-            user: {
-              ...this.form.user,
-              [field]: value,
-            },
-          })
-        );
-        this.$emit('clear', `user.${field}`);
-      },
-    },
-  };
+    errors: {
+      type: Object,
+      required: true
+    }
+  },
+
+  methods: {
+    onInput(field, value) {
+      this.$emit(
+        "input",
+        Object.assign(this.form, {
+          user: {
+            ...this.form.user,
+            [field]: value
+          }
+        })
+      );
+      this.$emit("clear", `user.${field}`);
+    }
+  }
+};
 </script>

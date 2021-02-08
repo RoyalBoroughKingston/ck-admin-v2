@@ -42,29 +42,29 @@
 </template>
 
 <script>
-  import CollectionForm from '@/views/collections/categories/forms/CollectionForm';
-  import Form from '@/classes/Form';
+import CollectionForm from "@/views/collections/categories/forms/CollectionForm";
+import Form from "@/classes/Form";
 
-  export default {
-    name: 'CreateCollectionCategory',
-    components: { CollectionForm },
-    data() {
-      return {
-        form: new Form({
-          name: '',
-          intro: '',
-          icon: '',
-          order: 1,
-          sideboxes: [],
-          category_taxonomies: [],
-        }),
-      };
-    },
-    methods: {
-      async onSubmit() {
-        await this.form.post('/collections/categories');
-        this.$router.push({ name: 'admin-index-collections' });
-      },
-    },
-  };
+export default {
+  name: "CreateCollectionCategory",
+  components: { CollectionForm },
+  data() {
+    return {
+      form: new Form({
+        name: "",
+        intro: "",
+        icon: "",
+        order: 1,
+        sideboxes: [],
+        category_taxonomies: []
+      })
+    };
+  },
+  methods: {
+    async onSubmit() {
+      await this.form.post("/collections/categories");
+      this.$router.push({ name: "admin-index-collections" });
+    }
+  }
+};
 </script>

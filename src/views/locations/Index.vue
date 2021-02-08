@@ -63,24 +63,24 @@
               {
                 heading: 'Address line 1',
                 sort: 'address_line_1',
-                render: (location) => location.address_line_1,
+                render: location => location.address_line_1
               },
               {
                 heading: 'City',
                 sort: 'city',
-                render: (location) => location.city,
+                render: location => location.city
               },
               {
                 heading: 'Postcode',
                 sort: 'postcode',
-                render: (location) => location.postcode,
-              },
+                render: location => location.postcode
+              }
             ]"
             :view-route="
-              (location) => {
+              location => {
                 return {
                   name: 'locations-show',
-                  params: { location: location.id },
+                  params: { location: location.id }
                 };
               }
             "
@@ -92,48 +92,48 @@
 </template>
 
 <script>
-  import CkResourceListingTable from '@/components/Ck/CkResourceListingTable.vue';
-  import CkTableFilters from '@/components/Ck/CkTableFilters.vue';
+import CkResourceListingTable from "@/components/Ck/CkResourceListingTable.vue";
+import CkTableFilters from "@/components/Ck/CkTableFilters.vue";
 
-  export default {
-    name: 'ListLocations',
-    components: { CkResourceListingTable, CkTableFilters },
-    data() {
-      return {
-        filters: {
-          address_line_1: '',
-          city: '',
-          postcode: '',
-        },
-      };
+export default {
+  name: "ListLocations",
+  components: { CkResourceListingTable, CkTableFilters },
+  data() {
+    return {
+      filters: {
+        address_line_1: "",
+        city: "",
+        postcode: ""
+      }
+    };
+  },
+  computed: {
+    params() {
+      let params = {};
+
+      if (this.filters.address_line_1 !== "") {
+        params["filter[address_line_1]"] = this.filters.address_line_1;
+      }
+
+      if (this.filters.city !== "") {
+        params["filter[city]"] = this.filters.city;
+      }
+
+      if (this.filters.postcode !== "") {
+        params["filter[postcode]"] = this.filters.postcode;
+      }
+
+      return params;
+    }
+  },
+  methods: {
+    onSearch() {
+      this.$refs.locationsTable.currentPage = 1;
+      this.$refs.locationsTable.fetchResources();
     },
-    computed: {
-      params() {
-        let params = {};
-
-        if (this.filters.address_line_1 !== '') {
-          params['filter[address_line_1]'] = this.filters.address_line_1;
-        }
-
-        if (this.filters.city !== '') {
-          params['filter[city]'] = this.filters.city;
-        }
-
-        if (this.filters.postcode !== '') {
-          params['filter[postcode]'] = this.filters.postcode;
-        }
-
-        return params;
-      },
-    },
-    methods: {
-      onSearch() {
-        this.$refs.locationsTable.currentPage = 1;
-        this.$refs.locationsTable.fetchResources();
-      },
-      onAddLocation() {
-        this.$router.push({ name: 'locations-create' });
-      },
-    },
-  };
+    onAddLocation() {
+      this.$router.push({ name: "locations-create" });
+    }
+  }
+};
 </script>

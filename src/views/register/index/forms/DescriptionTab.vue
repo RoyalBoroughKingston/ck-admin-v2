@@ -57,23 +57,23 @@
 </template>
 
 <script>
-  import CkOfferingsInput from '@/views/services/inputs/OfferingsInput.vue';
+import CkOfferingsInput from "@/views/services/inputs/OfferingsInput.vue";
 
-  export default {
-    components: {
-      CkOfferingsInput,
+export default {
+  components: {
+    CkOfferingsInput
+  },
+
+  props: {
+    service: {
+      type: Object,
+      required: true
     },
 
-    props: {
-      service: {
-        type: Object,
-        required: true,
-      },
-
-      errors: {
-        type: Object,
-        required: true,
-      },
-    },
-  };
+    errors: {
+      type: Object,
+      required: true
+    }
+  }
+};
 </script>

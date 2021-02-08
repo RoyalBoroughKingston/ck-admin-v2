@@ -18,7 +18,7 @@
       :error="errors.get('slug')"
     >
       <gov-hint slot="hint" for="slug">
-        This will be used to access the organisation page.<br>
+        This will be used to access the organisation page.<br />
         e.g. example.com/organisations/{{ slug }}
       </gov-hint>
     </ck-text-input>
@@ -64,9 +64,10 @@
       id="logo"
       label="Organisation logo"
       accept="image/x-png"
-      :existing-url="id ? apiUrl(`/organisations/${id}/logo.png?v=${now}`) : undefined"
+      :existing-url="
+        id ? apiUrl(`/organisations/${id}/logo.png?v=${now}`) : undefined
+      "
     />
-
   </div>
 </template>
 

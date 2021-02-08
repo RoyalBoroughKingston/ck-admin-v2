@@ -29,28 +29,28 @@
         {
           heading: 'Page URL',
           sort: 'url',
-          render: (pageFeedback) => pageFeedback.url,
+          render: pageFeedback => pageFeedback.url
         },
         {
           heading: 'Contact name',
-          render: (pageFeedback) => pageFeedback.name || '-',
+          render: pageFeedback => pageFeedback.name || '-'
         },
         {
           heading: 'Contact details',
-          render: (pageFeedback) =>
-            pageFeedback.email || pageFeedback.phone || '-',
+          render: pageFeedback =>
+            pageFeedback.email || pageFeedback.phone || '-'
         },
         {
           heading: 'Date / Time',
           sort: 'created_at',
-          render: (pageFeedback) => formatDateTime(pageFeedback.created_at),
-        },
+          render: pageFeedback => formatDateTime(pageFeedback.created_at)
+        }
       ]"
       :view-route="
-        (pageFeedback) => {
+        pageFeedback => {
           return {
             name: 'page-feedbacks-show',
-            params: { pageFeedback: pageFeedback.id },
+            params: { pageFeedback: pageFeedback.id }
           };
         }
       "
@@ -59,35 +59,35 @@
 </template>
 
 <script>
-  import CkResourceListingTable from '@/components/Ck/CkResourceListingTable.vue';
-  import CkTableFilters from '@/components/Ck/CkTableFilters.vue';
+import CkResourceListingTable from "@/components/Ck/CkResourceListingTable.vue";
+import CkTableFilters from "@/components/Ck/CkTableFilters.vue";
 
-  export default {
-    name: 'ListNotification',
-    components: { CkResourceListingTable, CkTableFilters },
-    data() {
-      return {
-        filters: {
-          url: '',
-        },
-      };
-    },
-    computed: {
-      params() {
-        const params = {};
+export default {
+  name: "ListNotification",
+  components: { CkResourceListingTable, CkTableFilters },
+  data() {
+    return {
+      filters: {
+        url: ""
+      }
+    };
+  },
+  computed: {
+    params() {
+      const params = {};
 
-        if (this.filters.url !== '') {
-          params['filter[url]'] = this.filters.url;
-        }
+      if (this.filters.url !== "") {
+        params["filter[url]"] = this.filters.url;
+      }
 
-        return params;
-      },
-    },
-    methods: {
-      onSearch() {
-        this.$refs.pageFeedbacksTable.currentPage = 1;
-        this.$refs.pageFeedbacksTable.fetchResources();
-      },
-    },
-  };
+      return params;
+    }
+  },
+  methods: {
+    onSearch() {
+      this.$refs.pageFeedbacksTable.currentPage = 1;
+      this.$refs.pageFeedbacksTable.fetchResources();
+    }
+  }
+};
 </script>

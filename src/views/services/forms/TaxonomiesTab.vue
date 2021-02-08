@@ -35,41 +35,41 @@
   </div>
 </template>
 <script>
-  import CategoryTaxonomyInput from '@/views/services/inputs/CategoryTaxonomyInput';
+import CategoryTaxonomyInput from "@/views/services/inputs/CategoryTaxonomyInput";
 
-  export default {
-    name: 'TaxonomiesTab',
-    components: { CategoryTaxonomyInput },
-    props: {
-      errors: {
-        required: true,
-      },
-      isGlobalAdmin: {
-        required: true,
-      },
-      type: {
-        required: true,
-        type: String,
-      },
-      category_taxonomies: {
-        required: true,
-        type: Array,
-      },
+export default {
+  name: "TaxonomiesTab",
+  components: { CategoryTaxonomyInput },
+  props: {
+    errors: {
+      required: true
     },
-    computed: {
-      contactAdminTeamEmail() {
-        const to = 'onehounslowconnect@hounslow.gov.uk';
-        const subject = `Incorrect taxonomies applied to ${this.type}`;
-        const body = `${this.$options.filters.ucfirst(
-          this.type
-        )} Name: XXX\n\nI believe that the tags applied to the above ${
-          this.type
-        } are incorrect. The following changes should be made:`;
+    isGlobalAdmin: {
+      required: true
+    },
+    type: {
+      required: true,
+      type: String
+    },
+    category_taxonomies: {
+      required: true,
+      type: Array
+    }
+  },
+  computed: {
+    contactAdminTeamEmail() {
+      const to = "onehounslowconnect@hounslow.gov.uk";
+      const subject = `Incorrect taxonomies applied to ${this.type}`;
+      const body = `${this.$options.filters.ucfirst(
+        this.type
+      )} Name: XXX\n\nI believe that the tags applied to the above ${
+        this.type
+      } are incorrect. The following changes should be made:`;
 
-        return `mailto:${to}?subject=${encodeURIComponent(
-          subject
-        )}&body=${encodeURIComponent(body)}`;
-      },
-    },
-  };
+      return `mailto:${to}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+    }
+  }
+};
 </script>

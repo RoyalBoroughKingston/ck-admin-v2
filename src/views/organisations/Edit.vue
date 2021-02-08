@@ -11,7 +11,7 @@
       <gov-back-link
         :to="{
           name: 'organisations-show',
-          params: { organisation: organisation.id },
+          params: { organisation: organisation.id }
         }"
         >Back to organisation</gov-back-link
       >
@@ -58,80 +58,80 @@
 </template>
 
 <script>
-  import http from '@/http';
-  import Form from '@/classes/Form';
-  import OrganisationForm from '@/views/organisations/forms/OrganisationForm';
+import http from "@/http";
+import Form from "@/classes/Form";
+import OrganisationForm from "@/views/organisations/forms/OrganisationForm";
 
-  export default {
-    name: 'EditOrganisation',
-    components: { OrganisationForm },
-    data() {
-      return {
-        loading: false,
-        organisation: null,
-        form: null,
-      };
+export default {
+  name: "EditOrganisation",
+  components: { OrganisationForm },
+  data() {
+    return {
+      loading: false,
+      organisation: null,
+      form: null
+    };
+  },
+  methods: {
+    async fetchOrganisation() {
+      this.loading = true;
+
+      const response = await http.get(
+        `/organisations/${this.$route.params.organisation}`
+      );
+      this.organisation = response.data.data;
+      this.form = new Form({
+        name: this.organisation.name,
+        slug: this.organisation.slug,
+        description: this.organisation.description,
+        url: this.organisation.url,
+        email: this.organisation.email || "",
+        phone: this.organisation.phone || "",
+        logo_file_id: null
+      });
+
+      this.loading = false;
     },
-    methods: {
-      async fetchOrganisation() {
-        this.loading = true;
-
-        const response = await http.get(
-          `/organisations/${this.$route.params.organisation}`
-        );
-        this.organisation = response.data.data;
-        this.form = new Form({
-          name: this.organisation.name,
-          slug: this.organisation.slug,
-          description: this.organisation.description,
-          url: this.organisation.url,
-          email: this.organisation.email || '',
-          phone: this.organisation.phone || '',
-          logo_file_id: null,
-        });
-
-        this.loading = false;
-      },
-      async onSubmit() {
-        await this.form.put(
-          `/organisations/${this.organisation.id}`,
-          (config, data) => {
-            // Remove any unchanged values.
-            if (data.name === this.organisation.name) {
-              delete data.name;
-            }
-            if (data.slug === this.organisation.slug) {
-              delete data.slug;
-            }
-            if (data.description === this.organisation.description) {
-              delete data.description;
-            }
-            if (data.url === this.organisation.url) {
-              delete data.url;
-            }
-            if (data.email === (this.organisation.email || '-')) {
-              delete data.email;
-            }
-            if (data.phone === (this.organisation.phone || '-')) {
-              delete data.phone;
-            }
-
-            // Remove the logo from the request if null, or delete if false.
-            if (data.logo_file_id === null) {
-              delete data.logo_file_id;
-            } else if (data.logo_file_id === false) {
-              data.logo_file_id = null;
-            }
+    async onSubmit() {
+      await this.form.put(
+        `/organisations/${this.organisation.id}`,
+        (config, data) => {
+          // Remove any unchanged values.
+          if (data.name === this.organisation.name) {
+            delete data.name;
           }
-        );
-        this.$router.push({
-          name: 'organisations-updated',
-          params: { organisation: this.organisation.id },
-        });
-      },
-    },
-    created() {
-      this.fetchOrganisation();
-    },
-  };
+          if (data.slug === this.organisation.slug) {
+            delete data.slug;
+          }
+          if (data.description === this.organisation.description) {
+            delete data.description;
+          }
+          if (data.url === this.organisation.url) {
+            delete data.url;
+          }
+          if (data.email === (this.organisation.email || "-")) {
+            delete data.email;
+          }
+          if (data.phone === (this.organisation.phone || "-")) {
+            delete data.phone;
+          }
+
+          // Remove the logo from the request if null, or delete if false.
+          if (data.logo_file_id === null) {
+            delete data.logo_file_id;
+          } else if (data.logo_file_id === false) {
+            data.logo_file_id = null;
+          }
+        }
+      );
+      this.$router.push({
+        name: "organisations-updated",
+        params: { organisation: this.organisation.id }
+      });
+    }
+  },
+  created() {
+    this.fetchOrganisation();
+  }
+};
 </script>

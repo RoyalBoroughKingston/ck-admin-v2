@@ -1,8 +1,6 @@
 <template>
   <gov-form-group :invalid="error !== null">
-
     <gov-radios>
-
       <gov-label :for="id">
         Is this {{ type }} open or closed during these holiday hours?
       </gov-label>
@@ -24,15 +22,9 @@
         label="Closed"
         :value="true"
       />
-
     </gov-radios>
 
-    <gov-error-message
-      v-if="error"
-      v-text="error"
-      :for="id"
-    />
-
+    <gov-error-message v-if="error" v-text="error" :for="id" />
   </gov-form-group>
 </template>
 

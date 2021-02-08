@@ -3,12 +3,20 @@
     <gov-heading size="l">Good to know</gov-heading>
     <gov-table>
       <template slot="body">
-        <gov-table-row v-for="usefulInfo in usefulInfos" :key="usefulInfo.order">
-          <gov-table-header scope="row" top>{{ usefulInfo.title }}</gov-table-header>
+        <gov-table-row
+          v-for="usefulInfo in usefulInfos"
+          :key="usefulInfo.order"
+        >
+          <gov-table-header scope="row" top>{{
+            usefulInfo.title
+          }}</gov-table-header>
           <gov-table-cell v-html="toHtml(usefulInfo.description)" />
         </gov-table-row>
         <gov-table-row v-if="usefulInfos.length === 0">
-          <gov-table-cell colspan="2">No useful info specified for this {{ service.type }}</gov-table-cell>
+          <gov-table-cell colspan="2"
+            >No useful info specified for this
+            {{ service.type }}</gov-table-cell
+          >
         </gov-table-row>
       </template>
     </gov-table>

@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <ck-text-input
       :value="name"
       @input="onInput('name', $event)"
@@ -20,7 +19,6 @@
       :options="taxonomyOptions"
       :error="errors.get('parent_id')"
     />
-
   </div>
 </template>
 

@@ -1,17 +1,30 @@
 <template>
   <div>
-    <gov-inset-text v-for="(galleryItem, index) in galleryItems" :key="galleryItem.$index">
+    <gov-inset-text
+      v-for="(galleryItem, index) in galleryItems"
+      :key="galleryItem.$index"
+    >
       <ck-image-input
         @input="onGalleryItemInput($event, index)"
         :id="`Ck::GalleryItem::${galleryItem.$index}`"
         label="Upload an item to the gallery"
         accept="image/x-png"
-        :existing-url="galleryItem.hasOwnProperty('url') ? galleryItem.url : undefined"
+        :existing-url="
+          galleryItem.hasOwnProperty('url') ? galleryItem.url : undefined
+        "
       />
 
       <gov-error-message
-        v-if="errors.has(`gallery_items.${index}`) || errors.has(`gallery_items.${index}.file_id`)"
-        v-text="errors.get([`gallery_items.${index}`, `gallery_items.${index}.file_id`])"
+        v-if="
+          errors.has(`gallery_items.${index}`) ||
+            errors.has(`gallery_items.${index}.file_id`)
+        "
+        v-text="
+          errors.get([
+            `gallery_items.${index}`,
+            `gallery_items.${index}.file_id`
+          ])
+        "
         :for="galleryItem.$index"
       />
 
@@ -88,7 +101,7 @@ export default {
       this.$emit("input", galleryItems);
       this.$emit("clear", `gallery_items.${deleteIndex}`);
       this.$emit("clear", `gallery_items.${deleteIndex}.file_id`);
-    },
+    }
   }
 };
 </script>

@@ -79,44 +79,44 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      form: {
-        type: Object,
-        required: true,
-      },
-
-      errors: {
-        type: Object,
-        required: true,
-      },
+export default {
+  props: {
+    form: {
+      type: Object,
+      required: true
     },
 
-    methods: {
-      onInput(organisationType) {
-        if (this.form.organisation_types.includes(organisationType)) {
-          this.$emit(
-            'input',
-            Object.assign(this.form, {
-              organisation_types: this.form.organisation_types.filter(
-                (type) => type !== organisationType
-              ),
-            })
-          );
-        } else {
-          this.$emit(
-            'input',
-            Object.assign(this.form, {
-              organisation_types: [
-                ...this.form.organisation_types,
-                organisationType,
-              ],
-            })
-          );
-        }
+    errors: {
+      type: Object,
+      required: true
+    }
+  },
 
-        this.$emit('clear', 'organisation_types');
-      },
-    },
-  };
+  methods: {
+    onInput(organisationType) {
+      if (this.form.organisation_types.includes(organisationType)) {
+        this.$emit(
+          "input",
+          Object.assign(this.form, {
+            organisation_types: this.form.organisation_types.filter(
+              type => type !== organisationType
+            )
+          })
+        );
+      } else {
+        this.$emit(
+          "input",
+          Object.assign(this.form, {
+            organisation_types: [
+              ...this.form.organisation_types,
+              organisationType
+            ]
+          })
+        );
+      }
+
+      this.$emit("clear", "organisation_types");
+    }
+  }
+};
 </script>

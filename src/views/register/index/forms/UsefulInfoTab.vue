@@ -3,7 +3,6 @@
     <gov-heading size="l">Good to know</gov-heading>
     <gov-grid-row>
       <gov-grid-column width="one-half">
-
         <gov-body>
           What do people want to know about your {{ service.type }}.
         </gov-body>

@@ -17,11 +17,7 @@
       :options="hours"
       class="govuk-!-width-one-quarter"
     />
-    <gov-error-message
-      v-if="error"
-      v-text="error"
-      :for="`${id}.opens_at`"
-    />
+    <gov-error-message v-if="error" v-text="error" :for="`${id}.opens_at`" />
   </gov-form-group>
 </template>
 

@@ -36,67 +36,67 @@
 </template>
 
 <script>
-  export default {
-    name: 'SocialMediasInput',
-    model: {
-      prop: 'socialMedias',
-      event: 'input',
+export default {
+  name: "SocialMediasInput",
+  model: {
+    prop: "socialMedias",
+    event: "input"
+  },
+  props: {
+    socialMedias: {
+      required: true,
+      type: Array
     },
-    props: {
-      socialMedias: {
-        required: true,
-        type: Array,
-      },
-      errors: {
-        required: true,
-        type: Object,
-      },
+    errors: {
+      required: true,
+      type: Object
+    }
+  },
+  data() {
+    return {
+      socialMediaTypeOptions: [
+        { text: "Please select", value: null, disabled: true },
+        { text: "Twitter", value: "twitter" },
+        { text: "Facebook", value: "facebook" },
+        { text: "Instagram", value: "instagram" },
+        { text: "YouTube", value: "youtube" },
+        { text: "Other", value: "other" }
+      ],
+      socialMediasIndex: 1
+    };
+  },
+  methods: {
+    cloneSocialMedias() {
+      return this.socialMedias.map(socialMedia => ({ ...socialMedia }));
     },
-    data() {
-      return {
-        socialMediaTypeOptions: [
-          { text: 'Please select', value: null, disabled: true },
-          { text: 'Twitter', value: 'twitter' },
-          { text: 'Facebook', value: 'facebook' },
-          { text: 'Instagram', value: 'instagram' },
-          { text: 'YouTube', value: 'youtube' },
-          { text: 'Other', value: 'other' },
-        ],
-        socialMediasIndex: 1,
-      };
-    },
-    methods: {
-      cloneSocialMedias() {
-        return this.socialMedias.map((socialMedia) => ({ ...socialMedia }));
-      },
-      onAddSocialMedia() {
-        let socialMedias = this.cloneSocialMedias();
-        socialMedias.push({
-          type: null,
-          url: '',
-          index: this.socialMediasIndex,
-        });
-        this.$emit('input', socialMedias);
+    onAddSocialMedia() {
+      let socialMedias = this.cloneSocialMedias();
+      socialMedias.push({
+        type: null,
+        url: "",
+        index: this.socialMediasIndex
+      });
+      this.$emit("input", socialMedias);
 
-        this.socialMediasIndex++;
-      },
-      onDeleteSocialMedia(deleteIndex) {
-        let socialMedias = this.cloneSocialMedias();
-        this.$delete(socialMedias, deleteIndex);
-        this.$emit('input', socialMedias);
-        this.$emit('clear', `social_medias.${deleteIndex}.type`);
-        this.$emit('clear', `social_medias.${deleteIndex}.url`);
-      },
-      onTypeInput({ index, value }) {
-        let socialMedias = this.cloneSocialMedias();
-        socialMedias[index].type = value;
-        this.$emit('input', socialMedias);
-      },
-      onUrlInput({ index, value }) {
-        let socialMedias = this.cloneSocialMedias();
-        socialMedias[index].url = value;
-        this.$emit('input', socialMedias);
-      },
+      this.socialMediasIndex++;
     },
-  };
+    onDeleteSocialMedia(deleteIndex) {
+      let socialMedias = this.cloneSocialMedias();
+      this.$delete(socialMedias, deleteIndex);
+      this.$emit("input", socialMedias);
+      this.$emit("clear", `social_medias.${deleteIndex}.type`);
+      this.$emit("clear", `social_medias.${deleteIndex}.url`);
+    },
+    onTypeInput({ index, value }) {
+      let socialMedias = this.cloneSocialMedias();
+      socialMedias[index].type = value;
+      this.$emit("input", socialMedias);
+    },
+    onUrlInput({ index, value }) {
+      let socialMedias = this.cloneSocialMedias();
+      socialMedias[index].url = value;
+      this.$emit("input", socialMedias);
+    }
+  }
+};
 </script>

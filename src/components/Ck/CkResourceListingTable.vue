@@ -1,5 +1,5 @@
 <template>
-  <ck-loader v-if="loading"/>
+  <ck-loader v-if="loading" />
   <div v-else>
     <gov-table>
       <template slot="header">
@@ -15,8 +15,7 @@
               {{ sortText(column) }}
             </template>
           </gov-table-header>
-          <gov-table-header>
-          </gov-table-header>
+          <gov-table-header> </gov-table-header>
         </gov-table-row>
       </template>
       <template slot="body">
@@ -27,13 +26,18 @@
             v-html="column.render(resource)"
           />
           <gov-table-cell right>
-            <gov-link @click="onAction(resource)" :to="viewRoute ? viewRoute(resource) : null">
+            <gov-link
+              @click="onAction(resource)"
+              :to="viewRoute ? viewRoute(resource) : null"
+            >
               {{ actionText }}
             </gov-link>
           </gov-table-cell>
         </gov-table-row>
         <gov-table-row v-if="resources.length === 0">
-          <gov-table-cell :colspan="columns.length + 1">None found</gov-table-cell>
+          <gov-table-cell :colspan="columns.length + 1"
+            >None found</gov-table-cell
+          >
         </gov-table-row>
       </template>
     </gov-table>

@@ -9,7 +9,7 @@
     :name="name"
     :type="type"
     :aria-describedby="ariaDescribedBy"
-  >
+  />
 </template>
 
 <script>

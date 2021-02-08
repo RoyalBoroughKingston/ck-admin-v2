@@ -3,7 +3,9 @@
     <gov-grid-column width="two-thirds">
       <gov-heading size="l">About</gov-heading>
 
-      <gov-body>Review the content for the about page on the frontend.</gov-body>
+      <gov-body
+        >Review the content for the about page on the frontend.</gov-body
+      >
 
       <ck-text-input
         :value="frontend.about.title"
@@ -62,7 +64,7 @@ export default {
       frontend.about[field] = value;
 
       this.$emit("input", frontend);
-      this.$emit("clear", `frontend.about.${field}`)
+      this.$emit("clear", `frontend.about.${field}`);
     }
   }
 };

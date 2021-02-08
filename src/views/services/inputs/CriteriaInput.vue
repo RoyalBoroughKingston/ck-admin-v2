@@ -5,7 +5,10 @@
       :id="`${id}_radio`"
       :label="label"
       :hint="hint"
-      :options="[{ value: false, label: 'No specific requirement' }, { value: true, label: 'Other' }]"
+      :options="[
+        { value: false, label: 'No specific requirement' },
+        { value: true, label: 'Other' }
+      ]"
       :error="error"
     />
 

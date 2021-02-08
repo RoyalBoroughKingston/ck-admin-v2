@@ -124,103 +124,103 @@
 </template>
 
 <script>
-  import http from '@/http';
-  import Form from '@/classes/Form';
+import http from "@/http";
+import Form from "@/classes/Form";
 
-  export default {
-    name: 'ShowReferral',
-    data() {
-      return {
-        loadingReferral: false,
-        loadingStatusUpdates: false,
-        referral: null,
-        statusUpdates: [],
-        currentPage: 1,
-        lastPage: 1,
-        statusOptions: [
-          { text: 'New', value: 'new' },
-          { text: 'In progress', value: 'in_progress' },
-          { text: 'Completed', value: 'completed' },
-          { text: 'Incomplete', value: 'incompleted' },
-        ],
-        form: new Form({
-          status: null,
-          comments: '',
-        }),
-      };
-    },
-    methods: {
-      fetchReferral() {
-        this.loadingReferral = true;
+export default {
+  name: "ShowReferral",
+  data() {
+    return {
+      loadingReferral: false,
+      loadingStatusUpdates: false,
+      referral: null,
+      statusUpdates: [],
+      currentPage: 1,
+      lastPage: 1,
+      statusOptions: [
+        { text: "New", value: "new" },
+        { text: "In progress", value: "in_progress" },
+        { text: "Completed", value: "completed" },
+        { text: "Incomplete", value: "incompleted" }
+      ],
+      form: new Form({
+        status: null,
+        comments: ""
+      })
+    };
+  },
+  methods: {
+    fetchReferral() {
+      this.loadingReferral = true;
 
-        http
-          .get(`/referrals/${this.$route.params.referral}`, {
-            params: {
-              include: 'service',
-            },
-          })
-          .then(({ data }) => {
-            this.referral = data.data;
-            this.form.status = this.referral.status;
-            this.loadingReferral = false;
-          });
-      },
-      fetchStatusUpdates() {
-        this.loadingStatusUpdates = true;
-
-        const config = {
+      http
+        .get(`/referrals/${this.$route.params.referral}`, {
           params: {
-            'filter[referral_id]': this.$route.params.referral,
-            include: 'user',
-          },
-        };
+            include: "service"
+          }
+        })
+        .then(({ data }) => {
+          this.referral = data.data;
+          this.form.status = this.referral.status;
+          this.loadingReferral = false;
+        });
+    },
+    fetchStatusUpdates() {
+      this.loadingStatusUpdates = true;
 
-        http.get('/status-updates', config).then(({ data }) => {
-          this.statusUpdates = data.data;
-          this.currentPage = data.meta.current_page;
-          this.lastPage = data.meta.last_page;
-          this.loadingStatusUpdates = false;
-        });
-      },
-      onNext() {
-        this.currentPage++;
-        this.fetchStatusUpdates();
-      },
-      onPrevious() {
-        this.currentPage--;
-        this.fetchStatusUpdates();
-      },
-      onSubmit() {
-        this.form.put(`/referrals/${this.referral.id}`).then(() => {
-          this.form.comments = '';
-          this.form.$errors.clear();
-          this.fetchReferral();
-          this.fetchStatusUpdates();
-        });
-      },
-      onDelete() {
-        this.$router.push({ name: 'referrals-index' });
-      },
-    },
-    filters: {
-      status(status) {
-        switch (status) {
-          case 'new':
-            return 'New';
-          case 'in_progress':
-            return 'In progress';
-          case 'completed':
-            return 'Completed';
-          case 'incompleted':
-            return 'Incomplete';
-          default:
-            return 'Invalid status';
+      const config = {
+        params: {
+          "filter[referral_id]": this.$route.params.referral,
+          include: "user"
         }
-      },
+      };
+
+      http.get("/status-updates", config).then(({ data }) => {
+        this.statusUpdates = data.data;
+        this.currentPage = data.meta.current_page;
+        this.lastPage = data.meta.last_page;
+        this.loadingStatusUpdates = false;
+      });
     },
-    created() {
-      this.fetchReferral();
+    onNext() {
+      this.currentPage++;
       this.fetchStatusUpdates();
     },
-  };
+    onPrevious() {
+      this.currentPage--;
+      this.fetchStatusUpdates();
+    },
+    onSubmit() {
+      this.form.put(`/referrals/${this.referral.id}`).then(() => {
+        this.form.comments = "";
+        this.form.$errors.clear();
+        this.fetchReferral();
+        this.fetchStatusUpdates();
+      });
+    },
+    onDelete() {
+      this.$router.push({ name: "referrals-index" });
+    }
+  },
+  filters: {
+    status(status) {
+      switch (status) {
+        case "new":
+          return "New";
+        case "in_progress":
+          return "In progress";
+        case "completed":
+          return "Completed";
+        case "incompleted":
+          return "Incomplete";
+        default:
+          return "Invalid status";
+      }
+    }
+  },
+  created() {
+    this.fetchReferral();
+    this.fetchStatusUpdates();
+  }
+};
 </script>

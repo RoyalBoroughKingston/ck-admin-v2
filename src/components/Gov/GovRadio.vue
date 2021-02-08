@@ -9,7 +9,7 @@
       type="radio"
       :value="value"
       :disabled="disabled"
-    >
+    />
     <gov-label class="govuk-radios__label" :for="id">{{ label }}</gov-label>
   </div>
 </template>
