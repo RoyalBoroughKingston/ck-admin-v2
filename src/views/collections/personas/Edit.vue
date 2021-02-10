@@ -61,65 +61,65 @@
 </template>
 
 <script>
-  import http from '@/http';
-  import Form from '@/classes/Form';
-  import CollectionForm from '@/views/collections/personas/forms/CollectionForm';
+import http from "@/http";
+import Form from "@/classes/Form";
+import CollectionForm from "@/views/collections/personas/forms/CollectionForm";
 
-  export default {
-    name: 'EditCollectionPersona',
-    components: { CollectionForm },
-    data() {
-      return {
-        loading: false,
-        collection: null,
-        form: null,
-      };
+export default {
+  name: "EditCollectionPersona",
+  components: { CollectionForm },
+  data() {
+    return {
+      loading: false,
+      collection: null,
+      form: null
+    };
+  },
+  methods: {
+    async fetchCollection() {
+      this.loading = true;
+
+      const response = await http.get(
+        `/collections/personas/${this.$route.params.collection}`
+      );
+      this.collection = response.data.data;
+      this.form = new Form({
+        name: this.collection.name,
+        subtitle: this.collection.subtitle,
+        intro: this.collection.intro,
+        order: this.collection.order,
+        sideboxes: this.collection.sideboxes,
+        category_taxonomies: this.collection.category_taxonomies.map(
+          taxonomy => taxonomy.id
+        ),
+        image_file_id: null
+      });
+
+      this.loading = false;
     },
-    methods: {
-      async fetchCollection() {
-        this.loading = true;
-
-        const response = await http.get(
-          `/collections/personas/${this.$route.params.collection}`
-        );
-        this.collection = response.data.data;
-        this.form = new Form({
-          name: this.collection.name,
-          subtitle: this.collection.subtitle,
-          intro: this.collection.intro,
-          order: this.collection.order,
-          sideboxes: this.collection.sideboxes,
-          category_taxonomies: this.collection.category_taxonomies.map(
-            (taxonomy) => taxonomy.id
-          ),
-          image_file_id: null,
-        });
-
-        this.loading = false;
-      },
-      async onSubmit() {
-        await this.form.put(
-          `/collections/personas/${this.collection.id}`,
-          (config, data) => {
-            // Unset the image field if not provided.
-            if (data.image_file_id === null) {
-              delete data.image_file_id;
-            }
-
-            // Set the image to null if explicitly removed.
-            if (data.image_file_id === false) {
-              data.image_file_id = null;
-            }
+    async onSubmit() {
+      await this.form.put(
+        `/collections/personas/${this.collection.id}`,
+        (config, data) => {
+          // Unset the image field if not provided.
+          if (data.image_file_id === null) {
+            delete data.image_file_id;
           }
-        );
-        this.$router.push({ name: 'admin-index-collections-personas' });
-      },
-      onDelete() {
-        this.$router.push({ name: 'admin-index-collections-personas' });
-      },
+
+          // Set the image to null if explicitly removed.
+          if (data.image_file_id === false) {
+            data.image_file_id = null;
+          }
+        }
+      );
+      this.$router.push({ name: "admin-index-collections-personas" });
     },
-    created() {
-      this.fetchCollection();
-    },
-  };
+    onDelete() {
+      this.$router.push({ name: "admin-index-collections-personas" });
+    }
+  },
+  created() {
+    this.fetchCollection();
+  }
+};
 </script>

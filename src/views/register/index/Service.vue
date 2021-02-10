@@ -68,7 +68,7 @@
 
               <ck-submit-error v-if="errors.any()">
                 <strong>Check for errors</strong>
-                <br><br>
+                <br /><br />
                 Errors may be on earlier sections of the form. You can navigate
                 to these by clicking ‘Back’
               </ck-submit-error>
@@ -117,18 +117,21 @@ export default {
         { id: "who-for", heading: "Who is it for?", active: false },
         { id: "description", heading: "Description", active: false }
       ]
-    }
+    };
   },
 
   methods: {
     onInput(field, value) {
-      this.$emit('input', Object.assign(this.form, {
-        service: {
-          ...this.form.service,
-          [field]: value
-        }
-      }));
-      this.$emit('clear', `service.${field}`);
+      this.$emit(
+        "input",
+        Object.assign(this.form, {
+          service: {
+            ...this.form.service,
+            [field]: value
+          }
+        })
+      );
+      this.$emit("clear", `service.${field}`);
     },
 
     onTabChange({ index }) {

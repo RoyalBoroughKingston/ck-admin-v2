@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <ck-text-input
       :value="address_line_1"
       @input="onInput('address_line_1', $event)"
@@ -66,13 +65,18 @@
 
     <gov-section-break size="l" />
 
-    <gov-form-group :invalid="errors.has('has_induction_loop') || errors.has('has_wheelchair_access')">
+    <gov-form-group
+      :invalid="
+        errors.has('has_induction_loop') || errors.has('has_wheelchair_access')
+      "
+    >
       <gov-fieldset-legend size="xl">
         <gov-heading size="m">Accessibility information</gov-heading>
       </gov-fieldset-legend>
-      <gov-body>Select which accessibility requirements the building meets</gov-body>
+      <gov-body
+        >Select which accessibility requirements the building meets</gov-body
+      >
       <gov-checkboxes>
-
         <gov-checkbox
           :value="has_induction_loop"
           @input="onInput('has_induction_loop', $event)"
@@ -98,7 +102,6 @@
           v-text="errors.get('has_wheelchair_access')"
           for="has_wheelchair_access"
         />
-
       </gov-checkboxes>
     </gov-form-group>
 
@@ -107,9 +110,10 @@
       id="image"
       label="Location image"
       accept="image/x-png"
-      :existing-url="id ? apiUrl(`/locations/${id}/image.png?v=${now}`) : undefined"
+      :existing-url="
+        id ? apiUrl(`/locations/${id}/image.png?v=${now}`) : undefined
+      "
     />
-
   </div>
 </template>
 

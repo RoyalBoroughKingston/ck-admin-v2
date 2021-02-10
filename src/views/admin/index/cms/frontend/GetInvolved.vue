@@ -54,7 +54,7 @@ export default {
       frontend.get_involved[field] = value;
 
       this.$emit("input", frontend);
-      this.$emit("clear", `frontend.get_involved.${field}`)
+      this.$emit("clear", `frontend.get_involved.${field}`);
     }
   }
 };

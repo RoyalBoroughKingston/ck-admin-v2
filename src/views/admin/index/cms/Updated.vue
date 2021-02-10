@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  export default {
-    name: 'CmsUpdated',
-  };
+export default {
+  name: "CmsUpdated"
+};
 </script>

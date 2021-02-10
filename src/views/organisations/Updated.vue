@@ -11,7 +11,7 @@
       <gov-back-link
         :to="{
           name: 'organisations-show',
-          params: { organisation: organisation.id },
+          params: { organisation: organisation.id }
         }"
         >Back to organisation</gov-back-link
       >
@@ -28,7 +28,7 @@
             <gov-button
               :to="{
                 name: 'organisations-show',
-                params: { organisation: this.$route.params.organisation },
+                params: { organisation: this.$route.params.organisation }
               }"
               >Back to organisation</gov-button
             >
@@ -40,28 +40,28 @@
 </template>
 
 <script>
-  import http from '@/http';
+import http from "@/http";
 
-  export default {
-    name: 'OrganisationUpdated',
-    data() {
-      return {
-        loading: false,
-        organisation: null,
-      };
-    },
-    methods: {
-      async fetchOrganisation() {
-        this.loading = true;
-        const response = await http.get(
-          `/organisations/${this.$route.params.organisation}`
-        );
-        this.organisation = response.data.data;
-        this.loading = false;
-      },
-    },
-    created() {
-      this.fetchOrganisation();
-    },
-  };
+export default {
+  name: "OrganisationUpdated",
+  data() {
+    return {
+      loading: false,
+      organisation: null
+    };
+  },
+  methods: {
+    async fetchOrganisation() {
+      this.loading = true;
+      const response = await http.get(
+        `/organisations/${this.$route.params.organisation}`
+      );
+      this.organisation = response.data.data;
+      this.loading = false;
+    }
+  },
+  created() {
+    this.fetchOrganisation();
+  }
+};
 </script>

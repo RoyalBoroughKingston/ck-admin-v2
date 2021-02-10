@@ -6,7 +6,6 @@
       :invalid="errors.has('roles')"
     >
       <gov-inset-text>
-
         <gov-error-message
           v-if="errors.has(`roles.${index}`)"
           v-text="errors.get(`roles.${index}`)"
@@ -42,11 +41,15 @@
 
           <template v-if="showServiceSelect(index)">
             <!-- Service -->
-            <gov-form-group v-if="!services.hasOwnProperty(roles[index].organisation_id)">
+            <gov-form-group
+              v-if="!services.hasOwnProperty(roles[index].organisation_id)"
+            >
               Select an organisation
             </gov-form-group>
-            <gov-form-group v-else-if="services[roles[index].organisation_id].loading">
-              <ck-loader  />
+            <gov-form-group
+              v-else-if="services[roles[index].organisation_id].loading"
+            >
+              <ck-loader />
             </gov-form-group>
             <ck-select-input
               v-else
@@ -59,13 +62,11 @@
             />
             <!-- /Service -->
           </template>
-
         </template>
 
         <gov-section-break size="m" />
 
         <gov-button @click="onRemovePermission(index)" error>Remove</gov-button>
-
       </gov-inset-text>
     </gov-form-group>
 

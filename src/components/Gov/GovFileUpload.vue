@@ -7,7 +7,7 @@
     type="file"
     ref="file"
     :aria-describedby="ariaDescribedBy"
-  >
+  />
 </template>
 
 <script>

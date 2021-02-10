@@ -20,15 +20,15 @@
 </template>
 
 <script>
-  export default {
-    name: 'ShowReferralConfirmation',
-    methods: {
-      onContinue() {
-        this.$router.push({
-          name: 'referrals-show',
-          params: { referral: this.$route.params.referral },
-        });
-      },
-    },
-  };
+export default {
+  name: "ShowReferralConfirmation",
+  methods: {
+    onContinue() {
+      this.$router.push({
+        name: "referrals-show",
+        params: { referral: this.$route.params.referral }
+      });
+    }
+  }
+};
 </script>

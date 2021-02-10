@@ -1,7 +1,5 @@
 <template>
-  <div class="ck-character-count">
-    {{ count }}/{{ maxLength }}
-  </div>
+  <div class="ck-character-count">{{ count }}/{{ maxLength }}</div>
 </template>
 
 <script>
@@ -21,7 +19,6 @@ export default {
   }
 };
 </script>
-
 
 <style lang="scss">
 @import "../../scss/app.scss";

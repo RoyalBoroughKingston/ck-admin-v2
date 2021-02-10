@@ -1,10 +1,10 @@
 <template>
-  <div
-    class="ck-wysiwyg"
-    :class="{ 'ck-wysiwyg--lg': large }"
-  >
+  <div class="ck-wysiwyg" :class="{ 'ck-wysiwyg--lg': large }">
     <editor-menu-bar class="ck-wysiwyg__toolbar" :editor="editor">
-      <div class="ck-wysiwyg__toolbar-buttons-wrapper" slot-scope="{ commands, isActive }">
+      <div
+        class="ck-wysiwyg__toolbar-buttons-wrapper"
+        slot-scope="{ commands, isActive }"
+      >
         <gov-button
           v-if="isActive.bold"
           class="ck-wysiwyg__toolbar-button"
@@ -100,7 +100,7 @@ import {
   ListItem,
   Bold,
   Italic,
-  Link,
+  Link
 } from "tiptap-extensions";
 
 export default {
@@ -108,7 +108,7 @@ export default {
 
   components: {
     EditorMenuBar,
-    EditorContent,
+    EditorContent
   },
 
   props: {
@@ -136,7 +136,7 @@ export default {
           new ListItem(),
           new Bold(),
           new Italic(),
-          new Link(),
+          new Link()
         ];
       }
     }
@@ -144,7 +144,7 @@ export default {
 
   data() {
     return {
-      editor: null,
+      editor: null
     };
   },
 
@@ -154,7 +154,7 @@ export default {
       content: this.toHtml(this.value),
       onUpdate: ({ getHTML }) => {
         this.onEdit(getHTML());
-      },
+      }
     });
   },
 
@@ -169,19 +169,19 @@ export default {
     },
 
     promptUrl() {
-      return window.prompt('Please enter a URL');
-    },
+      return window.prompt("Please enter a URL");
+    }
   },
 
   mounted() {
-    const element = document.createElement('div');
+    const element = document.createElement("div");
     element.innerHTML = this.editor.getHTML();
     this.$emit("count", element.textContent.length);
   },
 
   beforeDestroy() {
     this.editor.destroy();
-  },
+  }
 };
 </script>
 

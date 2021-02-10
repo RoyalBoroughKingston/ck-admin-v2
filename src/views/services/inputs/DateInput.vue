@@ -30,11 +30,7 @@
       placeholder="YYYYY"
     />
 
-    <gov-error-message
-      v-if="error"
-      v-text="error"
-      :for="id"
-    />
+    <gov-error-message v-if="error" v-text="error" :for="id" />
   </gov-form-group>
 </template>
 

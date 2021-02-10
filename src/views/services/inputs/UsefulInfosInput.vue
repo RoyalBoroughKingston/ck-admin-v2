@@ -1,6 +1,9 @@
 <template>
   <div>
-    <gov-inset-text v-for="(usefulInfo, index) in usefulInfos" :key="usefulInfo.index">
+    <gov-inset-text
+      v-for="(usefulInfo, index) in usefulInfos"
+      :key="usefulInfo.index"
+    >
       <ck-select-input
         :value="usefulInfo.title"
         @input="onTitleInput({ index, value: $event })"
@@ -67,7 +70,7 @@ export default {
         { text: "Additional information", value: "Additional information" }
       ],
       usefulInfosIndex: 1,
-      extensions: [new Link()],
+      extensions: [new Link()]
     };
   },
   methods: {

@@ -1,39 +1,33 @@
 <template>
   <gov-form-group :invalid="error !== null">
+    <gov-label :for="id" class="govuk-!-font-weight-bold">
+      <slot name="label">{{ label }}</slot>
+    </gov-label>
 
-      <gov-label :for="id" class="govuk-!-font-weight-bold">
-        <slot name="label">{{ label }}</slot>
-      </gov-label>
+    <slot name="hint">
+      <gov-hint v-if="hint" :for="id" v-text="hint" />
+    </slot>
 
-      <slot name="hint">
-        <gov-hint v-if="hint" :for="id" v-text="hint" />
-      </slot>
-
-      <ck-character-count-group>
-        <gov-textarea
-          :value="value"
-          @input="$emit('input', $event)"
-          :id="id"
-          :name="id"
-          :rows="rows"
-          :maxlength="maxlength"
-        />
-        <ck-character-count
-          v-if="maxlength"
-          :count="value.length"
-          :max-length="maxlength"
-        />
-      </ck-character-count-group>
-
-      <slot name="after-input" />
-
-      <gov-error-message
-        v-if="error !== null"
-        v-text="error"
-        :for="id"
+    <ck-character-count-group>
+      <gov-textarea
+        :value="value"
+        @input="$emit('input', $event)"
+        :id="id"
+        :name="id"
+        :rows="rows"
+        :maxlength="maxlength"
       />
+      <ck-character-count
+        v-if="maxlength"
+        :count="value.length"
+        :max-length="maxlength"
+      />
+    </ck-character-count-group>
 
-    </gov-form-group>
+    <slot name="after-input" />
+
+    <gov-error-message v-if="error !== null" v-text="error" :for="id" />
+  </gov-form-group>
 </template>
 
 <script>

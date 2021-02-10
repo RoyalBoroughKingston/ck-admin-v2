@@ -389,8 +389,7 @@ let router = new Router({
             {
               path: "frontend/banner",
               name: "admin-index-cms-frontend-banner",
-              component: () =>
-                import("@/views/admin/index/cms/frontend/Banner")
+              component: () => import("@/views/admin/index/cms/frontend/Banner")
             }
           ]
         },

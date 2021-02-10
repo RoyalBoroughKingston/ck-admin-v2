@@ -23,21 +23,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'ReportsPage',
-    data() {
-      return {
-        tabs: [
-          {
-            heading: 'View all',
-            to: { name: 'reports-index' },
-          },
-          {
-            heading: 'Manage',
-            to: { name: 'reports-edit' },
-          },
-        ],
-      };
-    },
-  };
+export default {
+  name: "ReportsPage",
+  data() {
+    return {
+      tabs: [
+        {
+          heading: "View all",
+          to: { name: "reports-index" }
+        },
+        {
+          heading: "Manage",
+          to: { name: "reports-edit" }
+        }
+      ]
+    };
+  }
+};
 </script>

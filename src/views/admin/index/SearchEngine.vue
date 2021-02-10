@@ -9,21 +9,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'ListSearchEngine',
-    data() {
-      return {
-        tabs: [
-          {
-            heading: 'Thesaurus',
-            to: { name: 'admin-index-search-engine' },
-          },
-          {
-            heading: 'Stop words',
-            to: { name: 'admin-index-search-engine-stop-words' },
-          },
-        ],
-      };
-    },
-  };
+export default {
+  name: "ListSearchEngine",
+  data() {
+    return {
+      tabs: [
+        {
+          heading: "Thesaurus",
+          to: { name: "admin-index-search-engine" }
+        },
+        {
+          heading: "Stop words",
+          to: { name: "admin-index-search-engine-stop-words" }
+        }
+      ]
+    };
+  }
+};
 </script>

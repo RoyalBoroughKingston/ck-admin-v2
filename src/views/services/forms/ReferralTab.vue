@@ -107,7 +107,7 @@
           label="Show referral disclaimer?"
           :options="[
             { value: true, label: 'Display' },
-            { value: false, label: 'Don\'t display' },
+            { value: false, label: 'Don\'t display' }
           ]"
           :error="errors.get('show_referral_disclaimer')"
           :disabled="!isSuperAdmin"
@@ -120,120 +120,120 @@
 </template>
 
 <script>
-  export default {
-    name: 'ReferralTab',
-    props: {
-      errors: {
-        required: true,
-      },
-      isGlobalAdmin: {
-        required: true,
-        type: Boolean,
-      },
-      isSuperAdmin: {
-        required: true,
-        type: Boolean,
-      },
-      originalData: {
-        required: false,
-        type: Object,
-      },
-      type: {
-        required: true,
-        type: String,
-      },
-      show_referral_disclaimer: {
-        required: true,
-      },
-      referral_method: {
-        required: true,
-      },
-      referral_button_text: {
-        required: true,
-      },
-      referral_email: {
-        required: true,
-      },
-      referral_url: {
-        required: true,
-      },
+export default {
+  name: "ReferralTab",
+  props: {
+    errors: {
+      required: true
     },
-    computed: {
-      referralMethodOptions() {
-        return [
-          { text: 'Please select', value: null, disabled: true },
-          { text: 'Yes - Through One Hounslow Connect', value: 'internal' },
-          { text: 'Yes - Through an external form', value: 'external' },
-          {
-            text: `No - This ${this.type} doesn’t accept referrals`,
-            value: 'none',
-          },
-        ];
-      },
-      referralIsInternalOrExternal() {
-        return this.referral_method !== null && this.referral_method !== 'none';
-      },
-      contactAdminTeamEmail() {
-        const to = 'onehounslowconnect@hounslow.gov.uk';
-        const subject = `Turn referrals on for my ${this.type}`;
-        const body = `${this.$options.filters.ucfirst(
-          this.type
-        )} Name: XXX\n\nWe are interested in finding out more about accepting referrals through One Hounslow Connect.`;
-
-        return `mailto:${to}?subject=${encodeURIComponent(
-          subject
-        )}&body=${encodeURIComponent(body)}`;
-      },
+    isGlobalAdmin: {
+      required: true,
+      type: Boolean
     },
-    watch: {
-      referral_method(newReferralMethod, oldReferralMethod) {
-        if (newReferralMethod === null || newReferralMethod === 'none') {
-          this.$emit('update:referral_button_text', '');
-          this.$emit('update:referral_email', '');
-          this.$emit('update:referral_url', '');
-          this.$emit('update:show_referral_disclaimer', false);
-
-          this.$emit('clear', 'referral_button_text');
-          this.$emit('clear', 'referral_email');
-          this.$emit('clear', 'referral_url');
-          this.$emit('clear', 'show_referral_disclaimer');
+    isSuperAdmin: {
+      required: true,
+      type: Boolean
+    },
+    originalData: {
+      required: false,
+      type: Object
+    },
+    type: {
+      required: true,
+      type: String
+    },
+    show_referral_disclaimer: {
+      required: true
+    },
+    referral_method: {
+      required: true
+    },
+    referral_button_text: {
+      required: true
+    },
+    referral_email: {
+      required: true
+    },
+    referral_url: {
+      required: true
+    }
+  },
+  computed: {
+    referralMethodOptions() {
+      return [
+        { text: "Please select", value: null, disabled: true },
+        { text: "Yes - Through One Hounslow Connect", value: "internal" },
+        { text: "Yes - Through an external form", value: "external" },
+        {
+          text: `No - This ${this.type} doesn’t accept referrals`,
+          value: "none"
         }
+      ];
+    },
+    referralIsInternalOrExternal() {
+      return this.referral_method !== null && this.referral_method !== "none";
+    },
+    contactAdminTeamEmail() {
+      const to = "onehounslowconnect@hounslow.gov.uk";
+      const subject = `Turn referrals on for my ${this.type}`;
+      const body = `${this.$options.filters.ucfirst(
+        this.type
+      )} Name: XXX\n\nWe are interested in finding out more about accepting referrals through One Hounslow Connect.`;
 
-        if (newReferralMethod !== 'internal') {
-          this.$emit('update:referral_email', '');
+      return `mailto:${to}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+    }
+  },
+  watch: {
+    referral_method(newReferralMethod, oldReferralMethod) {
+      if (newReferralMethod === null || newReferralMethod === "none") {
+        this.$emit("update:referral_button_text", "");
+        this.$emit("update:referral_email", "");
+        this.$emit("update:referral_url", "");
+        this.$emit("update:show_referral_disclaimer", false);
 
-          this.$emit('clear', 'referral_email');
-        }
+        this.$emit("clear", "referral_button_text");
+        this.$emit("clear", "referral_email");
+        this.$emit("clear", "referral_url");
+        this.$emit("clear", "show_referral_disclaimer");
+      }
 
-        if (newReferralMethod !== 'external') {
-          this.$emit('update:referral_url', '');
+      if (newReferralMethod !== "internal") {
+        this.$emit("update:referral_email", "");
 
-          this.$emit('clear', 'referral_url');
-        }
+        this.$emit("clear", "referral_email");
+      }
 
-        if (
-          (oldReferralMethod === null || oldReferralMethod === 'none') &&
-          newReferralMethod !== null &&
-          newReferralMethod !== 'none'
-        ) {
-          if (this.originalData === undefined) {
-            // Create service.
-            this.$emit('update:show_referral_disclaimer', true);
+      if (newReferralMethod !== "external") {
+        this.$emit("update:referral_url", "");
+
+        this.$emit("clear", "referral_url");
+      }
+
+      if (
+        (oldReferralMethod === null || oldReferralMethod === "none") &&
+        newReferralMethod !== null &&
+        newReferralMethod !== "none"
+      ) {
+        if (this.originalData === undefined) {
+          // Create service.
+          this.$emit("update:show_referral_disclaimer", true);
+        } else {
+          // Edit service.
+          if (
+            this.originalData.referral_method !== "none" &&
+            this.originalData.show_referral_disclaimer === false
+          ) {
+            this.$emit("update:show_referral_disclaimer", false);
           } else {
-            // Edit service.
-            if (
-              this.originalData.referral_method !== 'none' &&
-              this.originalData.show_referral_disclaimer === false
-            ) {
-              this.$emit('update:show_referral_disclaimer', false);
-            } else {
-              this.$emit('update:show_referral_disclaimer', true);
-            }
+            this.$emit("update:show_referral_disclaimer", true);
           }
-
-          this.$emit('clear', 'show_referral_disclaimer');
         }
-      },
-    },
-  };
+
+        this.$emit("clear", "show_referral_disclaimer");
+      }
+    }
+  }
+};
 </script>

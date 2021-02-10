@@ -5,7 +5,8 @@
   <gov-form-group v-else>
     <gov-checkboxes :invalid="error">
       <gov-checkbox
-        v-for="taxonomy in taxonomies" :key="taxonomy.id"
+        v-for="taxonomy in taxonomies"
+        :key="taxonomy.id"
         :value="value.includes(taxonomy.id)"
         @input="onInput({ taxonomy, enabled: $event })"
         :id="taxonomy.id"
@@ -13,11 +14,11 @@
         :label="taxonomy.name"
         :disabled="disabled"
       >
-
         <!-- Level: 2 -->
         <gov-checkbox
           class="govuk-checkboxes__item--nested"
-          v-for="taxonomy in taxonomy.children" :key="taxonomy.id"
+          v-for="taxonomy in taxonomy.children"
+          :key="taxonomy.id"
           :value="value.includes(taxonomy.id)"
           @input="onInput({ taxonomy, enabled: $event })"
           :id="taxonomy.id"
@@ -25,11 +26,11 @@
           :label="taxonomy.name"
           :disabled="disabled"
         >
-
           <!-- Level: 3 -->
           <gov-checkbox
             class="govuk-checkboxes__item--nested"
-            v-for="taxonomy in taxonomy.children" :key="taxonomy.id"
+            v-for="taxonomy in taxonomy.children"
+            :key="taxonomy.id"
             :value="value.includes(taxonomy.id)"
             @input="onInput({ taxonomy, enabled: $event })"
             :id="taxonomy.id"
@@ -37,11 +38,11 @@
             :label="taxonomy.name"
             :disabled="disabled"
           >
-
             <!-- Level: 4 -->
             <gov-checkbox
               class="govuk-checkboxes__item--nested"
-              v-for="taxonomy in taxonomy.children" :key="taxonomy.id"
+              v-for="taxonomy in taxonomy.children"
+              :key="taxonomy.id"
               :value="value.includes(taxonomy.id)"
               @input="onInput({ taxonomy, enabled: $event })"
               :id="taxonomy.id"
@@ -49,11 +50,11 @@
               :label="taxonomy.name"
               :disabled="disabled"
             >
-
               <!-- Level: 5 -->
               <gov-checkbox
                 class="govuk-checkboxes__item--nested"
-                v-for="taxonomy in taxonomy.children" :key="taxonomy.id"
+                v-for="taxonomy in taxonomy.children"
+                :key="taxonomy.id"
                 :value="value.includes(taxonomy.id)"
                 @input="onInput({ taxonomy, enabled: $event })"
                 :id="taxonomy.id"
@@ -61,11 +62,11 @@
                 :label="taxonomy.name"
                 :disabled="disabled"
               >
-
                 <!-- Level: 6 -->
                 <gov-checkbox
                   class="govuk-checkboxes__item--nested"
-                  v-for="taxonomy in taxonomy.children" :key="taxonomy.id"
+                  v-for="taxonomy in taxonomy.children"
+                  :key="taxonomy.id"
                   :value="value.includes(taxonomy.id)"
                   @input="onInput({ taxonomy, enabled: $event })"
                   :id="taxonomy.id"
@@ -74,27 +75,18 @@
                   :disabled="disabled"
                 />
                 <!-- /Level: 6 -->
-
               </gov-checkbox>
               <!-- /Level: 5 -->
-
             </gov-checkbox>
             <!-- /Level: 4 -->
-
           </gov-checkbox>
           <!-- /Level: 3 -->
-
         </gov-checkbox>
         <!-- /Level: 2 -->
-
       </gov-checkbox>
     </gov-checkboxes>
 
-    <gov-error-message
-      v-if="error"
-      v-text="error"
-      for="category_taxonomies"
-    />
+    <gov-error-message v-if="error" v-text="error" for="category_taxonomies" />
   </gov-form-group>
   <!-- /Level: 1 -->
 </template>
