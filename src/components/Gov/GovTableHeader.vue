@@ -1,5 +1,9 @@
 <template>
-  <th @click="$emit('click')" class="govuk-table__header" :class="computedClasses">
+  <th
+    @click="$emit('click')"
+    class="govuk-table__header"
+    :class="computedClasses"
+  >
     <slot />
   </th>
 </template>

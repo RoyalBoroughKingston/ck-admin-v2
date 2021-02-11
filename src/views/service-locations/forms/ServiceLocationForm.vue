@@ -48,15 +48,27 @@
           :country="country"
           :has_induction_loop="has_induction_loop"
           :has_wheelchair_access="has_wheelchair_access"
-          @update:address_line_1="onLocationInput({ field: 'address_line_1', value: $event })"
-          @update:address_line_2="onLocationInput({ field: 'address_line_2', value: $event })"
-          @update:address_line_3="onLocationInput({ field: 'address_line_3', value: $event })"
+          @update:address_line_1="
+            onLocationInput({ field: 'address_line_1', value: $event })
+          "
+          @update:address_line_2="
+            onLocationInput({ field: 'address_line_2', value: $event })
+          "
+          @update:address_line_3="
+            onLocationInput({ field: 'address_line_3', value: $event })
+          "
           @update:city="onLocationInput({ field: 'city', value: $event })"
           @update:county="onLocationInput({ field: 'county', value: $event })"
-          @update:postcode="onLocationInput({ field: 'postcode', value: $event })"
+          @update:postcode="
+            onLocationInput({ field: 'postcode', value: $event })
+          "
           @update:country="onLocationInput({ field: 'country', value: $event })"
-          @update:has_induction_loop="onLocationInput({ field: 'has_induction_loop', value: $event })"
-          @update:has_wheelchair_access="onLocationInput({ field: 'has_wheelchair_access', value: $event })"
+          @update:has_induction_loop="
+            onLocationInput({ field: 'has_induction_loop', value: $event })
+          "
+          @update:has_wheelchair_access="
+            onLocationInput({ field: 'has_wheelchair_access', value: $event })
+          "
           @clear="$emit('clear-location', $event)"
         />
       </gov-inset-text>
@@ -71,7 +83,13 @@
     >
       <ck-select-input
         :value="regularOpeningHour.frequency"
-        @input="onRegularOpeningHourInput({ index, field: 'frequency', value: $event })"
+        @input="
+          onRegularOpeningHourInput({
+            index,
+            field: 'frequency',
+            value: $event
+          })
+        "
         :id="`regular_opening_hours.${index}.frequency`"
         label="Frequency type"
         :options="frequencies"
@@ -79,9 +97,15 @@
       />
 
       <ck-select-input
-        v-if="['weekly', 'nth_occurrence_of_month'].includes(regularOpeningHour.frequency)"
+        v-if="
+          ['weekly', 'nth_occurrence_of_month'].includes(
+            regularOpeningHour.frequency
+          )
+        "
         :value="regularOpeningHour.weekday"
-        @input="onRegularOpeningHourInput({ index, field: 'weekday', value: $event })"
+        @input="
+          onRegularOpeningHourInput({ index, field: 'weekday', value: $event })
+        "
         :id="`regular_opening_hours.${index}.weekday`"
         label="Weekday"
         :options="weekdays"
@@ -91,7 +115,13 @@
       <ck-select-input
         v-if="regularOpeningHour.frequency === 'monthly'"
         :value="regularOpeningHour.day_of_month"
-        @input="onRegularOpeningHourInput({ index, field: 'day_of_month', value: $event })"
+        @input="
+          onRegularOpeningHourInput({
+            index,
+            field: 'day_of_month',
+            value: $event
+          })
+        "
         :id="`regular_opening_hours.${index}.day_of_month`"
         label="Day of month"
         :options="daysInMonth"
@@ -101,17 +131,31 @@
       <ck-select-input
         v-if="regularOpeningHour.frequency === 'nth_occurrence_of_month'"
         :value="regularOpeningHour.occurrence_of_month"
-        @input="onRegularOpeningHourInput({ index, field: 'occurrence_of_month', value: $event })"
+        @input="
+          onRegularOpeningHourInput({
+            index,
+            field: 'occurrence_of_month',
+            value: $event
+          })
+        "
         :id="`regular_opening_hours.${index}.occurrence_of_month`"
         label="Occurrence in month"
         :options="occurrences"
-        :error="errors.get(`regular_opening_hours.${index}.occurrence_of_month`)"
+        :error="
+          errors.get(`regular_opening_hours.${index}.occurrence_of_month`)
+        "
       />
 
       <date-input
         v-if="regularOpeningHour.frequency === 'fortnightly'"
         :value="regularOpeningHour.starts_at"
-        @input="onRegularOpeningHourInput({ index, field: 'starts_at', value: $event })"
+        @input="
+          onRegularOpeningHourInput({
+            index,
+            field: 'starts_at',
+            value: $event
+          })
+        "
         :id="`regular_opening_hours.${index}.starts_at`"
         label="Starting date"
         :error="errors.get(`regular_opening_hours.${index}.starts_at`)"
@@ -121,18 +165,33 @@
         :id="`regular_opening_hours.${index}`"
         :opens_at="regularOpeningHour.opens_at"
         :closes_at="regularOpeningHour.closes_at"
-        @update:opens_at="onRegularOpeningHourInput({ index, field: 'opens_at', value: $event })"
-        @update:closes_at="onRegularOpeningHourInput({ index, field: 'closes_at', value: $event })"
-        :error="errors.get([`regular_opening_hours.${index}.opens_at`, `regular_opening_hours.${index}.closes_at`])"
+        @update:opens_at="
+          onRegularOpeningHourInput({ index, field: 'opens_at', value: $event })
+        "
+        @update:closes_at="
+          onRegularOpeningHourInput({
+            index,
+            field: 'closes_at',
+            value: $event
+          })
+        "
+        :error="
+          errors.get([
+            `regular_opening_hours.${index}.opens_at`,
+            `regular_opening_hours.${index}.closes_at`
+          ])
+        "
       />
 
-      <gov-button @click="onDeleteRegularOpeningHour(index)" error>Delete day</gov-button>
+      <gov-button @click="onDeleteRegularOpeningHour(index)" error
+        >Delete day</gov-button
+      >
     </gov-inset-text>
 
     <gov-button @click="onAddRegularOpeningHour(index)">
       <template v-if="regular_opening_hours.length === 0">Add day</template>
-      <template v-else>Add another day</template>
-    </gov-button>&nbsp;<!--
+      <template v-else>Add another day</template> </gov-button
+    >&nbsp;<!--
  --><gov-button @click="onAddWeekdays()">
       Add weekdays
     </gov-button>
@@ -146,14 +205,26 @@
     >
       <is-closed-input
         :value="holidayOpeningHour.is_closed"
-        @input="onHolidayOpeningHourInput({ index, field: 'is_closed', value: $event })"
+        @input="
+          onHolidayOpeningHourInput({
+            index,
+            field: 'is_closed',
+            value: $event
+          })
+        "
         :id="`holiday_opening_hours.${index}.is_closed`"
         :error="errors.get(`holiday_opening_hours.${index}.is_closed`)"
       />
 
       <date-input
         :value="holidayOpeningHour.starts_at"
-        @input="onHolidayOpeningHourInput({ index, field: 'starts_at', value: $event })"
+        @input="
+          onHolidayOpeningHourInput({
+            index,
+            field: 'starts_at',
+            value: $event
+          })
+        "
         :id="`holiday_opening_hours.${index}.starts_at`"
         label="Starting date"
         :error="errors.get(`holiday_opening_hours.${index}.starts_at`)"
@@ -161,7 +232,9 @@
 
       <date-input
         :value="holidayOpeningHour.ends_at"
-        @input="onHolidayOpeningHourInput({ index, field: 'ends_at', value: $event })"
+        @input="
+          onHolidayOpeningHourInput({ index, field: 'ends_at', value: $event })
+        "
         :id="`holiday_opening_hours.${index}.ends_at`"
         label="Ending date"
         :error="errors.get(`holiday_opening_hours.${index}.ends_at`)"
@@ -172,16 +245,33 @@
         :id="`holiday_opening_hours.${index}`"
         :opens_at="holidayOpeningHour.opens_at"
         :closes_at="holidayOpeningHour.closes_at"
-        @update:opens_at="onHolidayOpeningHourInput({ index, field: 'opens_at', value: $event })"
-        @update:closes_at="onHolidayOpeningHourInput({ index, field: 'closes_at', value: $event })"
-        :error="errors.get([`holiday_opening_hours.${index}.opens_at`, `holiday_opening_hours.${index}.closes_at`])"
+        @update:opens_at="
+          onHolidayOpeningHourInput({ index, field: 'opens_at', value: $event })
+        "
+        @update:closes_at="
+          onHolidayOpeningHourInput({
+            index,
+            field: 'closes_at',
+            value: $event
+          })
+        "
+        :error="
+          errors.get([
+            `holiday_opening_hours.${index}.opens_at`,
+            `holiday_opening_hours.${index}.closes_at`
+          ])
+        "
       />
 
-      <gov-button @click="onDeleteHolidayOpeningHour(index)" error>Delete holiday times</gov-button>
+      <gov-button @click="onDeleteHolidayOpeningHour(index)" error
+        >Delete holiday times</gov-button
+      >
     </gov-inset-text>
 
     <gov-button @click="onAddHolidayOpeningHour(index)">
-      <template v-if="holiday_opening_hours.length === 0">Add holiday times</template>
+      <template v-if="holiday_opening_hours.length === 0"
+        >Add holiday times</template
+      >
       <template v-else>Add more holiday times</template>
     </gov-button>
     <!-- /Holiday opening hours -->
@@ -191,7 +281,9 @@
       id="image"
       label="Service location image"
       accept="image/x-png"
-      :existing-url="id ? apiUrl(`/service-locations/${id}/image.png?v=${now}`) : undefined"
+      :existing-url="
+        id ? apiUrl(`/service-locations/${id}/image.png?v=${now}`) : undefined
+      "
     />
   </div>
 </template>
@@ -372,9 +464,7 @@ export default {
       this.locations = await this.fetchAll("/locations");
       this.locations = this.locations.map(location => {
         return {
-          text: `${location.address_line_1}, ${location.city}, ${
-            location.postcode
-          }`,
+          text: `${location.address_line_1}, ${location.city}, ${location.postcode}`,
           value: location.id
         };
       });
@@ -387,9 +477,7 @@ export default {
     },
     appendLocation(location) {
       this.locations.push({
-        text: `${location.address_line_1}, ${location.city}, ${
-          location.postcode
-        }`,
+        text: `${location.address_line_1}, ${location.city}, ${location.postcode}`,
         value: location.id
       });
     },

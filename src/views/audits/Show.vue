@@ -24,30 +24,30 @@
 </template>
 
 <script>
-  import http from '@/http';
-  import CkAuditDetails from '@/components/CkAuditDetails';
+import http from "@/http";
+import CkAuditDetails from "@/components/CkAuditDetails";
 
-  export default {
-    name: 'ShowAudit',
-    components: { CkAuditDetails },
-    data() {
-      return {
-        loading: false,
-        audit: null,
-      };
-    },
-    methods: {
-      async fetchAudit() {
-        this.loading = true;
-        const { data } = await http.get(
-          `/audits/${this.$route.params.audit}?include=user`
-        );
-        this.audit = data.data;
-        this.loading = false;
-      },
-    },
-    created() {
-      this.fetchAudit();
-    },
-  };
+export default {
+  name: "ShowAudit",
+  components: { CkAuditDetails },
+  data() {
+    return {
+      loading: false,
+      audit: null
+    };
+  },
+  methods: {
+    async fetchAudit() {
+      this.loading = true;
+      const { data } = await http.get(
+        `/audits/${this.$route.params.audit}?include=user`
+      );
+      this.audit = data.data;
+      this.loading = false;
+    }
+  },
+  created() {
+    this.fetchAudit();
+  }
+};
 </script>

@@ -12,29 +12,42 @@
         <!-- Age group -->
         <criteria-input
           :value="age_group"
-          @input="$emit('update:age_group', $event); $emit('clear', 'criteria.age_group')"
+          @input="
+            $emit('update:age_group', $event);
+            $emit('clear', 'criteria.age_group');
+          "
           :error="errors.get('criteria.age_group')"
           id="criteria.age_group"
           label="Age of service user (if applicable)"
-          :hint="`E.g “This ${type} is for people 16+” or “This ${type} is aimed at people nearing retirement”`"
+          :hint="
+            `E.g “This ${type} is for people 16+” or “This ${type} is aimed at people nearing retirement”`
+          "
         />
         <!-- /Age group -->
 
         <!-- Disability -->
         <criteria-input
           :value="disability"
-          @input="$emit('update:disability', $event); $emit('clear', 'criteria.disability')"
+          @input="
+            $emit('update:disability', $event);
+            $emit('clear', 'criteria.disability');
+          "
           :error="errors.get('criteria.disability')"
           id="criteria.disability"
           label="Disability Requirements / Restrictions (if applicable)"
-          :hint='`e.g. "This ${type} is for those with MS and their carers", or "For all people with disabilities and their carers"`'
+          :hint="
+            `e.g. &quot;This ${type} is for those with MS and their carers&quot;, or &quot;For all people with disabilities and their carers&quot;`
+          "
         />
         <!-- /Disability -->
 
         <!-- Gender -->
         <criteria-input
           :value="gender"
-          @input="$emit('update:gender', $event); $emit('clear', 'criteria.gender')"
+          @input="
+            $emit('update:gender', $event);
+            $emit('clear', 'criteria.gender');
+          "
           :error="errors.get('criteria.gender')"
           id="criteria.gender"
           label="Gender Specific (if applicable)"
@@ -45,7 +58,10 @@
         <!-- Housing -->
         <criteria-input
           :value="housing"
-          @input="$emit('update:housing', $event); $emit('clear', 'criteria.housing')"
+          @input="
+            $emit('update:housing', $event);
+            $emit('clear', 'criteria.housing');
+          "
           :error="errors.get('criteria.housing')"
           id="criteria.housing"
           label="Specific Housing status/needs (if applicable)"
@@ -56,38 +72,54 @@
         <!-- Income -->
         <criteria-input
           :value="income"
-          @input="$emit('update:income', $event); $emit('clear', 'criteria.income')"
+          @input="
+            $emit('update:income', $event);
+            $emit('clear', 'criteria.income');
+          "
           :error="errors.get('criteria.income')"
           id="criteria.income"
           label="Income level (if applicable)"
-          :hint='`e.g. "This ${type} is aimed at people claiming benefits or with Income support"`'
+          :hint="
+            `e.g. &quot;This ${type} is aimed at people claiming benefits or with Income support&quot;`
+          "
         />
         <!-- /Income -->
 
         <!-- Language -->
         <criteria-input
           :value="language"
-          @input="$emit('update:language', $event); $emit('clear', 'criteria.language')"
+          @input="
+            $emit('update:language', $event);
+            $emit('clear', 'criteria.language');
+          "
           :error="errors.get('criteria.language')"
           id="criteria.language"
           label="Language accessability (if applicable)"
-          :hint="`E.g. “Instructors speak English, but open to all”, or “This ${type} is available in a number of languages - please contact for more information”`"
+          :hint="
+            `E.g. “Instructors speak English, but open to all”, or “This ${type} is available in a number of languages - please contact for more information”`
+          "
         />
         <!-- /Language -->
 
         <!-- Other -->
         <criteria-input
           :value="other"
-          @input="$emit('update:other', $event); $emit('clear', 'criteria.other')"
+          @input="
+            $emit('update:other', $event);
+            $emit('clear', 'criteria.other');
+          "
           :error="errors.get('criteria.other')"
           id="criteria.other"
-          :label="`Any other notes as to who the ${type} is aimed at/not appropriate for?`"
-          :hint="`E.g. “This ${type} is open to all”, or “This ${type} is aimed at people living in Chessington”`"
+          :label="
+            `Any other notes as to who the ${type} is aimed at/not appropriate for?`
+          "
+          :hint="
+            `E.g. “This ${type} is open to all”, or “This ${type} is aimed at people living in Chessington”`
+          "
         />
         <!-- /Other -->
 
         <slot />
-
       </gov-grid-column>
     </gov-grid-row>
   </div>

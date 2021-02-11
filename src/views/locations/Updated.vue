@@ -25,7 +25,7 @@
             <gov-button
               :to="{
                 name: 'locations-show',
-                params: { location: this.$route.params.location },
+                params: { location: this.$route.params.location }
               }"
               >Back to location</gov-button
             >
@@ -37,28 +37,28 @@
 </template>
 
 <script>
-  import http from '@/http';
+import http from "@/http";
 
-  export default {
-    name: 'LocationUpdated',
-    data() {
-      return {
-        loading: false,
-        location: null,
-      };
-    },
-    methods: {
-      async fetchLocation() {
-        this.loading = true;
-        const response = await http.get(
-          `/locations/${this.$route.params.location}`
-        );
-        this.location = response.data.data;
-        this.loading = false;
-      },
-    },
-    created() {
-      this.fetchLocation();
-    },
-  };
+export default {
+  name: "LocationUpdated",
+  data() {
+    return {
+      loading: false,
+      location: null
+    };
+  },
+  methods: {
+    async fetchLocation() {
+      this.loading = true;
+      const response = await http.get(
+        `/locations/${this.$route.params.location}`
+      );
+      this.location = response.data.data;
+      this.loading = false;
+    }
+  },
+  created() {
+    this.fetchLocation();
+  }
+};
 </script>

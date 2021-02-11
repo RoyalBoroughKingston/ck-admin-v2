@@ -146,95 +146,95 @@
 </template>
 
 <script>
-  import CkImageInput from '@/components/Ck/CkImageInput';
-  import CkGalleryItemsInput from '@/views/services/inputs/GalleryItemsInput';
+import CkImageInput from "@/components/Ck/CkImageInput";
+import CkGalleryItemsInput from "@/views/services/inputs/GalleryItemsInput";
 
-  export default {
-    name: 'DetailsTab',
-    components: { CkImageInput, CkGalleryItemsInput },
-    props: {
-      errors: {
-        required: true,
-      },
-      isNew: {
-        required: false,
-        type: Boolean,
-        default: false,
-      },
-      name: {
-        required: true,
-      },
-      slug: {
-        required: true,
-      },
-      type: {
-        required: true,
-      },
-      organisation_id: {
-        required: false,
-      },
-      url: {
-        required: true,
-      },
-      status: {
-        required: true,
-      },
-      gallery_items: {
-        required: true,
-      },
-      id: {
-        required: false,
-        type: String,
-      },
+export default {
+  name: "DetailsTab",
+  components: { CkImageInput, CkGalleryItemsInput },
+  props: {
+    errors: {
+      required: true
     },
-    data() {
-      return {
-        organisations: [{ text: 'Please select', value: null, disabled: true }],
-        loading: false,
-        typeOptions: [
-          { text: 'It is a Service', value: 'service' },
-          { text: 'It is an Activity', value: 'activity' },
-          { text: 'It is a Club', value: 'club' },
-          { text: 'It is a Group', value: 'group' },
-        ],
-        statusOptions: [
-          { label: 'Enabled', value: 'active' },
-          { label: 'Disabled', value: 'inactive' },
-        ],
-      };
+    isNew: {
+      required: false,
+      type: Boolean,
+      default: false
     },
-    computed: {
-      logoHelpHref() {
-        const to = 'onehounslowconnect@hounslow.gov.uk';
-        const subject = 'Help uploading service logo';
+    name: {
+      required: true
+    },
+    slug: {
+      required: true
+    },
+    type: {
+      required: true
+    },
+    organisation_id: {
+      required: false
+    },
+    url: {
+      required: true
+    },
+    status: {
+      required: true
+    },
+    gallery_items: {
+      required: true
+    },
+    id: {
+      required: false,
+      type: String
+    }
+  },
+  data() {
+    return {
+      organisations: [{ text: "Please select", value: null, disabled: true }],
+      loading: false,
+      typeOptions: [
+        { text: "It is a Service", value: "service" },
+        { text: "It is an Activity", value: "activity" },
+        { text: "It is a Club", value: "club" },
+        { text: "It is a Group", value: "group" }
+      ],
+      statusOptions: [
+        { label: "Enabled", value: "active" },
+        { label: "Disabled", value: "inactive" }
+      ]
+    };
+  },
+  computed: {
+    logoHelpHref() {
+      const to = "onehounslowconnect@hounslow.gov.uk";
+      const subject = "Help uploading service logo";
 
-        return `mailto:${to}?subject=${encodeURIComponent(subject)}`;
-      },
+      return `mailto:${to}?subject=${encodeURIComponent(subject)}`;
+    }
+  },
+  methods: {
+    async fetchOrganisations() {
+      this.loading = true;
+      let fetchedOrganisations = await this.fetchAll("/organisations", {
+        "filter[has_permission]": true
+      });
+      fetchedOrganisations = fetchedOrganisations.map(organisation => {
+        return { text: organisation.name, value: organisation.id };
+      });
+      this.organisations = [...this.organisations, ...fetchedOrganisations];
+      this.loading = false;
     },
-    methods: {
-      async fetchOrganisations() {
-        this.loading = true;
-        let fetchedOrganisations = await this.fetchAll('/organisations', {
-          'filter[has_permission]': true,
-        });
-        fetchedOrganisations = fetchedOrganisations.map((organisation) => {
-          return { text: organisation.name, value: organisation.id };
-        });
-        this.organisations = [...this.organisations, ...fetchedOrganisations];
-        this.loading = false;
-      },
-      onNameInput(name) {
-        this.$emit('update:name', name);
-        this.$emit('clear', 'name');
+    onNameInput(name) {
+      this.$emit("update:name", name);
+      this.$emit("clear", "name");
 
-        if (this.auth.isGlobalAdmin || this.isNew) {
-          this.$emit('update:slug', this.slugify(name));
-          this.$emit('clear', 'slug');
-        }
-      },
-    },
-    created() {
-      this.fetchOrganisations();
-    },
-  };
+      if (this.auth.isGlobalAdmin || this.isNew) {
+        this.$emit("update:slug", this.slugify(name));
+        this.$emit("clear", "slug");
+      }
+    }
+  },
+  created() {
+    this.fetchOrganisations();
+  }
+};
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <hr class="govuk-section-break" :class="computedClasses">
+  <hr class="govuk-section-break" :class="computedClasses" />
 </template>
 
 <script>

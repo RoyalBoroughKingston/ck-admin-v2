@@ -10,7 +10,7 @@
       type="checkbox"
       :aria-describedby="ariaDescribedBy"
       :disabled="disabled"
-    >
+    />
     <gov-label class="govuk-checkboxes__label" :for="id">{{ label }}</gov-label>
     <slot />
   </div>

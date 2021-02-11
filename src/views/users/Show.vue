@@ -45,39 +45,39 @@
 </template>
 
 <script>
-  import http from '@/http';
+import http from "@/http";
 
-  export default {
-    name: 'ShowUser',
-    data() {
-      return {
-        loading: false,
-        user: null,
-      };
+export default {
+  name: "ShowUser",
+  data() {
+    return {
+      loading: false,
+      user: null
+    };
+  },
+  methods: {
+    fetchUser() {
+      this.loading = true;
+      http
+        .get(`/users/${this.$route.params.user}`, {
+          params: {
+            include: "user-roles.organisation,user-roles.service"
+          }
+        })
+        .then(({ data }) => {
+          this.user = data.data;
+          this.loading = false;
+        });
     },
-    methods: {
-      fetchUser() {
-        this.loading = true;
-        http
-          .get(`/users/${this.$route.params.user}`, {
-            params: {
-              include: 'user-roles.organisation,user-roles.service',
-            },
-          })
-          .then(({ data }) => {
-            this.user = data.data;
-            this.loading = false;
-          });
-      },
-      onEdit() {
-        alert('Edit');
-      },
-      onDelete() {
-        this.$router.push({ name: 'users-index' });
-      },
+    onEdit() {
+      alert("Edit");
     },
-    created() {
-      this.fetchUser();
-    },
-  };
+    onDelete() {
+      this.$router.push({ name: "users-index" });
+    }
+  },
+  created() {
+    this.fetchUser();
+  }
+};
 </script>

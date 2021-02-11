@@ -1,6 +1,9 @@
 <template>
   <div>
-    <gov-inset-text v-for="(offering, index) in offerings" :key="offering.index">
+    <gov-inset-text
+      v-for="(offering, index) in offerings"
+      :key="offering.index"
+    >
       <ck-text-input
         :value="offering.offering"
         @input="onOfferingInput({ index, value: $event })"

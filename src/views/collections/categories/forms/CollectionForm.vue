@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <ck-text-input
       :value="name"
       @input="onInput('name', $event)"
@@ -12,7 +11,10 @@
 
     <ck-textarea-input
       :value="intro"
-      @input="$emit('update:intro', $event); $emit('clear', 'intro')"
+      @input="
+        $emit('update:intro', $event);
+        $emit('clear', 'intro');
+      "
       id="intro"
       label="Description of category"
       hint="A short summary detailing what type of services the category contains."
@@ -29,7 +31,11 @@
       has-icons
     >
       <gov-hint slot="hint" for="icon">
-        If you're having trouble viewing the icons, refer to the <gov-link href="https://fontawesome.com/icons" target="_blank">Font Awesome website</gov-link> (the font library used).
+        If you're having trouble viewing the icons, refer to the
+        <gov-link href="https://fontawesome.com/icons" target="_blank"
+          >Font Awesome website</gov-link
+        >
+        (the font library used).
       </gov-hint>
       <option
         v-for="(option, key) in icons"
@@ -62,7 +68,6 @@
       @clear="$emit('clear', 'category_taxonomies')"
       :hierarchy="false"
     />
-
   </div>
 </template>
 
@@ -103,7 +108,7 @@ export default {
       icons: [
         { text: "Please select...", value: null, disabled: true },
         ...icons
-      ],
+      ]
     };
   },
   methods: {

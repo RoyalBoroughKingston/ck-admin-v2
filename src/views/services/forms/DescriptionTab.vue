@@ -63,30 +63,30 @@
 </template>
 
 <script>
-  import CkOfferingsInput from '@/views/services/inputs/OfferingsInput.vue';
+import CkOfferingsInput from "@/views/services/inputs/OfferingsInput.vue";
 
-  export default {
-    name: 'DescriptionTab',
-    components: {
-      CkOfferingsInput,
+export default {
+  name: "DescriptionTab",
+  components: {
+    CkOfferingsInput
+  },
+  props: {
+    errors: {
+      required: true
     },
-    props: {
-      errors: {
-        required: true,
-      },
-      type: {
-        required: true,
-        type: String,
-      },
-      intro: {
-        required: true,
-      },
-      offerings: {
-        required: true,
-      },
-      description: {
-        required: true,
-      },
+    type: {
+      required: true,
+      type: String
     },
-  };
+    intro: {
+      required: true
+    },
+    offerings: {
+      required: true
+    },
+    description: {
+      required: true
+    }
+  }
+};
 </script>

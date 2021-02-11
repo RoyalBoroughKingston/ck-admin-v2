@@ -78,7 +78,9 @@
         </gov-table-row>
 
         <gov-table-row>
-          <gov-table-header top scope="row">Champion Organisation</gov-table-header>
+          <gov-table-header top scope="row"
+            >Champion Organisation</gov-table-header
+          >
           <gov-table-cell>{{ referral.referee_organisation }}</gov-table-cell>
         </gov-table-row>
       </template>
@@ -104,12 +106,18 @@
 
       <gov-table-row>
         <gov-table-header top scope="row">Date/Time</gov-table-header>
-        <gov-table-cell>{{ formatDateTime(referral.created_at) }}</gov-table-cell>
+        <gov-table-cell>{{
+          formatDateTime(referral.created_at)
+        }}</gov-table-cell>
       </gov-table-row>
 
       <gov-table-row v-if="referral.status === 'completed'">
-        <gov-table-header top scope="row">Scheduled for deletion</gov-table-header>
-        <gov-table-cell>{{ formatDate(autoDeleteDate(referral.updated_at)) }}</gov-table-cell>
+        <gov-table-header top scope="row"
+          >Scheduled for deletion</gov-table-header
+        >
+        <gov-table-cell>{{
+          formatDate(autoDeleteDate(referral.updated_at))
+        }}</gov-table-cell>
       </gov-table-row>
     </template>
   </gov-table>
@@ -131,7 +139,7 @@ export default {
     return {
       loadingOrganisation: false,
       organisation: null
-    }
+    };
   },
   computed: {
     isSelfReferral() {
@@ -150,7 +158,7 @@ export default {
     }
   },
   created() {
-    this.fetchOrganisation()
+    this.fetchOrganisation();
   },
   methods: {
     autoDeleteDate(updated_at) {
@@ -166,7 +174,10 @@ export default {
 
       let businessDays = 0;
       for (var i = 0; i < duration; i++) {
-        const day = start.clone().add(i, "days").isoWeekday();
+        const day = start
+          .clone()
+          .add(i, "days")
+          .isoWeekday();
 
         if (day < 6) {
           businessDays += 1;
@@ -180,23 +191,21 @@ export default {
         return "N/A";
       }
 
-      const workingDays = this.diffInBusinessDays(
-        referral.created_at
-      );
+      const workingDays = this.diffInBusinessDays(referral.created_at);
 
       return workingDays >= 10 ? "Due" : 10 - workingDays;
     },
     async fetchOrganisation() {
-      this.loadingOrganisation = true
+      this.loadingOrganisation = true;
 
       const {
         data: { data: organisation }
       } = await http.get(
         `/organisations/${this.referral.service.organisation_id}`
-      )
-      this.organisation = organisation
+      );
+      this.organisation = organisation;
 
-      this.loadingOrganisation = false
+      this.loadingOrganisation = false;
     }
   },
   filters: {

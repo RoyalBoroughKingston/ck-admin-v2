@@ -59,51 +59,51 @@
 </template>
 
 <script>
-  import http from '@/http';
-  import Form from '@/classes/Form';
-  import CollectionForm from '@/views/collections/categories/forms/CollectionForm';
+import http from "@/http";
+import Form from "@/classes/Form";
+import CollectionForm from "@/views/collections/categories/forms/CollectionForm";
 
-  export default {
-    name: 'EditCollectionCategory',
-    components: { CollectionForm },
-    data() {
-      return {
-        loading: false,
-        collection: null,
-        form: null,
-      };
-    },
-    methods: {
-      async fetchCollection() {
-        this.loading = true;
+export default {
+  name: "EditCollectionCategory",
+  components: { CollectionForm },
+  data() {
+    return {
+      loading: false,
+      collection: null,
+      form: null
+    };
+  },
+  methods: {
+    async fetchCollection() {
+      this.loading = true;
 
-        const response = await http.get(
-          `/collections/categories/${this.$route.params.collection}`
-        );
-        this.collection = response.data.data;
-        this.form = new Form({
-          name: this.collection.name,
-          intro: this.collection.intro,
-          icon: this.collection.icon,
-          order: this.collection.order,
-          sideboxes: this.collection.sideboxes,
-          category_taxonomies: this.collection.category_taxonomies.map(
-            (taxonomy) => taxonomy.id
-          ),
-        });
+      const response = await http.get(
+        `/collections/categories/${this.$route.params.collection}`
+      );
+      this.collection = response.data.data;
+      this.form = new Form({
+        name: this.collection.name,
+        intro: this.collection.intro,
+        icon: this.collection.icon,
+        order: this.collection.order,
+        sideboxes: this.collection.sideboxes,
+        category_taxonomies: this.collection.category_taxonomies.map(
+          taxonomy => taxonomy.id
+        )
+      });
 
-        this.loading = false;
-      },
-      async onSubmit() {
-        await this.form.put(`/collections/categories/${this.collection.id}`);
-        this.$router.push({ name: 'admin-index-collections' });
-      },
-      onDelete() {
-        this.$router.push({ name: 'admin-index-collections' });
-      },
+      this.loading = false;
     },
-    created() {
-      this.fetchCollection();
+    async onSubmit() {
+      await this.form.put(`/collections/categories/${this.collection.id}`);
+      this.$router.push({ name: "admin-index-collections" });
     },
-  };
+    onDelete() {
+      this.$router.push({ name: "admin-index-collections" });
+    }
+  },
+  created() {
+    this.fetchCollection();
+  }
+};
 </script>

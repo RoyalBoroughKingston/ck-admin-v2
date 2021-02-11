@@ -4,9 +4,10 @@
       <gov-heading size="l">Thesaurus</gov-heading>
 
       <gov-body>
-        On this page, you can view and edit the thesaurus used when a user makes a
-        keyword search. The thesaurus means that when users enter in a search
-        term - if it appears in the thesaurus, all synonyms will also be searched.
+        On this page, you can view and edit the thesaurus used when a user makes
+        a keyword search. The thesaurus means that when users enter in a search
+        term - if it appears in the thesaurus, all synonyms will also be
+        searched.
       </gov-body>
 
       <ck-loader v-if="loading" />
@@ -19,7 +20,9 @@
     </gov-grid-column>
 
     <gov-grid-column v-if="auth.isGlobalAdmin" width="one-third">
-      <gov-button :to="{ name: 'thesaurus-edit' }" expand>Edit thesaurus</gov-button>
+      <gov-button :to="{ name: 'thesaurus-edit' }" expand
+        >Edit thesaurus</gov-button
+      >
     </gov-grid-column>
   </gov-grid-row>
 </template>

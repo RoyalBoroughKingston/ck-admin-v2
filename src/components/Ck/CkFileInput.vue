@@ -1,6 +1,5 @@
 <template>
   <gov-form-group :invalid="error !== null">
-
     <gov-label :for="id" class="govuk-!-font-weight-bold">
       <slot name="label">{{ label }}</slot>
     </gov-label>
@@ -11,7 +10,10 @@
 
     <gov-file-upload
       :value="value"
-      @change="$emit('input', $event); removeExisting = false;"
+      @change="
+        $emit('input', $event);
+        removeExisting = false;
+      "
       :id="id"
       :name="id"
       :accept="accept"
@@ -27,31 +29,26 @@
         :src="existingUrl"
         :key="`ExistingImage::${_uid}`"
         alt="Organisation logo"
-      >
+      />
       <!-- Uploaded image -->
       <img
         v-else-if="value"
         :src="value"
         :key="`UploadedImage::${_uid}`"
         alt="Uploaded organisation logo"
-      >
+      />
     </template>
 
-    <gov-error-message
-      v-if="error !== null"
-      v-text="error"
-      :for="id"
-    />
+    <gov-error-message v-if="error !== null" v-text="error" :for="id" />
 
     <slot name="after-error-message" />
 
     <div
-      v-if="(existingUrl && !removeExisting) || (value)"
+      v-if="(existingUrl && !removeExisting) || value"
       class="govuk-!-margin-top-2"
     >
       <gov-button @click="onRemove" type="button" error>Remove file</gov-button>
     </div>
-
   </gov-form-group>
 </template>
 

@@ -18,12 +18,16 @@
 
       <ck-loader v-if="loading" />
       <gov-list v-else bullet>
-        <li v-for="(stopWord, index) in stopWords" :key="`StopWord-${index}`">{{ stopWord }}</li>
+        <li v-for="(stopWord, index) in stopWords" :key="`StopWord-${index}`">
+          {{ stopWord }}
+        </li>
       </gov-list>
     </gov-grid-column>
 
     <gov-grid-column v-if="auth.isGlobalAdmin" width="one-third">
-      <gov-button :to="{ name: 'stop-words-edit' }" expand>Edit stop words</gov-button>
+      <gov-button :to="{ name: 'stop-words-edit' }" expand
+        >Edit stop words</gov-button
+      >
     </gov-grid-column>
   </gov-grid-row>
 </template>

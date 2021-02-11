@@ -32,33 +32,33 @@
             :columns="[
               {
                 heading: 'User',
-                render: (updateRequest) =>
+                render: updateRequest =>
                   updateRequest.user
                     ? `${updateRequest.user.first_name} ${updateRequest.user.last_name}`
-                    : 'N/A',
+                    : 'N/A'
               },
               {
                 heading: 'Type',
-                render: (updateRequest) =>
-                  displayType(updateRequest.updateable_type),
+                render: updateRequest =>
+                  displayType(updateRequest.updateable_type)
               },
               {
                 heading: 'Entry',
                 sort: 'entry',
-                render: (updateRequest) => updateRequest.entry,
+                render: updateRequest => updateRequest.entry
               },
               {
                 heading: 'Date / Time',
                 sort: 'created_at',
-                render: (updateRequest) =>
-                  formatDateTime(updateRequest.created_at),
-              },
+                render: updateRequest =>
+                  formatDateTime(updateRequest.created_at)
+              }
             ]"
             :view-route="
-              (updateRequest) => {
+              updateRequest => {
                 return {
                   name: 'update-requests-show',
-                  params: { updateRequest: updateRequest.id },
+                  params: { updateRequest: updateRequest.id }
                 };
               }
             "
@@ -70,53 +70,53 @@
 </template>
 
 <script>
-  import CkResourceListingTable from '@/components/Ck/CkResourceListingTable.vue';
-  import CkTableFilters from '@/components/Ck/CkTableFilters.vue';
+import CkResourceListingTable from "@/components/Ck/CkResourceListingTable.vue";
+import CkTableFilters from "@/components/Ck/CkTableFilters.vue";
 
-  export default {
-    name: 'ListUpdateRequests',
-    components: { CkResourceListingTable, CkTableFilters },
-    data() {
-      return {
-        filters: {
-          entry: '',
-        },
+export default {
+  name: "ListUpdateRequests",
+  components: { CkResourceListingTable, CkTableFilters },
+  data() {
+    return {
+      filters: {
+        entry: ""
+      }
+    };
+  },
+  computed: {
+    params() {
+      const params = {
+        include: "user"
       };
-    },
-    computed: {
-      params() {
-        const params = {
-          include: 'user',
-        };
 
-        if (this.filters.entry !== '') {
-          params['filter[entry]'] = this.filters.entry;
-        }
+      if (this.filters.entry !== "") {
+        params["filter[entry]"] = this.filters.entry;
+      }
 
-        return params;
-      },
+      return params;
+    }
+  },
+  methods: {
+    onSearch() {
+      this.$refs.updateRequestsTable.currentPage = 1;
+      this.$refs.updateRequestsTable.fetchResources();
     },
-    methods: {
-      onSearch() {
-        this.$refs.updateRequestsTable.currentPage = 1;
-        this.$refs.updateRequestsTable.fetchResources();
-      },
-      displayType(type) {
-        switch (type) {
-          case 'services':
-            return 'Service';
-          case 'organisations':
-            return 'Organisation';
-          case 'locations':
-            return 'Location';
-          case 'service_locations':
-            return 'Service location';
-          case 'organisation_sign_up_form':
-            return 'Organisation sign up form';
-          default:
-            return 'Invalid type';
-        }
-      },
-    },
-  };
+    displayType(type) {
+      switch (type) {
+        case "services":
+          return "Service";
+        case "organisations":
+          return "Organisation";
+        case "locations":
+          return "Location";
+        case "service_locations":
+          return "Service location";
+        case "organisation_sign_up_form":
+          return "Organisation sign up form";
+        default:
+          return "Invalid type";
+      }
+    }
+  }
+};
 </script>

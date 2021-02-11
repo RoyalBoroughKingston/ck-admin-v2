@@ -1,7 +1,7 @@
 <template>
-    <a :href="href" class="govuk-skip-link">
-        <slot />
-    </a>
+  <a :href="href" class="govuk-skip-link">
+    <slot />
+  </a>
 </template>
 
 <script>

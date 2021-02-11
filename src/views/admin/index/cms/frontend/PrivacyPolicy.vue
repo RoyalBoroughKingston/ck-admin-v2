@@ -54,7 +54,7 @@ export default {
       frontend.privacy_policy[field] = value;
 
       this.$emit("input", frontend);
-      this.$emit("clear", `frontend.privacy_policy.${field}`)
+      this.$emit("clear", `frontend.privacy_policy.${field}`);
     }
   }
 };

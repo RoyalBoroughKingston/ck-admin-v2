@@ -1,6 +1,5 @@
 <template>
   <gov-form-group :invalid="form.$errors.any()">
-
     <gov-label :for="id" class="govuk-!-font-weight-bold">
       <slot name="label">{{ label }}</slot>
     </gov-label>
@@ -28,14 +27,14 @@
       :src="existingUrl"
       :key="`ExistingImage::${_uid}`"
       alt="Existing image"
-    >
+    />
     <!-- Uploaded image -->
     <img
       v-else-if="form.file"
       :src="form.file"
       :key="`UploadedImage::${_uid}`"
       alt="Uploaded image"
-    >
+    />
 
     <gov-error-message
       v-if="form.$errors.any()"
@@ -46,12 +45,11 @@
     <slot name="after-error-message" />
 
     <div
-      v-if="(existingUrl && !removeExisting) || (form.file)"
+      v-if="(existingUrl && !removeExisting) || form.file"
       class="govuk-!-margin-top-2"
     >
       <gov-button @click="onRemove" type="button" error>Remove file</gov-button>
     </div>
-
   </gov-form-group>
 </template>
 

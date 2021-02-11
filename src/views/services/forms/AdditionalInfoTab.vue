@@ -233,86 +233,86 @@
 </template>
 
 <script>
-  import SocialMediasInput from '@/views/services/inputs/SocialMediasInput';
+import SocialMediasInput from "@/views/services/inputs/SocialMediasInput";
 
-  export default {
-    name: 'AdditionalInfoTab',
-    components: { SocialMediasInput },
-    props: {
-      errors: {
-        required: true,
-      },
-      type: {
-        required: true,
-      },
-      wait_time: {
-        required: true,
-      },
-      is_free: {
-        required: true,
-      },
-      fees_text: {
-        required: true,
-      },
-      fees_url: {
-        required: true,
-      },
-      testimonial: {
-        required: true,
-      },
-      video_embed: {
-        required: true,
-      },
-      contact_name: {
-        required: true,
-      },
-      contact_phone: {
-        required: true,
-      },
-      contact_email: {
-        required: true,
-      },
-      social_medias: {
-        required: true,
-      },
+export default {
+  name: "AdditionalInfoTab",
+  components: { SocialMediasInput },
+  props: {
+    errors: {
+      required: true
     },
-    computed: {
-      waitTimeOptions() {
-        return [
-          { text: `Not applicable for this ${this.type}`, value: null },
-          { text: 'One week', value: 'one_week' },
-          { text: 'Two weeks', value: 'two_weeks' },
-          { text: 'Three weeks', value: 'three_weeks' },
-          { text: 'One month', value: 'month' },
-          { text: 'Longer than a month', value: 'longer' },
-        ];
-      },
-      isFreeOptions() {
-        return [
-          { value: true, label: `Yes - The ${this.type} is free` },
-          {
-            value: false,
-            label: `No - there are elements of this ${this.type} that must be paid for`,
-          },
-        ];
-      },
-      videoEmbedHelpHref() {
-        const to = 'onehounslowconnect@hounslow.gov.uk';
-        const subject = `Make a video for my ${this.type}`;
-        const body = `My ${this.type} is: xxx\n\nI am interested in making a video for my ${this.type} page on One Hounslow Connect.`;
-
-        return `mailto:${to}?subject=${encodeURIComponent(
-          subject
-        )}&body=${encodeURIComponent(body)}`;
-      },
+    type: {
+      required: true
     },
-    watch: {
-      is_free(newIsFree) {
-        if (newIsFree) {
-          this.$emit('update:fees_text', '');
-          this.$emit('update:fees_url', '');
+    wait_time: {
+      required: true
+    },
+    is_free: {
+      required: true
+    },
+    fees_text: {
+      required: true
+    },
+    fees_url: {
+      required: true
+    },
+    testimonial: {
+      required: true
+    },
+    video_embed: {
+      required: true
+    },
+    contact_name: {
+      required: true
+    },
+    contact_phone: {
+      required: true
+    },
+    contact_email: {
+      required: true
+    },
+    social_medias: {
+      required: true
+    }
+  },
+  computed: {
+    waitTimeOptions() {
+      return [
+        { text: `Not applicable for this ${this.type}`, value: null },
+        { text: "One week", value: "one_week" },
+        { text: "Two weeks", value: "two_weeks" },
+        { text: "Three weeks", value: "three_weeks" },
+        { text: "One month", value: "month" },
+        { text: "Longer than a month", value: "longer" }
+      ];
+    },
+    isFreeOptions() {
+      return [
+        { value: true, label: `Yes - The ${this.type} is free` },
+        {
+          value: false,
+          label: `No - there are elements of this ${this.type} that must be paid for`
         }
-      },
+      ];
     },
-  };
+    videoEmbedHelpHref() {
+      const to = "onehounslowconnect@hounslow.gov.uk";
+      const subject = `Make a video for my ${this.type}`;
+      const body = `My ${this.type} is: xxx\n\nI am interested in making a video for my ${this.type} page on One Hounslow Connect.`;
+
+      return `mailto:${to}?subject=${encodeURIComponent(
+        subject
+      )}&body=${encodeURIComponent(body)}`;
+    }
+  },
+  watch: {
+    is_free(newIsFree) {
+      if (newIsFree) {
+        this.$emit("update:fees_text", "");
+        this.$emit("update:fees_url", "");
+      }
+    }
+  }
+};
 </script>
