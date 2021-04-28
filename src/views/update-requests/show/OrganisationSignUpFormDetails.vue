@@ -26,12 +26,16 @@
           <gov-table-header top scope="row">Phone</gov-table-header>
           <gov-table-cell>{{ user.phone }}</gov-table-cell>
         </gov-table-row>
+        <gov-table-row v-if="organisation.id">
+          <gov-table-header top scope="row">Organisation</gov-table-header>
+          <gov-table-cell>{{ organisation.name }}</gov-table-cell>
+        </gov-table-row>
       </template>
     </gov-table>
 
     <gov-section-break size="m" />
 
-    <gov-table>
+    <gov-table v-if="!organisation.id">
       <template slot="body">
         <gov-table-row>
           <gov-table-header scope="column">Organisation</gov-table-header>
@@ -72,7 +76,7 @@
 
     <gov-section-break size="m" />
 
-    <gov-table>
+    <gov-table v-if="service">
       <template slot="body">
         <gov-table-row>
           <gov-table-header scope="column">Service</gov-table-header>
@@ -277,7 +281,6 @@ export default {
     },
 
     service: {
-      required: true,
       type: Object
     }
   },
