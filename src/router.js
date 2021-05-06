@@ -38,6 +38,12 @@ let router = new Router({
       meta: { auth: true }
     },
     {
+      path: "/organisations/import",
+      name: "organisations-import",
+      component: () => import("@/views/organisations/Import"),
+      meta: { auth: true }
+    },
+    {
       path: "/organisations/:organisation",
       name: "organisations-show",
       component: () => import("@/views/organisations/Show"),

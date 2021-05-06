@@ -30,6 +30,14 @@
                 expand
                 >Add organisation</gov-button
               >
+              <gov-button
+                v-if="auth.isSuperAdmin"
+                :to="{ name: 'organisations-import' }"
+                type="submit"
+                success
+                expand
+                >Bulk import</gov-button
+              >
             </gov-grid-column>
           </gov-grid-row>
 
