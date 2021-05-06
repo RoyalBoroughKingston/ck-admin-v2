@@ -485,31 +485,49 @@ let router = new Router({
         {
           path: "",
           name: "register-index",
-          component: () => import("@/views/register/index/Eligibility"),
+          component: () => import("@/views/register/Search"),
           meta: { auth: false }
         },
         {
-          path: "user",
-          name: "register-index-user",
-          component: () => import("@/views/register/index/User"),
+          path: "new/step-2",
+          name: "register-new-step2",
+          component: () => import("@/views/register/new/Criteria"),
           meta: { auth: false }
         },
         {
-          path: "organisation",
-          name: "register-index-organisation",
-          component: () => import("@/views/register/index/Organisation"),
+          path: "new/step-3",
+          name: "register-new-step3",
+          component: () => import("@/views/register/new/Information"),
           meta: { auth: false }
         },
         {
-          path: "service",
-          name: "register-index-service",
-          component: () => import("@/views/register/index/Service"),
+          path: "new/step-4",
+          name: "register-new-step4",
+          component: () => import("@/views/register/new/User"),
           meta: { auth: false }
         },
         {
-          path: "success",
-          name: "register-index-success",
-          component: () => import("@/views/register/index/Success"),
+          path: "new/step-5",
+          name: "register-new-step5",
+          component: () => import("@/views/register/new/Organisation"),
+          meta: { auth: false }
+        },
+        {
+          path: "existing/step-2",
+          name: "register-existing-step2",
+          component: () => import("@/views/register/existing/Information"),
+          meta: { auth: false }
+        },
+        {
+          path: "existing/step-3",
+          name: "register-existing-step3",
+          component: () => import("@/views/register/existing/User"),
+          meta: { auth: false }
+        },
+        {
+          path: "completed",
+          name: "register-completed",
+          component: () => import("@/views/register/Completed"),
           meta: { auth: false }
         }
       ]

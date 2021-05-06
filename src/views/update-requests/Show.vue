@@ -132,14 +132,18 @@ export default {
       // If the update request is for a service, and the organisation has been
       // updated, then eager load the organisation and append to the data.
       if (
-        this.updateRequest.updateable_type === "services" &&
-        this.updateRequest.data.hasOwnProperty("organisation_id")
+        (this.updateRequest.updateable_type === "services" &&
+          this.updateRequest.data.hasOwnProperty("organisation_id")) ||
+        (this.updateRequest.updateable_type === "organisation_sign_up_form" &&
+          this.updateRequest.data.hasOwnProperty("organisation") &&
+          this.updateRequest.data.organisation.id)
       ) {
+        const organisationId =
+          this.updateRequest.data.organisation_id ||
+          this.updateRequest.data.organisation.id;
         const {
           data: { data: organisation }
-        } = await http.get(
-          `/organisations/${this.updateRequest.data.organisation_id}`
-        );
+        } = await http.get(`/organisations/${organisationId}`);
         this.updateRequest.data.organisation = organisation;
       }
 

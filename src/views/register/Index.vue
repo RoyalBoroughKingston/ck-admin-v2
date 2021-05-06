@@ -1,31 +1,22 @@
 <template>
-  <gov-width-container>
-    <vue-headful title="One Hounslow Connect - Register" />
-
-    <gov-error-summary v-if="form.$errors.any()" title="Check for errors">
-      <gov-list>
-        <li
-          v-for="(error, field) in form.$errors.all()"
-          :key="field"
-          v-text="error[0]"
-        />
-      </gov-list>
-    </gov-error-summary>
-
-    <router-view
-      :form="form"
-      :errors="form.$errors"
-      @input="onInput($event)"
-      @clear="$delete(form.$errors.errors, $event.replace(/\./g, '_'))"
-      @submit="onSubmit"
-    />
-  </gov-width-container>
+  <div>
+    <gov-main-wrapper>
+      <gov-grid-row>
+        <gov-grid-column width="two-thirds">
+          <router-view
+            v-model="form"
+            :errors="form.$errors"
+            @completed="submitRegistration"
+          ></router-view>
+        </gov-grid-column>
+      </gov-grid-row>
+    </gov-main-wrapper>
+  </div>
 </template>
 
 <script>
 import Form from "@/classes/Form";
 import axios from "axios";
-
 const http = axios.create({
   baseURL: `${process.env.VUE_APP_API_URI}/core/v1`
 });
@@ -45,42 +36,13 @@ export default {
             password: ""
           },
           organisation: {
+            id: "",
             name: "",
             slug: "",
             description: "",
             url: "",
             email: "",
             phone: ""
-          },
-          service: {
-            name: "",
-            slug: "",
-            type: "service",
-            intro: "",
-            description: "",
-            wait_time: null,
-            is_free: true,
-            fees_text: "",
-            fees_url: "",
-            testimonial: "",
-            video_embed: "",
-            url: "",
-            contact_name: "",
-            contact_phone: "",
-            contact_email: "",
-            criteria: {
-              age_group: "",
-              disability: "",
-              employment: "",
-              gender: "",
-              housing: "",
-              income: "",
-              language: "",
-              other: ""
-            },
-            useful_infos: [],
-            offerings: [],
-            social_medias: []
           }
         },
         {},
@@ -88,39 +50,26 @@ export default {
       )
     };
   },
-
-  watch: {
-    ["form.organisation.name"](newName) {
-      this.form.organisation.slug = this.slugify(newName);
-    },
-
-    ["form.service.name"](newName) {
-      this.form.service.slug = this.slugify(newName);
-    },
-
-    ["form.service.is_free"](newIsFree) {
-      if (newIsFree) {
-        this.form.service.fees_text = "";
-        this.form.service.fees_url = "";
-      }
-    }
-  },
-
   methods: {
-    onInput(data) {
-      for (const field in data) {
-        this.$set(this.form, field, data[field]);
-      }
-    },
-
-    async onSubmit() {
+    async submitRegistration() {
+      this.form.organisation.slug = this.slugify(this.form.organisation.name);
       try {
         await this.form.post("/organisation-sign-up-forms");
-        this.$router.push({ name: "register-index-success" });
+        this.$router.push({ name: "register-completed" });
       } catch (exception) {
-        //
+        const formErrors = Object.keys(exception.errors);
+        if (formErrors.includes("organisation_id")) {
+          this.$router.push({ name: "register-index" });
+        } else if (
+          !this.form.organisation.id &&
+          formErrors.some(error => error.startsWith("user"))
+        ) {
+          this.$router.push({ name: "register-new-step4" });
+        }
       }
     }
   }
 };
 </script>
+
+<style lang="scss" scoped></style>
