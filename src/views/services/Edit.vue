@@ -212,9 +212,9 @@
               <gov-button v-if="form.$submitting" disabled type="submit"
                 >Requesting...</gov-button
               >
-              <gov-button v-else @click="onSubmit" type="submit"
-                >Request update</gov-button
-              >
+              <gov-button v-else @click="onSubmit" type="submit">{{
+                updateButtonText
+              }}</gov-button>
             </gov-grid-column>
           </gov-grid-row>
         </gov-main-wrapper>
@@ -278,6 +278,9 @@ export default {
       }
 
       return this.tabs;
+    },
+    updateButtonText() {
+      return this.auth.isGlobalAdmin ? "Update" : "Request update";
     }
   },
   methods: {
@@ -512,11 +515,26 @@ export default {
         return response;
       }
 
-      // Otherwise, forward the user to the service page.
-      this.$router.push({
+      const updateRequestId = response.id;
+      let next = {
         name: "services-updated",
         params: { service: this.service.id }
-      });
+      };
+
+      if (this.auth.isGlobalAdmin) {
+        try {
+          const { data } = await http.get(
+            `/update-requests/${updateRequestId}`
+          );
+          if (data.approved_at) {
+            next.name = "services-show";
+            next.query = { updated: true };
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      this.$router.push(next);
     },
     async onPreview() {
       this.updateRequest = await this.onSubmit(true);

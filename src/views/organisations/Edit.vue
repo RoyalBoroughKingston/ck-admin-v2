@@ -100,9 +100,9 @@
             <gov-button v-if="form.$submitting" disabled type="submit"
               >Requesting...</gov-button
             >
-            <gov-button v-else @click="onSubmit" type="submit"
-              >Request update</gov-button
-            >
+            <gov-button v-else @click="onSubmit" type="submit">{{
+              updateButtonText
+            }}</gov-button>
             <ck-submit-error v-if="form.$errors.any()" />
           </gov-grid-column>
         </gov-grid-row>
@@ -132,6 +132,11 @@ export default {
       ]
     };
   },
+  computed: {
+    updateButtonText() {
+      return this.auth.isGlobalAdmin ? "Update" : "Request update";
+    }
+  },
   methods: {
     async fetchOrganisation() {
       this.loading = true;
@@ -157,7 +162,7 @@ export default {
       this.loading = false;
     },
     async onSubmit() {
-      await this.form.put(
+      const response = await this.form.put(
         `/organisations/${this.organisation.id}`,
         (config, data) => {
           // Remove any unchanged values.
@@ -204,10 +209,27 @@ export default {
           }
         }
       );
-      this.$router.push({
+      const updateRequestId = response.id;
+      let next = {
         name: "organisations-updated",
         params: { organisation: this.organisation.id }
-      });
+      };
+
+      if (this.auth.isGlobalAdmin) {
+        try {
+          const { data } = await http.get(
+            `/update-requests/${updateRequestId}`
+          );
+
+          if (data.approved_at) {
+            next.name = "organisations-show";
+            next.query = { updated: true };
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      this.$router.push(next);
     },
     onTabChange({ index }) {
       this.tabs.forEach(tab => (tab.active = false));
