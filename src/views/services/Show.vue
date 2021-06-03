@@ -82,7 +82,10 @@ export default {
           heading: "Contact info",
           to: { name: "services-show-contact-info" }
         },
-        { heading: "Who is it for?", to: { name: "services-show-who-for" } },
+        {
+          heading: "Eligibility",
+          to: { name: "services-show-eligibility" }
+        },
         { heading: "Locations", to: { name: "services-show-locations" } },
         { heading: "Referral", to: { name: "services-show-referral" } }
       ]

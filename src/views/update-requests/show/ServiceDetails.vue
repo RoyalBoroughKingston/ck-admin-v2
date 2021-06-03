@@ -105,79 +105,75 @@
           <gov-table-cell>{{ service.is_free | isFree }}</gov-table-cell>
         </gov-table-row>
 
-        <gov-table-row v-if="service.hasOwnProperty('criteria')">
-          <gov-table-header top scope="row">Criteria</gov-table-header>
+        <gov-table-row v-if="service.hasOwnProperty('eligibility_types')">
+          <gov-table-header top scope="row">Eligibility</gov-table-header>
           <gov-table-cell v-if="original">
-            <gov-list v-if="original.hasOwnProperty('criteria')">
-              <li v-if="original.criteria.hasOwnProperty('age_group')">
-                <span class="govuk-!-font-weight-bold">Age group:</span>
-                {{ original.criteria.age_group || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('disability')">
-                <span class="govuk-!-font-weight-bold">Disability:</span>
-                {{ original.criteria.disability || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('employment')">
-                <span class="govuk-!-font-weight-bold">Employment:</span>
-                {{ original.criteria.employment || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('gender')">
-                <span class="govuk-!-font-weight-bold">Gender:</span>
-                {{ original.criteria.gender || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('housing')">
-                <span class="govuk-!-font-weight-bold">Housing:</span>
-                {{ original.criteria.housing || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('income')">
-                <span class="govuk-!-font-weight-bold">Income:</span>
-                {{ original.criteria.income || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('language')">
-                <span class="govuk-!-font-weight-bold">Language:</span>
-                {{ original.criteria.language || "-" }}
-              </li>
-              <li v-if="original.criteria.hasOwnProperty('other')">
-                <span class="govuk-!-font-weight-bold">Other:</span>
-                {{ original.criteria.other || "-" }}
-              </li>
-            </gov-list>
+            <div
+              v-for="rootTaxonomy in eligibilityTypes"
+              :key="rootTaxonomy.id"
+              v-if="eligibilityChanged(rootTaxonomy)"
+            >
+              <span class="govuk-!-font-weight-bold">{{
+                rootTaxonomy.name
+              }}</span>
+              <ck-taxonomy-tree
+                v-if="Array.isArray(service.eligibility_types.taxonomies)"
+                :taxonomies="rootTaxonomy.children"
+                :checked="original.eligibility_types.taxonomies"
+                :error="false"
+                :filteredTaxonomyIds="updatedServiceEligibilities"
+                :disabled="true"
+              />
+              <gov-body
+                v-if="
+                  original.eligibility_types.hasOwnProperty('custom') &&
+                    original.eligibility_types.custom[
+                      slugify(rootTaxonomy.name)
+                    ] !==
+                      service.eligibility_types.custom[
+                        slugify(rootTaxonomy.name)
+                      ]
+                "
+                >Custom Value:
+                {{
+                  original.eligibility_types.custom[slugify(rootTaxonomy.name)]
+                }}</gov-body
+              >
+            </div>
           </gov-table-cell>
           <gov-table-cell>
-            <gov-list>
-              <li v-if="service.criteria.hasOwnProperty('age_group')">
-                <span class="govuk-!-font-weight-bold">Age group:</span>
-                {{ service.criteria.age_group }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('disability')">
-                <span class="govuk-!-font-weight-bold">Disability:</span>
-                {{ service.criteria.disability }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('employment')">
-                <span class="govuk-!-font-weight-bold">Employment:</span>
-                {{ service.criteria.employment }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('gender')">
-                <span class="govuk-!-font-weight-bold">Gender:</span>
-                {{ service.criteria.gender }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('housing')">
-                <span class="govuk-!-font-weight-bold">Housing:</span>
-                {{ service.criteria.housing }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('income')">
-                <span class="govuk-!-font-weight-bold">Income:</span>
-                {{ service.criteria.income }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('language')">
-                <span class="govuk-!-font-weight-bold">Language:</span>
-                {{ service.criteria.language }}
-              </li>
-              <li v-if="service.criteria.hasOwnProperty('other')">
-                <span class="govuk-!-font-weight-bold">Other:</span>
-                {{ service.criteria.other }}
-              </li>
-            </gov-list>
+            <div
+              v-for="rootTaxonomy in eligibilityTypes"
+              :key="rootTaxonomy.id"
+              v-if="eligibilityChanged(rootTaxonomy)"
+            >
+              <span class="govuk-!-font-weight-bold">{{
+                rootTaxonomy.name
+              }}</span>
+              <ck-taxonomy-tree
+                v-if="Array.isArray(service.eligibility_types.taxonomies)"
+                :taxonomies="rootTaxonomy.children"
+                :checked="service.eligibility_types.taxonomies"
+                :error="false"
+                :filteredTaxonomyIds="updatedServiceEligibilities"
+                :disabled="true"
+              />
+              <gov-body
+                v-if="
+                  service.eligibility_types.hasOwnProperty('custom') &&
+                    original.eligibility_types.custom[
+                      slugify(rootTaxonomy.name)
+                    ] !==
+                      service.eligibility_types.custom[
+                        slugify(rootTaxonomy.name)
+                      ]
+                "
+                >Custom Value:
+                {{
+                  service.eligibility_types.custom[slugify(rootTaxonomy.name)]
+                }}</gov-body
+              >
+            </div>
           </gov-table-cell>
         </gov-table-row>
 
@@ -501,6 +497,7 @@
 <script>
 import http from "@/http";
 import CkCarousel from "@/components/Ck/CkCarousel";
+import CkTaxonomyTree from "@/components/Ck/CkTaxonomyTree";
 
 export default {
   name: "ServiceDetails",
@@ -532,15 +529,51 @@ export default {
     }
   },
 
-  components: { CkCarousel },
+  components: { CkCarousel, CkTaxonomyTree },
 
   data() {
     return {
       loading: false,
       original: null,
       taxonomies: [],
-      flattenedTaxonomies: []
+      flattenedTaxonomies: [],
+      eligibilityTypes: [],
+      flattenedEligibilityTypes: []
     };
+  },
+
+  computed: {
+    updatedServiceEligibilities() {
+      const originalTaxonomies = this.original.eligibility_types.taxonomies.reduce(
+        (taxonomyIds, taxonomyId) => {
+          const taxonomy = this.flattenedEligibilityTypes.find(
+            taxonomy => taxonomy.id === taxonomyId
+          );
+          return taxonomyIds.concat(
+            this.getTaxonomyAndAncestorsIds(
+              taxonomy,
+              this.flattenedEligibilityTypes
+            )
+          );
+        },
+        []
+      );
+      const updatedTaxonomies = this.service.eligibility_types.taxonomies.reduce(
+        (taxonomyIds, taxonomyId) => {
+          const taxonomy = this.flattenedEligibilityTypes.find(
+            taxonomy => taxonomy.id === taxonomyId
+          );
+          return taxonomyIds.concat(
+            this.getTaxonomyAndAncestorsIds(
+              taxonomy,
+              this.flattenedEligibilityTypes
+            )
+          );
+        },
+        []
+      );
+      return Array.from(new Set(originalTaxonomies.concat(updatedTaxonomies)));
+    }
   },
 
   methods: {
@@ -564,6 +597,8 @@ export default {
 
       await this.fetchTaxonomies();
 
+      await this.fetchServiceEligibilites();
+
       this.loading = false;
     },
 
@@ -586,26 +621,49 @@ export default {
         data: { data: taxonomies }
       } = await http.get("/taxonomies/categories");
       this.taxonomies = taxonomies;
-      this.setFlattenedTaxonomies();
+      this.flattenedTaxonomies = this.getFlattenedTaxonomies(taxonomies);
     },
 
-    setFlattenedTaxonomies(taxonomies = null) {
-      if (taxonomies === null) {
-        this.flattenedTaxonomies = [];
-        taxonomies = this.taxonomies;
-      }
-
+    getFlattenedTaxonomies(taxonomies = null, flattenedTaxonomies = []) {
       taxonomies.forEach(taxonomy => {
-        this.flattenedTaxonomies.push(taxonomy);
+        flattenedTaxonomies.push(taxonomy);
 
         if (taxonomy.children.length > 0) {
-          this.setFlattenedTaxonomies(taxonomy.children);
+          this.getFlattenedTaxonomies(taxonomy.children, flattenedTaxonomies);
         }
       });
+      return flattenedTaxonomies;
     },
 
     findTaxonomy(id) {
       return this.flattenedTaxonomies.find(taxonomy => taxonomy.id === id);
+    },
+
+    async fetchServiceEligibilites() {
+      this.loading = true;
+      const { data: eligibilityTypes } = await http.get(
+        "/taxonomies/service-eligibilities"
+      );
+      this.eligibilityTypes = eligibilityTypes.data;
+      this.flattenedEligibilityTypes = this.getFlattenedTaxonomies(
+        eligibilityTypes.data
+      );
+      this.loading = false;
+    },
+
+    getTaxonomyAndAncestorsIds(taxonomy, flatTaxonomyTree) {
+      let ids = [taxonomy.id];
+      if (taxonomy.parent_id) {
+        const parent = flatTaxonomyTree.find(
+          tax => tax.id === taxonomy.parent_id
+        );
+        if (parent) {
+          ids = ids.concat(
+            this.getTaxonomyAndAncestorsIds(parent, flatTaxonomyTree)
+          );
+        }
+      }
+      return ids;
     },
 
     imageUrls(service) {
@@ -618,6 +676,24 @@ export default {
           `/services/${service.id}/gallery-items/${galleryItem.file_id}?update_request_id=${this.updateRequestId}`
         );
       });
+    },
+
+    slugify(name) {
+      return name.toLowerCase().replaceAll(" ", "_");
+    },
+
+    eligibilityChanged(eligibilityRoot) {
+      return (
+        this.service.hasOwnProperty("eligibility_types") &&
+        (this.updatedServiceEligibilities.includes(eligibilityRoot.id) ||
+          (this.service.eligibility_types.hasOwnProperty("custom") &&
+            this.original.eligibility_types.custom[
+              this.slugify(eligibilityRoot.name)
+            ] !==
+              this.service.eligibility_types.custom[
+                this.slugify(eligibilityRoot.name)
+              ]))
+      );
     }
   },
 

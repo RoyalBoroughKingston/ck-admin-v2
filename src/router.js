@@ -189,9 +189,9 @@ let router = new Router({
           component: () => import("@/views/services/show/ContactInfoTab")
         },
         {
-          path: "who-for",
-          name: "services-show-who-for",
-          component: () => import("@/views/services/show/WhoForTab")
+          path: "eligibility",
+          name: "services-show-eligibility",
+          component: () => import("@/views/services/show/EligibilityTab")
         },
         {
           path: "locations",
