@@ -26,86 +26,89 @@
           v-text="errors.get('eligibility_types')"
           for="eligibility_types"
         />
+        <slot />
       </gov-grid-column>
     </gov-grid-row>
   </div>
 </template>
 
 <script>
-import http from "@/http";
-import ServiceEligibilityInput from "../inputs/ServiceEligibilityInput";
+  import http from '@/http';
+  import ServiceEligibilityInput from '../inputs/ServiceEligibilityInput';
 
-export default {
-  name: "EligibilityTab",
-  components: { ServiceEligibilityInput },
+  export default {
+    name: 'EligibilityTab',
+    components: { ServiceEligibilityInput },
 
-  props: {
-    serviceEligibilityTypes: {
-      required: true,
-      type: Object
+    props: {
+      serviceEligibilityTypes: {
+        required: true,
+        type: Object,
+      },
+      type: {
+        required: true,
+        type: String,
+      },
+      errors: {
+        required: true,
+      },
     },
-    type: {
-      required: true,
-      type: String
-    },
-    errors: {
-      required: true
-    }
-  },
 
-  data() {
-    return {
-      loading: false,
-      eligibilityTypes: []
-    };
-  },
-
-  methods: {
-    async fetchServiceEligibilites() {
-      this.loading = true;
-      const { data: eligibilityTypes } = await http.get(
-        "/taxonomies/service-eligibilities"
-      );
-      this.eligibilityTypes = eligibilityTypes.data;
-      this.loading = false;
-    },
-    updateServiceEligibilityTaxonomies({ taxonomy, enabled }) {
-      const updatedServiceEligibilityTypes = {
-        ...this.serviceEligibilityTypes
+    data() {
+      return {
+        loading: false,
+        eligibilityTypes: [],
       };
+    },
 
-      if (enabled) {
-        if (!updatedServiceEligibilityTypes.taxonomies.includes(taxonomy.id)) {
-          updatedServiceEligibilityTypes.taxonomies.push(taxonomy.id);
-        }
-      } else if (
-        updatedServiceEligibilityTypes.taxonomies.includes(taxonomy.id)
-      ) {
-        const index = updatedServiceEligibilityTypes.taxonomies.indexOf(
-          taxonomy.id
+    methods: {
+      async fetchServiceEligibilites() {
+        this.loading = true;
+        const { data: eligibilityTypes } = await http.get(
+          '/taxonomies/service-eligibilities'
         );
-        updatedServiceEligibilityTypes.taxonomies.splice(index, 1);
-      }
+        this.eligibilityTypes = eligibilityTypes.data;
+        this.loading = false;
+      },
+      updateServiceEligibilityTaxonomies({ taxonomy, enabled }) {
+        const updatedServiceEligibilityTypes = {
+          ...this.serviceEligibilityTypes,
+        };
 
-      this.$emit(
-        "update:serviceEligibilityTypes",
-        updatedServiceEligibilityTypes
-      );
+        if (enabled) {
+          if (
+            !updatedServiceEligibilityTypes.taxonomies.includes(taxonomy.id)
+          ) {
+            updatedServiceEligibilityTypes.taxonomies.push(taxonomy.id);
+          }
+        } else if (
+          updatedServiceEligibilityTypes.taxonomies.includes(taxonomy.id)
+        ) {
+          const index = updatedServiceEligibilityTypes.taxonomies.indexOf(
+            taxonomy.id
+          );
+          updatedServiceEligibilityTypes.taxonomies.splice(index, 1);
+        }
+
+        this.$emit(
+          'update:serviceEligibilityTypes',
+          updatedServiceEligibilityTypes
+        );
+      },
+      updateServiceEligibilityCustom({ customTaxonomy, customValue }) {
+        const updatedServiceEligibilityTypes = {
+          ...this.serviceEligibilityTypes,
+        };
+        updatedServiceEligibilityTypes.custom[customTaxonomy] = customValue;
+        this.$emit(
+          'update:serviceEligibilityTypes',
+          updatedServiceEligibilityTypes
+        );
+      },
     },
-    updateServiceEligibilityCustom({ customTaxonomy, customValue }) {
-      const updatedServiceEligibilityTypes = {
-        ...this.serviceEligibilityTypes
-      };
-      updatedServiceEligibilityTypes.custom[customTaxonomy] = customValue;
-      this.$emit(
-        "update:serviceEligibilityTypes",
-        updatedServiceEligibilityTypes
-      );
-    }
-  },
 
-  created() {
-    this.fetchServiceEligibilites();
-  }
-};
+    created() {
+      this.fetchServiceEligibilites();
+    },
+  };
 </script>
