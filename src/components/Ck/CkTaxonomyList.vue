@@ -32,8 +32,7 @@
         :checkbox="false"
         @moveUp="$emit('move-up', $event)"
         @moveDown="$emit('move-down', $event)"
-      >
-      </ck-taxonomy-list>
+      />
     </li>
   </gov-list>
 </template>
@@ -75,7 +74,7 @@ export default {
         ? this.taxonomies.filter(taxonomy => {
             return this.filteredTaxonomyIds.includes(taxonomy.id);
           })
-        : [];
+        : this.taxonomies;
     }
   }
 };
