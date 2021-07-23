@@ -124,7 +124,7 @@
                 :taxonomies="rootTaxonomy.children"
                 :checked="original ? original.eligibility_types.taxonomies : []"
                 :error="false"
-                :filteredTaxonomyIds="updatedServiceEligibilities"
+                :filteredTaxonomyIds="updatedServiceEligibilities()"
                 :disabled="true"
               />
               <gov-body v-if="eligibilityCustomChanged(rootTaxonomy)"
@@ -152,7 +152,7 @@
                 :taxonomies="rootTaxonomy.children"
                 :checked="service.eligibility_types.taxonomies"
                 :error="false"
-                :filteredTaxonomyIds="updatedServiceEligibilities"
+                :filteredTaxonomyIds="updatedServiceEligibilities()"
                 :disabled="true"
               />
               <gov-body v-if="eligibilityCustomChanged(rootTaxonomy)"
@@ -463,7 +463,7 @@
             <ck-carousel
               v-if="
                 original.hasOwnProperty('gallery_items') &&
-                  Array.isArray(gallery_items)
+                  Array.isArray(original.gallery_items)
               "
               :image-urls="imageUrls(original)"
             />
@@ -472,7 +472,7 @@
           <gov-table-cell :style="original ? 'width: 25%;' : 'width: 50%;'">
             <ck-carousel
               v-if="Array.isArray(service.gallery_items)"
-              :image-urls="galleryItemsDataUris || imageUrls(service)"
+              :image-urls="serviceGalleryItems"
             />
             <gov-body v-else>-</gov-body>
           </gov-table-cell>
@@ -531,38 +531,10 @@ export default {
   },
 
   computed: {
-    updatedServiceEligibilities() {
-      const originalTaxonomies = this.original
-        ? this.original.eligibility_types.taxonomies.reduce(
-            (taxonomyIds, taxonomyId) => {
-              const taxonomy = this.flattenedEligibilityTypes.find(
-                taxonomy => taxonomy.id === taxonomyId
-              );
-              return taxonomyIds.concat(
-                this.getTaxonomyAndAncestorsIds(
-                  taxonomy,
-                  this.flattenedEligibilityTypes
-                )
-              );
-            },
-            []
-          )
-        : [];
-      const updatedTaxonomies = this.service.eligibility_types.taxonomies.reduce(
-        (taxonomyIds, taxonomyId) => {
-          const taxonomy = this.flattenedEligibilityTypes.find(
-            taxonomy => taxonomy.id === taxonomyId
-          );
-          return taxonomyIds.concat(
-            this.getTaxonomyAndAncestorsIds(
-              taxonomy,
-              this.flattenedEligibilityTypes
-            )
-          );
-        },
-        []
-      );
-      return Array.from(new Set(originalTaxonomies.concat(updatedTaxonomies)));
+    serviceGalleryItems() {
+      return this.galleryItemsDataUris && this.galleryItemsDataUris.length > 0
+        ? this.galleryItemsDataUris
+        : this.imageUrls(this.service);
     }
   },
 
@@ -656,6 +628,31 @@ export default {
       return ids;
     },
 
+    getServiceEligibilityIds(service) {
+      return service.eligibility_types.taxonomies.reduce(
+        (taxonomyIds, taxonomyId) => {
+          const taxonomy = this.flattenedEligibilityTypes.find(
+            taxonomy => taxonomy.id === taxonomyId
+          );
+          return taxonomyIds.concat(
+            this.getTaxonomyAndAncestorsIds(
+              taxonomy,
+              this.flattenedEligibilityTypes
+            )
+          );
+        },
+        []
+      );
+    },
+
+    updatedServiceEligibilities() {
+      const originalTaxonomies = this.original
+        ? this.getServiceEligibilityIds(this.original)
+        : [];
+      const updatedTaxonomies = this.getServiceEligibilityIds(this.service);
+      return Array.from(new Set(originalTaxonomies.concat(updatedTaxonomies)));
+    },
+
     imageUrls(service) {
       return service.gallery_items.map(galleryItem => {
         if (galleryItem.hasOwnProperty("url")) {
@@ -675,7 +672,7 @@ export default {
     eligibilityTaxonomyChanged(eligibilityRoot) {
       return (
         this.service.hasOwnProperty("eligibility_types") &&
-        this.updatedServiceEligibilities.includes(eligibilityRoot.id)
+        this.updatedServiceEligibilities().includes(eligibilityRoot.id)
       );
     },
     eligibilityCustomChanged(eligibilityRoot) {

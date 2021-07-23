@@ -192,7 +192,11 @@
                 :service="updateRequest.data"
                 :logo-data-uri="form.logo"
                 :gallery-items-data-uris="
-                  form.gallery_items.map(galleryItem => galleryItem.image)
+                  form.gallery_items
+                    .filter(
+                      galleryItem => typeof galleryItem.image !== 'undefined'
+                    )
+                    .map(galleryItem => galleryItem.image)
                 "
               />
 
