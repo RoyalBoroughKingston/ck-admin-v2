@@ -48,9 +48,9 @@
 
           <span class="govuk-footer__licence-description">
             For any feedback or technical queries, please email
-            <gov-link href="mailto:onehounslowconnect@hounslow.gov.uk"
-              >onehounslowconnect@hounslow.gov.uk</gov-link
-            >
+            <gov-link :href="`mailto:${contactEmail}`">{{
+              contactEmail
+            }}</gov-link>
           </span>
         </div>
         <div class="govuk-footer__meta-item"></div>
