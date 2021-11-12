@@ -148,8 +148,8 @@
       <gov-grid-column width="one-half">
         <gov-body>
           Please provide your {{ type }}’s public-facing contact details. These
-          will be displayed on your {{ type }}’s page on the One Hounslow
-          Connect website.
+          will be displayed on your {{ type }}’s page on the Hounslow Connect
+          website.
         </gov-body>
 
         <gov-section-break size="l" />
@@ -271,7 +271,7 @@ export default {
       ];
     },
     videoEmbedHelpHref() {
-      const to = "onehounslowconnect@hounslow.gov.uk";
+      const to = this.contactEmail;
       const subject = `Make a video for my ${this.type}`;
       const body = `My ${this.type} is: xxx\n\nI am interested in making a video for my ${this.type} page on Hounslow Connect.`;
 

@@ -146,6 +146,12 @@ Vue.mixin({
   computed: {
     now() {
       return moment().format(moment.HTML5_FMT.DATE_TIME_SECONDS);
+    },
+    contactEmail() {
+      return process.env.VUE_APP_CONTACT_EMAIL;
+    },
+    sessionMinutes() {
+      return process.env.VUE_APP_SESSION_TIMEOUT;
     }
   },
   methods: {
