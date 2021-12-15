@@ -312,6 +312,34 @@ let router = new Router({
       ]
     },
     {
+      path: "/pages",
+      component: () => import("@/views/pages/Index"),
+      meta: { auth: true },
+      children: [
+        {
+          path: "information-pages",
+          name: "information-pages-index",
+          component: () => import("@/views/pages/information-pages/Index")
+        },
+        {
+          path: "information-pages/create",
+          name: "information-pages-create",
+          component: () => import("@/views/pages/information-pages/Create")
+        },
+        {
+          path: "information-pages/:informationPage",
+          name: "information-pages-show",
+          component: () => import("@/views/pages/information-pages/Show")
+        },
+
+        {
+          path: "information-pages/:informationPage/edit",
+          name: "information-pages-edit",
+          component: () => import("@/views/pages/information-pages/Edit")
+        }
+      ]
+    },
+    {
       path: "/admin",
       component: () => import("@/views/admin/Index"),
       meta: { auth: true },
