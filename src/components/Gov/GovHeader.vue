@@ -8,7 +8,7 @@
         >
           <span class="govuk-header__logotype">
             <img
-              src="@/assets/logo-white.png"
+              src="@/assets/logo.svg"
               class="govuk-header__logotype-crown"
             />
           </span>
