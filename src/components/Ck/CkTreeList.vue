@@ -28,8 +28,8 @@
           :edit="edit"
           :nodeType="nodeType"
           :bullet="bullet"
-          @moveUp="$emit('move-up', $event)"
-          @moveDown="$emit('move-down', $event)"
+          @move-up="$emit('move-up', $event)"
+          @move-down="$emit('move-down', $event)"
         />
       </slot>
     </li>

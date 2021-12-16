@@ -11,6 +11,7 @@
         :parent_id.sync="form.parent_id"
         :title.sync="form.title"
         :content.sync="form.content"
+        :image_file_id.sync="form.image_file_id"
         :enabled.sync="form.enabled"
         @clear="form.$errors.clear($event)"
       />
@@ -43,6 +44,7 @@ export default {
         parent_id: null,
         title: "",
         content: "",
+        image_file_id: null,
         enabled: false
       })
     };

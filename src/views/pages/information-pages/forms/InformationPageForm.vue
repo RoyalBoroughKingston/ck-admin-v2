@@ -37,13 +37,7 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Information Page Image"
-      :existing-url="
-        informationPageId
-          ? apiUrl(
-              `/information-pages/${informationPageId}/image.${image_file_suffix}?v=${now}`
-            )
-          : undefined
-      "
+      :existing-url="existingImageUrl"
     />
 
     <ck-radio-input
@@ -87,16 +81,11 @@ export default {
       type: Boolean,
       required: true
     },
-    informationPageId: {
-      type: String,
+    informationPage: {
+      type: Object,
       default: null
     },
     image_file_id: {
-      type: String,
-      default: null
-    },
-    image_file_suffix: {
-      type: String,
       default: null
     }
   },
@@ -117,11 +106,26 @@ export default {
       return [
         { text: "No parent (top level)", value: null },
         ...this.parseInformationPages(
-          this.informationPages.filter(
-            page => page.id !== this.informationPageId
-          )
+          this.informationPages.filter(page => {
+            return !page.parent;
+          })
         )
       ];
+    },
+    imageFileSuffix() {
+      return this.informationPage.image
+        ? {
+            "image/jpeg": "jpg",
+            "image/png": "png"
+          }[this.informationPage.image.mime_type]
+        : null;
+    },
+    existingImageUrl() {
+      return this.informationPage && this.informationPage.image
+        ? this.apiUrl(
+            `/information-pages/${this.informationPage.id}/image.${this.imageFileSuffix}?v=${this.now}`
+          )
+        : undefined;
     }
   },
 
@@ -139,16 +143,20 @@ export default {
       this.loading = false;
     },
     parseInformationPages(pages, parsed = [], depth = 0) {
-      pages.forEach(page => {
-        const text = "-".repeat(depth) + " " + page.title;
-        parsed.push({ text, value: page.id });
-        const children = this.informationPages.filter(
-          child => child.parent_id === page.id
-        );
-        if (children.length > 0 && depth < 4) {
-          parsed = this.parseInformationPages(children, parsed, depth + 1);
-        }
-      });
+      pages
+        .filter(
+          page => !this.informationPage || page.id !== this.informationPage.id
+        )
+        .forEach(page => {
+          const text = "-".repeat(depth) + " " + page.title;
+          parsed.push({ text, value: page.id });
+          const children = this.informationPages.filter(
+            child => child.parent && child.parent.id === page.id
+          );
+          if (children.length > 0 && depth < 4) {
+            parsed = this.parseInformationPages(children, parsed, depth + 1);
+          }
+        });
 
       return parsed;
     }

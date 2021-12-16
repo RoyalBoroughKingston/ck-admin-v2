@@ -13,11 +13,12 @@
       >
       <gov-main-wrapper>
         <information-page-form
-          :informationPageId="informationPage.id"
+          :informationPage="informationPage"
           :errors="form.$errors"
           :parent_id.sync="form.parent_id"
           :title.sync="form.title"
           :content.sync="form.content"
+          :image_file_id.sync="form.image_file_id"
           :enabled.sync="form.enabled"
           @clear="form.$errors.clear($event)"
         />
@@ -73,7 +74,9 @@ export default {
           ? this.informationPage.parent.id
           : null,
         enabled: this.informationPage.enabled,
-        image_file_id: null
+        image_file_id: this.informationPage.image
+          ? this.informationPage.image.id
+          : null
       });
 
       this.loading = false;
@@ -98,6 +101,11 @@ export default {
 
           // Remove the image from the request if null, or delete if false.
           if (data.image_file_id === null) {
+            delete data.image_file_id;
+          } else if (
+            this.informationPage.image &&
+            data.image_file_id === this.informationPage.image.id
+          ) {
             delete data.image_file_id;
           } else if (data.image_file_id === false) {
             data.image_file_id = null;

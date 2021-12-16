@@ -22,12 +22,12 @@
       <gov-grid-column width="two-thirds">
         <ck-tree-list
           key="informationPageslist"
-          :nodes="informationPages"
+          :nodes="informationPagesTree"
           edit="information-pages-edit"
           nodeType="informationPage"
           :bullet="true"
-          @moveUp="onMoveUp"
-          @moveDown="onMoveDown"
+          @move-up="onMoveUp"
+          @move-down="onMoveDown"
         />
       </gov-grid-column>
     </gov-grid-row>
@@ -48,6 +48,15 @@ export default {
       loading: false,
       informationPages: []
     };
+  },
+  computed: {
+    informationPagesTree() {
+      return this.buildInformationPagesTree(
+        this.informationPages.filter(page => {
+          return !page.parent;
+        })
+      );
+    }
   },
   methods: {
     async fetchInformationPages() {
@@ -76,6 +85,31 @@ export default {
         ...informationPage
       });
       this.fetchInformationPages();
+    },
+    buildInformationPagesTree(pages, parsed = [], depth = 0) {
+      pages
+        .sort((page1, page2) => {
+          return page1.order - page2.order;
+        })
+        .forEach(page => {
+          page.children = this.informationPages.filter(
+            child => child.parent && child.parent.id === page.id
+          );
+
+          if (depth === 0) {
+            parsed.push(page);
+          }
+
+          if (page.children.length > 0 && depth < 4) {
+            parsed = this.buildInformationPagesTree(
+              page.children,
+              parsed,
+              depth + 1
+            );
+          }
+        });
+
+      return parsed;
     }
   },
   created() {
