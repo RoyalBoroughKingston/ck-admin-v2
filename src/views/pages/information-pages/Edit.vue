@@ -27,7 +27,7 @@
       <gov-section-break size="l" />
 
       <gov-grid-row>
-        <gov-grid-column width="three-quarters">
+        <gov-grid-column width="one-half">
           <gov-button v-if="form.$submitting" disabled type="submit"
             >Updating...</gov-button
           >
@@ -35,7 +35,7 @@
 
           <ck-submit-error v-if="form.$errors.any()" />
         </gov-grid-column>
-        <gov-grid-column width="one-quarter">
+        <gov-grid-column width="one-half">
           <ck-delete-button
             v-if="canDelete"
             resource="information page"
