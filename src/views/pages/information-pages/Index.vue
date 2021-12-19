@@ -22,7 +22,9 @@
                 />
               </gov-grid-column>
               <gov-grid-column width="one-quarter">
-                <gov-button @click="clearSearch">Cancel</gov-button>
+                <gov-button type="button" @click="clearSearch"
+                  >Cancel</gov-button
+                >
               </gov-grid-column>
             </gov-grid-row>
           </gov-form-group>
@@ -109,7 +111,6 @@ export default {
   methods: {
     async fetchInformationPages() {
       this.loading = true;
-
       const { data } = await http.get("/information-pages/index", {
         params: this.params
       });
