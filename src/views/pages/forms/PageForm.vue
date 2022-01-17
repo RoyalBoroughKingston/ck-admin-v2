@@ -1,8 +1,11 @@
 <template>
   <div>
+    <gov-heading tag="h3" size="m">{{ pageTypes[page_type] }}</gov-heading>
+
     <ck-loader v-if="loading" />
+
     <ck-select-input
-      v-else
+      v-else-if="page_type !== 'landing'"
       :value="parent_id"
       @input="onInput('parent_id', $event)"
       id="parent_id"
@@ -20,23 +23,17 @@
       :error="errors.get('title')"
     />
 
-    <ck-wysiwyg-input
-      :value="content"
-      @input="onInput('content', $event)"
+    <ck-page-content
+      :content="content"
       id="content"
-      label="Page content"
-      :hint="
-        `This is the largest content of the page. Use formatting to improve readability and impact.`
-      "
-      :error="errors.get('content')"
-      large
-      :maxlength="3000"
+      @update="onInput('content', $event)"
+      :errors="errors"
     />
 
     <ck-image-input
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
-      label="Information Page Image"
+      label="Page Image"
       :existing-url="existingImageUrl"
     />
 
@@ -44,7 +41,7 @@
       :value="enabled"
       @input="onInput('enabled', $event)"
       id="enabled"
-      label="Is the information page enabled"
+      label="Is the page enabled"
       hint="Indicates if the page is enabled or disabled"
       :options="enabledOptions"
       :error="errors.get('enabled')"
@@ -55,11 +52,12 @@
 <script>
 import http from "@/http";
 import CkImageInput from "@/components/Ck/CkImageInput";
+import CkPageContent from "@/components/CkPageContent";
 
 export default {
-  name: "InformationPageForm",
+  name: "PageForm",
 
-  components: { CkImageInput },
+  components: { CkImageInput, CkPageContent },
 
   props: {
     errors: {
@@ -74,14 +72,18 @@ export default {
       required: true
     },
     content: {
-      type: String,
+      type: Object,
       required: true
     },
     enabled: {
       type: Boolean,
       required: true
     },
-    informationPage: {
+    page_type: {
+      type: String,
+      default: "information"
+    },
+    page: {
       type: Object,
       default: null
     },
@@ -93,11 +95,15 @@ export default {
   data() {
     return {
       loading: false,
-      informationPages: [],
+      pages: [],
       enabledOptions: [
         { label: "Enabled", value: true },
         { label: "Disabled", value: false }
-      ]
+      ],
+      pageTypes: {
+        information: "Information page",
+        landing: "Landing page"
+      }
     };
   },
 
@@ -105,27 +111,38 @@ export default {
     parentOptions() {
       return [
         { text: "No parent (top level)", value: null },
-        ...this.parseInformationPages(
-          this.informationPages.filter(page => {
+        ...this.parsePages(
+          this.pages.filter(page => {
             return !page.parent;
           })
         )
       ];
     },
     imageFileSuffix() {
-      return this.informationPage.image
+      return this.page.image
         ? {
             "image/jpeg": "jpg",
             "image/png": "png"
-          }[this.informationPage.image.mime_type]
+          }[this.page.image.mime_type]
         : null;
     },
     existingImageUrl() {
-      return this.informationPage && this.informationPage.image
+      return this.page && this.page.image
         ? this.apiUrl(
-            `/information-pages/${this.informationPage.id}/image.${this.imageFileSuffix}?v=${this.now}`
+            `/pages/${this.page.id}/image.${this.imageFileSuffix}?v=${this.now}`
           )
         : undefined;
+    },
+    contentErrors() {
+      let errors = {};
+      Object.keys(this.errors)
+        .filter(key => {
+          return key.startsWith("content_");
+        })
+        .forEach(errorKey => {
+          errors[errorKey] = this.errors[errorKey];
+        });
+      return errors;
     }
   },
 
@@ -134,27 +151,25 @@ export default {
       this.$emit(`update:${field}`, value);
       this.$emit("clear", field);
     },
-    async fetchInformationPages() {
+    async fetchPages() {
       this.loading = true;
 
-      const { data } = await http.get("/information-pages/index");
-      this.informationPages = data.data;
+      const { data } = await http.get("/pages/index");
+      this.pages = data.data;
 
       this.loading = false;
     },
-    parseInformationPages(pages, parsed = [], depth = 0) {
+    parsePages(pages, parsed = [], depth = 0) {
       pages
-        .filter(
-          page => !this.informationPage || page.id !== this.informationPage.id
-        )
+        .filter(page => !this.page || page.id !== this.page.id)
         .forEach(page => {
           const text = "-".repeat(depth) + " " + page.title;
           parsed.push({ text, value: page.id });
-          const children = this.informationPages.filter(
+          const children = this.pages.filter(
             child => child.parent && child.parent.id === page.id
           );
           if (children.length > 0 && depth < 4) {
-            parsed = this.parseInformationPages(children, parsed, depth + 1);
+            parsed = this.parsePages(children, parsed, depth + 1);
           }
         });
 
@@ -163,7 +178,7 @@ export default {
   },
 
   created() {
-    this.fetchInformationPages();
+    this.fetchPages();
   }
 };
 </script>

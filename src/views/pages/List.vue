@@ -1,17 +1,17 @@
 <template>
   <div>
-    <vue-headful title="Help Yourself Sutton - Pages: Information Pages" />
+    <vue-headful title="Help Yourself Sutton - Pages" />
 
     <gov-grid-row>
       <gov-grid-column width="two-thirds">
-        <gov-heading size="l">Information Pages</gov-heading>
+        <gov-heading size="l">Pages</gov-heading>
         <gov-body>
-          From this page, you can edit the information pages available, as well
-          as add new ones.
+          From this page, you can edit the pages available, as well as add new
+          ones.
         </gov-body>
-        <ck-table-filters @search="onSearch" hide-extra>
+        <ck-table-filters @search="onSearch">
           <gov-form-group>
-            <gov-label for="filter[title]">Information Page title</gov-label>
+            <gov-label for="filter[title]">Page title</gov-label>
             <gov-grid-row>
               <gov-grid-column width="three-quarters">
                 <gov-input
@@ -28,11 +28,26 @@
               </gov-grid-column>
             </gov-grid-row>
           </gov-form-group>
+
+          <template slot="extra-filters">
+            <gov-form-group>
+              <gov-label for="filter[page_type]">Page type</gov-label>
+              <gov-select
+                v-model="filters.page_type"
+                id="filter[page_type"
+                name="filter[page_type"
+                :options="pageTypes"
+              />
+            </gov-form-group>
+          </template>
         </ck-table-filters>
       </gov-grid-column>
       <gov-grid-column v-if="auth.isGlobalAdmin" width="one-third">
-        <gov-button :to="{ name: 'information-pages-create' }" success expand
-          >Add a new information page</gov-button
+        <gov-button :to="{ name: 'pages-create-landing' }" success expand
+          >Add a new Landing page</gov-button
+        >
+        <gov-button :to="{ name: 'pages-create-information' }" success expand
+          >Add a new Information page</gov-button
         >
       </gov-grid-column>
     </gov-grid-row>
@@ -41,13 +56,13 @@
     <gov-grid-row v-else>
       <gov-grid-column width="two-thirds">
         <gov-list v-if="searching" :bullet="true">
-          <li v-for="page in informationPages" :key="page.id">
+          <li v-for="page in pages" :key="page.id">
             {{ page.title }}
             <span v-if="auth.isGlobalAdmin">
               <gov-link
                 :to="{
-                  name: 'information-pages-edit',
-                  params: { informationPage: page.id }
+                  name: 'pages-edit',
+                  params: { page: page.id }
                 }"
               >
                 Edit
@@ -57,10 +72,10 @@
         </gov-list>
         <ck-tree-list
           v-else
-          key="informationPageslist"
-          :nodes="informationPagesTree"
-          edit="information-pages-edit"
-          nodeType="informationPage"
+          key="pageslist"
+          :nodes="pagesTree"
+          edit="pages-edit"
+          nodeType="page"
           :bullet="true"
           @move-up="onMoveUp"
           @move-down="onMoveDown"
@@ -76,7 +91,7 @@ import CkTreeList from "@/components/Ck/CkTreeList";
 import CkTableFilters from "@/components/Ck/CkTableFilters";
 
 export default {
-  name: "ListInformationPages",
+  name: "ListPages",
   components: {
     CkTreeList,
     CkTableFilters
@@ -85,17 +100,23 @@ export default {
     return {
       loading: false,
       searching: false,
-      informationPages: [],
+      pages: [],
       filters: {
-        title: ""
+        title: "",
+        page_type: null
       },
-      minSearchPhraseLength: 3
+      minSearchPhraseLength: 3,
+      pageTypes: [
+        { value: "", text: "All" },
+        { value: "information", text: "Information page" },
+        { value: "landing", text: "Landing page" }
+      ]
     };
   },
   computed: {
-    informationPagesTree() {
-      return this.buildInformationPagesTree(
-        this.informationPages.filter(page => {
+    pagesTree() {
+      return this.buildPagesTree(
+        this.pages.filter(page => {
           return !page.parent;
         })
       );
@@ -105,60 +126,56 @@ export default {
       if (this.filters.title.length > this.minSearchPhraseLength) {
         params["filter[title]"] = this.filters.title;
       }
+      if (this.filters.page_type) {
+        params["filter[page_type]"] = this.filters.page_type;
+      }
       return params;
     }
   },
   methods: {
-    async fetchInformationPages() {
+    async fetchPages() {
       this.loading = true;
-      const { data } = await http.get("/information-pages/index", {
+      this.searching = Object.keys(this.params).length > 0;
+      const { data } = await http.get("/pages/index", {
         params: this.params
       });
-      this.informationPages = data.data.map(informationPage => {
+      this.pages = data.data.map(page => {
         return {
-          label: informationPage.title,
-          ...informationPage
+          label: page.title,
+          ...page
         };
       });
 
       this.loading = false;
     },
-    async onMoveUp(informationPage) {
-      informationPage.order--;
-      await http.put(`/information-pages/${informationPage.id}`, {
-        ...informationPage
+    async onMoveUp(page) {
+      page.order--;
+      await http.put(`/pages/${page.id}`, {
+        ...page
       });
-      this.fetchInformationPages();
+      this.fetchPages();
     },
-    async onMoveDown(informationPage) {
-      informationPage.order++;
-      await http.put(`/information-pages/${informationPage.id}`, {
-        ...informationPage
+    async onMoveDown(page) {
+      page.order++;
+      await http.put(`/pages/${page.id}`, {
+        ...page
       });
-      this.fetchInformationPages();
+      this.fetchPages();
     },
     async onSearch() {
-      if (this.filters.title.length > this.minSearchPhraseLength) {
-        this.loading = true;
-        this.searching = true;
-        await this.fetchInformationPages();
-        this.loading = false;
-      }
+      await this.fetchPages();
     },
     async clearSearch() {
       this.filters.title = "";
-      this.loading = true;
-      this.searching = false;
-      await this.fetchInformationPages();
-      this.loading = false;
+      await this.fetchPages();
     },
-    buildInformationPagesTree(pages, parsed = [], depth = 0) {
+    buildPagesTree(pages, parsed = [], depth = 0) {
       pages
         .sort((page1, page2) => {
           return page1.order - page2.order;
         })
         .forEach(page => {
-          page.children = this.informationPages.filter(
+          page.children = this.pages.filter(
             child => child.parent && child.parent.id === page.id
           );
 
@@ -167,11 +184,7 @@ export default {
           }
 
           if (page.children.length > 0 && depth < 4) {
-            parsed = this.buildInformationPagesTree(
-              page.children,
-              parsed,
-              depth + 1
-            );
+            parsed = this.buildPagesTree(page.children, parsed, depth + 1);
           }
         });
 
@@ -179,7 +192,7 @@ export default {
     }
   },
   created() {
-    this.fetchInformationPages();
+    this.fetchPages();
   }
 };
 </script>

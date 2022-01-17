@@ -317,25 +317,32 @@ let router = new Router({
       meta: { auth: true },
       children: [
         {
-          path: "information-pages",
-          name: "information-pages-index",
-          component: () => import("@/views/pages/information-pages/Index")
+          path: "create/landing",
+          name: "pages-create-landing",
+          component: () => import("@/views/pages/Create"),
+          props: { type: "landing" }
         },
         {
-          path: "information-pages/create",
-          name: "information-pages-create",
-          component: () => import("@/views/pages/information-pages/Create")
+          path: "create/information",
+          name: "pages-create-information",
+          component: () => import("@/views/pages/Create"),
+          props: { type: "information" }
         },
         {
-          path: "information-pages/:informationPage",
-          name: "information-pages-show",
-          component: () => import("@/views/pages/information-pages/Show")
+          path: ":page",
+          name: "pages-show",
+          component: () => import("@/views/pages/Show")
         },
 
         {
-          path: "information-pages/:informationPage/edit",
-          name: "information-pages-edit",
-          component: () => import("@/views/pages/information-pages/Edit")
+          path: ":page/edit",
+          name: "pages-edit",
+          component: () => import("@/views/pages/Edit")
+        },
+        {
+          path: "",
+          name: "pages-index",
+          component: () => import("@/views/pages/List")
         }
       ]
     },

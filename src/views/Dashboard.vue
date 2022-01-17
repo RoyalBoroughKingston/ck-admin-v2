@@ -91,8 +91,8 @@
 
         <gov-grid-column width="one-half" v-if="auth.isGlobalAdmin">
           <gov-heading size="l">Pages</gov-heading>
-          <gov-body>Manage information pages on the platform.</gov-body>
-          <gov-button start :to="{ name: 'information-pages-index' }">
+          <gov-body>Manage pages on the platform.</gov-body>
+          <gov-button start :to="{ name: 'pages-index' }">
             Go to pages
           </gov-button>
         </gov-grid-column>

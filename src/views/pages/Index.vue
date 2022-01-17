@@ -8,10 +8,8 @@
       <gov-grid-row>
         <gov-grid-column width="full">
           <gov-heading size="xl">Pages</gov-heading>
-          <gov-tabs :tabs="tabs" bar :panel="false">
-            <gov-section-break size="m" />
-            <router-view />
-          </gov-tabs>
+          <gov-section-break size="m" />
+          <router-view />
         </gov-grid-column>
       </gov-grid-row>
     </gov-main-wrapper>
@@ -20,17 +18,7 @@
 
 <script>
 export default {
-  name: "Pages",
-  data() {
-    return {
-      tabs: [
-        {
-          heading: "Information Pages",
-          to: { name: "information-pages-index" }
-        }
-      ]
-    };
-  }
+  name: "Pages"
 };
 </script>
 
