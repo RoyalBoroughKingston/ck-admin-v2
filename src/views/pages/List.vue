@@ -65,9 +65,14 @@
                   params: { page: page.id }
                 }"
               >
-                Edit
-              </gov-link>
+                Edit </gov-link
+              >&nbsp;
             </span>
+            <gov-tag v-if="page.page_type === 'landing'">Landing page</gov-tag
+            >&nbsp;
+            <gov-tag v-if="!page.enabled" class="govuk-tag--grey"
+              >disabled</gov-tag
+            >
           </li>
         </gov-list>
         <ck-tree-list
@@ -79,7 +84,26 @@
           :bullet="true"
           @move-up="onMoveUp"
           @move-down="onMoveDown"
-        />
+        >
+          <template slot="edit" slot-scope="editProps">
+            <gov-link
+              :to="{
+                name: 'pages-edit',
+                params: { page: editProps.node.id }
+              }"
+            >
+              Edit
+            </gov-link>
+          </template>
+          <template slot="status" slot-scope="statusProps">
+            <gov-tag v-if="statusProps.node.page_type === 'landing'"
+              >Landing page</gov-tag
+            >&nbsp;
+            <gov-tag v-if="!statusProps.node.enabled" class="govuk-tag--grey"
+              >disabled</gov-tag
+            >
+          </template>
+        </ck-tree-list>
       </gov-grid-column>
     </gov-grid-row>
   </div>
@@ -197,4 +221,4 @@ export default {
 };
 </script>
 
-<style l CkTreeListang="scss" scoped></style>
+<style lang="scss" scoped></style>
