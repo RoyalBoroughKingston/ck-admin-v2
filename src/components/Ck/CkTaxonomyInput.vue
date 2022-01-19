@@ -145,7 +145,7 @@ export default {
         });
       });
     },
-    onUpdate({ taxonomy, enabled }) {
+    onUpdate({ node: taxonomy, enabled }) {
       if (enabled) {
         this.onChecked(taxonomy);
       } else {

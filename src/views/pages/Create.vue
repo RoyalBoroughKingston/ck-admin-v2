@@ -11,6 +11,7 @@
         :title.sync="form.title"
         :content.sync="form.content"
         :image_file_id.sync="form.image_file_id"
+        :collections.sync="form.collections"
         :enabled.sync="form.enabled"
         @clear="form.$errors.clear($event)"
       />
@@ -52,6 +53,7 @@ export default {
         content: "",
         page_type: this.type,
         image_file_id: null,
+        collections: [],
         enabled: false
       }),
 

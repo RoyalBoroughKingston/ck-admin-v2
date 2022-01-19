@@ -37,6 +37,16 @@
       :existing-url="existingImageUrl"
     />
 
+    <ck-collection-input
+      v-if="page_type === 'landing'"
+      :value="pageCollectionIds"
+      root="categories"
+      :error="errors.get('collections')"
+      @input="onInput('collections', $event)"
+    >
+      <gov-hint>Select the collections to show on the landing page</gov-hint>
+    </ck-collection-input>
+
     <ck-radio-input
       :value="enabled"
       @input="onInput('enabled', $event)"
@@ -51,13 +61,18 @@
 
 <script>
 import http from "@/http";
+import CkCollectionInput from "@/components/Ck/CkCollectionInput";
 import CkImageInput from "@/components/Ck/CkImageInput";
 import CkPageContent from "@/components/CkPageContent";
 
 export default {
   name: "PageForm",
 
-  components: { CkImageInput, CkPageContent },
+  components: {
+    CkImageInput,
+    CkPageContent,
+    CkCollectionInput
+  },
 
   props: {
     errors: {
@@ -122,7 +137,8 @@ export default {
       return this.page.image
         ? {
             "image/jpeg": "jpg",
-            "image/png": "png"
+            "image/png": "png",
+            "image/svg+xml": "svg"
           }[this.page.image.mime_type]
         : null;
     },
@@ -143,6 +159,11 @@ export default {
           errors[errorKey] = this.errors[errorKey];
         });
       return errors;
+    },
+    pageCollectionIds() {
+      return this.page
+        ? this.page.collections.map(collection => collection.id)
+        : [];
     }
   },
 
@@ -158,6 +179,11 @@ export default {
       this.pages = data.data;
 
       this.loading = false;
+    },
+    async fetchCollections() {
+      this.loading = true;
+      const { data } = await http.get("/collections/categories/all");
+      this.loading = data.data;
     },
     parsePages(pages, parsed = [], depth = 0) {
       pages

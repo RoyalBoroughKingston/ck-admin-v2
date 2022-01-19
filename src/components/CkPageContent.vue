@@ -21,7 +21,7 @@
         :hint="section.hint"
         :error="errors.get(`content_${sectionId}_title`)"
         large
-        :maxlength="3000"
+        :maxlength="60000"
       />
     </div>
   </div>
