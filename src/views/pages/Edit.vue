@@ -14,31 +14,29 @@
           :title.sync="form.title"
           :content.sync="form.content"
           :image_file_id.sync="form.image_file_id"
+          :collections.sync="form.collections"
           :enabled.sync="form.enabled"
           @clear="form.$errors.clear($event)"
         />
+
+        <gov-section-break size="l" />
+
+        <gov-button v-if="form.$submitting" disabled type="submit"
+          >Updating...</gov-button
+        >
+        <gov-button v-else @click="onSubmit" type="submit">Update</gov-button>
+
+        <ck-submit-error v-if="form.$errors.any()" />
+
+        <gov-section-break size="l" />
+
+        <ck-delete-button
+          v-if="canDelete"
+          resource="page"
+          :endpoint="`/pages/${this.page.id}`"
+          @deleted="onDelete"
+        />
       </gov-main-wrapper>
-
-      <gov-section-break size="l" />
-
-      <gov-grid-row>
-        <gov-grid-column width="one-half">
-          <gov-button v-if="form.$submitting" disabled type="submit"
-            >Updating...</gov-button
-          >
-          <gov-button v-else @click="onSubmit" type="submit">Update</gov-button>
-
-          <ck-submit-error v-if="form.$errors.any()" />
-        </gov-grid-column>
-        <gov-grid-column width="one-half">
-          <ck-delete-button
-            v-if="canDelete"
-            resource="page"
-            :endpoint="`/pages/${this.page.id}`"
-            @deleted="onDelete"
-          />
-        </gov-grid-column>
-      </gov-grid-row>
     </template>
   </gov-width-container>
 </template>
@@ -82,7 +80,8 @@ export default {
         page_type: this.page.page_type,
         parent_id: this.page.parent ? this.page.parent.id : null,
         enabled: this.page.enabled,
-        image_file_id: this.page.image ? this.page.image.id : null
+        image_file_id: this.page.image ? this.page.image.id : null,
+        collections: this.page.collections
       });
 
       this.loading = false;
@@ -116,6 +115,13 @@ export default {
           delete data.image_file_id;
         } else if (data.image_file_id === false) {
           data.image_file_id = null;
+        }
+
+        if (
+          JSON.stringify(data.collections) ===
+          JSON.stringify(this.page.collections)
+        ) {
+          delete data.collections;
         }
       });
       this.$router.push({
