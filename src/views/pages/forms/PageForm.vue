@@ -162,7 +162,11 @@ export default {
     },
     pageCollectionIds() {
       return this.page
-        ? this.page.collections.map(collection => collection.id)
+        ? this.page.collection_categories
+            .map(collection => collection.id)
+            .concat(
+              this.page.collection_personas.map(collection => collection.id)
+            )
         : [];
     }
   },
