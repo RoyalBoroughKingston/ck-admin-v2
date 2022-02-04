@@ -100,6 +100,20 @@
             <gov-body v-else>-</gov-body>
           </gov-table-cell>
         </gov-table-row>
+        <gov-table-row>
+          <gov-table-header top scope="row">Tags</gov-table-header>
+          <gov-table-cell>
+            <gov-list v-if="service.tags.length > 0" bullet>
+              <li
+                v-for="(tag, index) in service.tags"
+                :key="`ServiceTag::${index}`"
+              >
+                {{ tag.label }}
+              </li>
+            </gov-list>
+            <template v-else>None</template>
+          </gov-table-cell>
+        </gov-table-row>
       </template>
     </gov-table>
   </div>

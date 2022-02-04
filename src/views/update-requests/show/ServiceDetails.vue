@@ -398,6 +398,37 @@
           }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="service.hasOwnProperty('tags')">
+          <gov-table-header top scope="row">Tags</gov-table-header>
+          <gov-table-cell v-if="original">
+            <gov-list
+              v-if="
+                original.hasOwnProperty('tags') && Array.isArray(original.tags)
+              "
+              bullet
+            >
+              <li
+                v-for="(tag, index) in original.tags"
+                :key="`ServiceTag::Original::${index}`"
+              >
+                {{ tag.label }}
+              </li>
+            </gov-list>
+            <template v-else>None</template>
+          </gov-table-cell>
+          <gov-table-cell>
+            <gov-list v-if="Array.isArray(service.tags)" bullet>
+              <li
+                v-for="(tag, index) in service.tags"
+                :key="`ServiceTag::New::${index}`"
+              >
+                {{ tag.label }}
+              </li>
+            </gov-list>
+            <template v-else>None</template>
+          </gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="service.hasOwnProperty('category_taxonomies')">
           <gov-table-header top scope="row"
             >Category taxonomies</gov-table-header

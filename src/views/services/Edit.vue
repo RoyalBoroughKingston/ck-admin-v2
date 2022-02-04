@@ -53,6 +53,7 @@
                   :score.sync="form.score"
                   :ends_at.sync="form.ends_at"
                   :gallery_items.sync="form.gallery_items"
+                  :tags.sync="form.tags"
                   :id="service.id"
                 >
                   <gov-button @click="onNext" start>Next</gov-button>
@@ -320,6 +321,7 @@ export default {
           file_id: galleryItem.file_id,
           image: null
         })),
+        tags: this.service.tags,
         category_taxonomies: this.service.category_taxonomies.map(
           taxonomy => taxonomy.id
         ),

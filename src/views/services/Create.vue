@@ -82,6 +82,7 @@
                 :score.sync="form.score"
                 :ends_at.sync="form.ends_at"
                 :gallery_items.sync="form.gallery_items"
+                :tags.sync="form.tags"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
               </details-tab>
@@ -264,6 +265,7 @@ export default {
         ],
         offerings: [],
         gallery_items: [],
+        tags: [],
         category_taxonomies: [],
         eligibility_types: {
           taxonomies: [],
