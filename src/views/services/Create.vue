@@ -103,6 +103,7 @@
                 :contact_name.sync="form.contact_name"
                 :contact_phone.sync="form.contact_phone"
                 :contact_email.sync="form.contact_email"
+                :cqc_location_id.sync="form.cqc_location_id"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
               </additional-info-tab>
@@ -237,6 +238,7 @@ export default {
         contact_name: "",
         contact_phone: "",
         contact_email: "",
+        cqc_location_id: "",
         show_referral_disclaimer: false,
         referral_method: "none",
         referral_button_text: "",

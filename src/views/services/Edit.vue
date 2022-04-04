@@ -75,6 +75,7 @@
                   :contact_name.sync="form.contact_name"
                   :contact_phone.sync="form.contact_phone"
                   :contact_email.sync="form.contact_email"
+                  :cqc_location_id.sync="form.cqc_location_id"
                 >
                   <gov-button @click="onNext" start>Next</gov-button>
                 </additional-info-tab>
@@ -306,6 +307,7 @@ export default {
         contact_name: this.service.contact_name || "",
         contact_phone: this.service.contact_phone || "",
         contact_email: this.service.contact_email || "",
+        cqc_location_id: this.service.cqc_location_id || "",
         show_referral_disclaimer: this.service.show_referral_disclaimer,
         referral_method: this.service.referral_method,
         referral_button_text: this.service.referral_button_text || "",
@@ -396,6 +398,9 @@ export default {
           }
           if (data.contact_email === (this.service.contact_email || "")) {
             delete data.contact_email;
+          }
+          if (data.cqc_location_id === (this.service.cqc_location_id || "")) {
+            delete data.cqc_location_id;
           }
           if (
             data.show_referral_disclaimer ===
