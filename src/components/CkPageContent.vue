@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(section, sectionId) in content" :key="sectionId">
+    <div v-for="[sectionId, section] in sortedContent" :key="sectionId">
       <gov-heading tag="h3" size="m">{{ section.label }}</gov-heading>
       <ck-text-input
         v-if="Object.keys(section).includes('title')"
@@ -38,6 +38,32 @@ export default {
     },
     errors: {
       required: true
+    }
+  },
+
+  data() {
+    return {
+      contentOrder: {
+        introduction: 1,
+        about: 2,
+        info_pages: 3,
+        collections: 4
+      }
+    };
+  },
+
+  computed: {
+    sortedContent() {
+      return Object.entries(this.content)
+        .map(([key, value]) => {
+          if (!value.order) {
+            value.order = this.contentOrder[key];
+          }
+          return [key, value];
+        })
+        .sort((a, b) => {
+          return a[1].order - b[1].order;
+        });
     }
   },
 

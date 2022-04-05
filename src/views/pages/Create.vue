@@ -60,22 +60,26 @@ export default {
       contentTypes: {
         landing: {
           introduction: {
+            order: 1,
             label: "Introduction",
             hint: "",
             copy: [""]
           },
           about: {
+            order: 2,
             label: "About",
             hint: "",
             copy: ["", ""]
           },
           info_pages: {
+            order: 3,
             label: "Information Pages",
             hint: "",
             title: "",
             copy: [""]
           },
           collections: {
+            order: 4,
             label: "Collections",
             hint: "",
             title: "",
@@ -84,6 +88,7 @@ export default {
         },
         information: {
           introduction: {
+            order: 1,
             label: "Page content",
             hint:
               "This is the largest content of the page. Use formatting to improve readability and impact.",
