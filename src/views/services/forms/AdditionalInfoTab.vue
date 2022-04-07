@@ -268,6 +268,9 @@ export default {
     },
     contact_email: {
       required: true
+    },
+    cqc_location_id: {
+      required: true
     }
   },
   computed: {
