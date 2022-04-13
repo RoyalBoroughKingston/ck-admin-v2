@@ -106,15 +106,11 @@ export default {
         }
 
         // Remove the image from the request if null, or delete if false.
-        if (data.image_file_id === null) {
-          delete data.image_file_id;
-        } else if (
-          this.page.image &&
-          data.image_file_id === this.page.image.id
+        if (
+          data.image_file_id === null ||
+          (this.page.image && data.image_file_id === this.page.image.id)
         ) {
-          delete data.image_file_id;
-        } else if (data.image_file_id === false) {
-          data.image_file_id = null;
+          delete data.image_file_id
         }
 
         if (
