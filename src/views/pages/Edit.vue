@@ -105,12 +105,14 @@ export default {
           delete data.enabled;
         }
 
-        // Remove the image from the request if null, or delete if false.
-        if (
-          data.image_file_id === null ||
-          (this.page.image && data.image_file_id === this.page.image.id)
-        ) {
+        // Remove the image from the request if unchanged.
+        if (this.page.image && data.image_file_id === this.page.image.id) {
           delete data.image_file_id
+        }
+
+        // Convert false to null if removed
+        if (data.image_file_id === false) {
+          data.image_file_id = null
         }
 
         if (
