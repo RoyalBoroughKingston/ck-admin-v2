@@ -68,6 +68,36 @@ let router = new Router({
       meta: { auth: true }
     },
     {
+      path: "/events",
+      name: "events-index",
+      component: () => import("@/views/events/Index"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/create",
+      name: "events-create",
+      component: () => import("@/views/events/Create"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/:event",
+      name: "events-show",
+      component: () => import("@/views/events/Show"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/:event/edit",
+      name: "events-edit",
+      component: () => import("@/views/events/Edit"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/:event/updated",
+      name: "events-updated",
+      component: () => import("@/views/events/Updated"),
+      meta: { auth: true }
+    },
+    {
       path: "/referrals",
       name: "referrals-index",
       component: () => import("@/views/referrals/Index"),

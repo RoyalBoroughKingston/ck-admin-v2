@@ -165,6 +165,8 @@
         :id="`regular_opening_hours.${index}`"
         :opens_at="regularOpeningHour.opens_at"
         :closes_at="regularOpeningHour.closes_at"
+        opens_at_label="Opening time"
+        closes_at_label="Closing time"
         @update:opens_at="
           onRegularOpeningHourInput({ index, field: 'opens_at', value: $event })
         "
@@ -291,8 +293,8 @@
 <script>
 import moment from "moment";
 import countries from "@/storage/countries";
-import DateInput from "@/views/services/inputs/DateInput";
-import TimePeriodInput from "@/views/services/inputs/TimePeriodInput";
+import DateInput from "@/components/Ck/CkDateInput";
+import TimePeriodInput from "@/components/Ck/CkTimePeriodInput";
 import IsClosedInput from "@/views/services/inputs/IsClosedInput";
 import LocationForm from "@/views/locations/forms/LocationForm";
 import CkImageInput from "@/components/Ck/CkImageInput";
