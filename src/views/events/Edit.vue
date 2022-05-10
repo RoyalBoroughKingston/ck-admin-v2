@@ -37,6 +37,7 @@
               :booking_summary.sync="form.booking_summary"
               :booking_url.sync="form.booking_url"
               :booking_cta.sync="form.booking_cta"
+              :homepage.sync="form.homepage"
               :is_virtual.sync="form.is_virtual"
               :location_id.sync="form.location_id"
               :image_file_id.sync="form.image_file_id"
@@ -113,6 +114,7 @@ export default {
         booking_url: this.event.booking_url || "",
         booking_cta: this.event.booking_cta || "",
         is_virtual: this.event.is_virtual,
+        homepage: this.event.homepage || false,
         location_id: this.event.location_id,
         image_file_id: null
       });
@@ -191,6 +193,10 @@ export default {
             data.location_id === this.event.location_id
           ) {
             delete data.location_id;
+          }
+
+          if (data.homepage === this.event.homepage) {
+            delete data.homepage;
           }
           // Remove the logo from the request if null, or delete if false.
           if (data.image_file_id === null) {

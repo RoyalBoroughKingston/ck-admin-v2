@@ -33,6 +33,7 @@
             :booking_url.sync="form.booking_url"
             :booking_cta.sync="form.booking_cta"
             :is_virtual.sync="form.is_virtual"
+            :homepage.sync="form.homepage"
             :organisations="organisations"
             @update:organisation_id="form.organisation_id = $event"
             @update:location_id="form.location_id = $event"
@@ -83,7 +84,8 @@ export default {
         is_virtual: true,
         location_id: null,
         organisation_id: null,
-        image_file_id: null
+        image_file_id: null,
+        homepage: false
       }),
 
       organisations: [{ text: "Please select", value: null, disabled: true }],

@@ -76,6 +76,10 @@
         <gov-table-cell>{{ event.booking_cta || "-" }}</gov-table-cell>
       </gov-table-row>
       <gov-table-row>
+        <gov-table-header scope="row" top>Show on home page</gov-table-header>
+        <gov-table-cell>{{ onHomepage }}</gov-table-cell>
+      </gov-table-row>
+      <gov-table-row>
         <gov-table-header top scope="row">Image</gov-table-header>
         <gov-table-cell>
           <img
@@ -215,6 +219,9 @@ export default {
     },
     isVirtual() {
       return this.event.is_virtual ? "Yes" : "No";
+    },
+    onHomepage() {
+      return this.event.homepage ? "Yes" : "No";
     }
   }
 };

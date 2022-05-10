@@ -266,6 +266,14 @@
         id ? apiUrl(`/organisation-events/${id}/image.png?v=${now}`) : undefined
       "
     />
+
+    <event-homepage-input
+      :value="homepage"
+      @input="onInput('homepage', $event)"
+      id="homepage"
+      label="Show the Event on the homepage"
+      :error="errors.get('homepage')"
+    />
   </div>
 </template>
 
@@ -274,6 +282,7 @@ import CkDateInput from "@/components/Ck/CkDateInput";
 import CkImageInput from "@/components/Ck/CkImageInput";
 import CkLocationInput from "@/components/Ck/CkLocationInput";
 import CkTimePeriodInput from "@/components/Ck/CkTimePeriodInput";
+import EventHomepageInput from "@/views/events/inputs/EventHomepageInput";
 
 export default {
   name: "OrganisationEventForm",
@@ -282,7 +291,8 @@ export default {
     CkDateInput,
     CkImageInput,
     CkLocationInput,
-    CkTimePeriodInput
+    CkTimePeriodInput,
+    EventHomepageInput
   },
 
   props: {
@@ -367,13 +377,18 @@ export default {
       type: Boolean
     },
     organisation_id: {
-      required: false
+      required: false,
+      default: null
     },
     location_id: {
       required: false
     },
     image_file_id: {
       required: false
+    },
+    homepage: {
+      required: true,
+      type: Boolean
     },
     id: {
       required: false,
