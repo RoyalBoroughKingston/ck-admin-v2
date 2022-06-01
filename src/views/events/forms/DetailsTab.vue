@@ -20,17 +20,20 @@
       :error="errors.get('title')"
     />
 
-    <ck-date-input
+    <ck-date-picker
       id="start_date"
       :value="start_date"
+      :min="todayAsDate"
+      :max="end_date"
       :error="errors.get('start_date')"
       @input="onInput('start_date', $event)"
       label="Start date*"
     />
 
-    <ck-date-input
+    <ck-date-picker
       id="end_date"
       :value="end_date"
+      :min="start_date"
       :error="errors.get('end_date')"
       @input="onInput('end_date', $event)"
       label="End date*"
@@ -278,7 +281,7 @@
 </template>
 
 <script>
-import CkDateInput from "@/components/Ck/CkDateInput";
+import CkDatePicker from "@/components/Ck/CkDatePicker";
 import CkImageInput from "@/components/Ck/CkImageInput";
 import CkLocationInput from "@/components/Ck/CkLocationInput";
 import CkTimePeriodInput from "@/components/Ck/CkTimePeriodInput";
@@ -288,7 +291,7 @@ export default {
   name: "OrganisationEventDetailsTab",
 
   components: {
-    CkDateInput,
+    CkDatePicker,
     CkImageInput,
     CkLocationInput,
     CkTimePeriodInput,
@@ -418,6 +421,13 @@ export default {
           label: `No - the event occurs at a location`
         }
       ];
+    },
+    todayAsDate() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(now.getDate()).padStart(2, "0")}`;
     }
   },
 

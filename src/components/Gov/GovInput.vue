@@ -8,6 +8,8 @@
     :id="id"
     :name="name"
     :type="type"
+    :max="max"
+    :min="min"
     :aria-describedby="ariaDescribedBy"
   />
 </template>
@@ -36,6 +38,12 @@ export default {
     width: {
       type: Number,
       required: false
+    },
+    min: {
+      type: [String, Number]
+    },
+    max: {
+      type: [String, Number]
     }
   },
   computed: {
