@@ -41,6 +41,10 @@
               Induction loop system:
               {{ location.has_induction_loop ? "Yes" : "No" }}
             </li>
+            <li>
+              Accessible toilet:
+              {{ location.has_accessible_toilet ? "Yes" : "No" }}
+            </li>
           </gov-list>
         </gov-table-cell>
       </gov-table-row>

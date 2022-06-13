@@ -108,6 +108,19 @@
           v-text="errors.get('has_wheelchair_access')"
           for="has_wheelchair_access"
         />
+
+        <gov-checkbox
+          :value="has_accessible_toilet"
+          @input="onInput('has_accessible_toilet', $event)"
+          id="has_accessible_toilet"
+          name="has_accessible_toilet"
+          label="Accessible toilet"
+        />
+        <gov-error-message
+          v-if="errors.has('has_accessible_toilet')"
+          v-text="errors.get('has_accessible_toilet')"
+          for="has_accessible_toilet"
+        />
       </gov-checkboxes>
     </gov-form-group>
 
@@ -173,6 +186,10 @@ export default {
       type: Boolean
     },
     has_wheelchair_access: {
+      required: true,
+      type: Boolean
+    },
+    has_accessible_toilet: {
       required: true,
       type: Boolean
     },
