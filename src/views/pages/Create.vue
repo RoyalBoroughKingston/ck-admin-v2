@@ -9,6 +9,7 @@
         :page_type.sync="form.page_type"
         :parent_id.sync="form.parent_id"
         :title.sync="form.title"
+        :excerpt.sync="form.excerpt"
         :content.sync="form.content"
         :image_file_id.sync="form.image_file_id"
         :collections.sync="form.collections"
@@ -49,8 +50,9 @@ export default {
     return {
       form: new Form({
         parent_id: null,
-        title: "",
-        content: "",
+        title: '',
+        excerpt: '',
+        content: '',
         page_type: this.type,
         image_file_id: null,
         collections: [],

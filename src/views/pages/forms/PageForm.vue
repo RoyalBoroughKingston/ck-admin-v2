@@ -23,6 +23,15 @@
       :error="errors.get('title')"
     />
 
+    <ck-text-input
+      :value="excerpt"
+      @input="onInput('excerpt', $event)"
+      id="excerpt"
+      label="Excerpt"
+      type="text"
+      :error="errors.get('excerpt')"
+    />
+
     <ck-page-content
       :content="content"
       id="content"
@@ -85,6 +94,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    excerpt: {
+      type: String,
+      default: '',
     },
     content: {
       type: Object,
