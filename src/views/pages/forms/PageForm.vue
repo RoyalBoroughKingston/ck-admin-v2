@@ -24,6 +24,21 @@
     />
 
     <ck-text-input
+      :value="slug"
+      @input="onInput('slug', $event)"
+      id="slug"
+      label="Unique slug"
+      type="text"
+      :error="errors.get('slug')"
+      v-if="auth.isGlobalAdmin"
+    >
+      <gov-hint slot="hint" for="slug">
+        This will be used to access the page.<br />
+        e.g. example.com/pages/{{ slug }}
+      </gov-hint>
+    </ck-text-input>
+
+    <ck-text-input
       :value="excerpt"
       @input="onInput('excerpt', $event)"
       id="excerpt"
@@ -94,6 +109,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    slug: {
+      type: String,
+      required: true,
     },
     excerpt: {
       type: String,

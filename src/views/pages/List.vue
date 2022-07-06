@@ -175,16 +175,18 @@ export default {
     async onMoveUp(page) {
       page.order--;
       await http.put(`/pages/${page.id}`, {
-        ...page
-      });
-      this.fetchPages();
+        id: page.id,
+        order: page.order,
+      })
+      this.fetchPages()
     },
     async onMoveDown(page) {
       page.order++;
       await http.put(`/pages/${page.id}`, {
-        ...page
-      });
-      this.fetchPages();
+        id: page.id,
+        order: page.order,
+      })
+      this.fetchPages()
     },
     async onSearch() {
       await this.fetchPages();
