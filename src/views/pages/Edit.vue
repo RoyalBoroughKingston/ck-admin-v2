@@ -9,6 +9,7 @@
         <page-form
           :page="page"
           :errors="form.$errors"
+          :is-new="false"
           :parent_id.sync="form.parent_id"
           :page_type.sync="form.page_type"
           :title.sync="form.title"

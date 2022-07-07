@@ -39,7 +39,7 @@
     </ck-text-input>
 
     <ck-text-input
-      :value="excerpt"
+      :value="excerpt || ''"
       @input="onInput('excerpt', $event)"
       id="excerpt"
       label="Excerpt"
@@ -102,6 +102,11 @@ export default {
     errors: {
       type: Object,
       required: true
+    },
+    isNew: {
+      required: false,
+      type: Boolean,
+      default: false,
     },
     parent_id: {
       required: true
@@ -205,8 +210,13 @@ export default {
 
   methods: {
     onInput(field, value) {
-      this.$emit(`update:${field}`, value);
-      this.$emit("clear", field);
+      this.$emit(`update:${field}`, value)
+      this.$emit('clear', field)
+
+      if (this.auth.isGlobalAdmin && field === 'title' && this.isNew) {
+        this.$emit('update:slug', this.slugify(value))
+        this.$emit('clear', 'slug')
+      }
     },
     async fetchPages() {
       this.loading = true;

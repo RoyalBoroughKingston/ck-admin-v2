@@ -6,6 +6,7 @@
     <gov-main-wrapper>
       <page-form
         :errors="form.$errors"
+        :is-new="true"
         :page_type.sync="form.page_type"
         :parent_id.sync="form.parent_id"
         :title.sync="form.title"
