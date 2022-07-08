@@ -13,27 +13,37 @@
       />
       <div
         v-for="(content, index) in section.content"
-        :key="`${sectionId}-copy-${index}`"
+        :key="`${sectionId}-content-${index}`"
       >
         <ck-wysiwyg-input
           v-if="content.type === 'copy'"
           :value="content.value"
-          @input="onChangeCopy(sectionId, 'copy', index, $event)"
+          @input="onChangeCopy(sectionId, index, $event)"
           :id="`${sectionId}-copy-${index}`"
           :label="section.label"
           :hint="section.hint"
-          :error="errors.get(`content_${sectionId}_copy_${index}`)"
+          :error="errors.get(`content.${sectionId}.content.${index}`)"
           large
           :maxlength="60000"
         />
+        <ck-call-to-action
+          v-else-if="content.type === 'cta'"
+          :call-to-action="content"
+          :id="`${sectionId}-cta-${index}`"
+          @input="onChangeCalltoAction(sectionId, index, $event)"
+          :error="errors.get(`content.${sectionId}.content.${index}`)"
+        />
         <gov-button type="button" @click="addCopy(sectionId, index)"
-          >Add Content</gov-button
+          >Add Copy</gov-button
+        >&nbsp;
+        <gov-button type="button" @click="addCallToAction(sectionId, index)"
+          >Add Call to action</gov-button
         >&nbsp;
         <gov-button
           v-if="index > 0"
           type="button"
           :warning="true"
-          @click="removeCopy(sectionId, index)"
+          @click="removeContent(sectionId, index)"
           >Remove Content</gov-button
         >
       </div>
@@ -42,8 +52,14 @@
 </template>
 
 <script>
+import CkCallToAction from './Ck/CkCallToAction'
+
 export default {
   name: "PageContent",
+
+  components: {
+    CkCallToAction,
+  },
 
   props: {
     content: {
@@ -93,13 +109,18 @@ export default {
     onChangeCopy(section, index, value) {
       const content = Object.assign({}, this.content)
 
-      content[section]['content'][index] = {
-        type: 'copy',
-        value: value,
-      }
+      content[section]['content'][index].value = value
 
       this.$emit('update', content)
-      this.$emit('clear', `content_${section}_copy`)
+      this.$emit('clear', `content_${section}_content`)
+    },
+    onChangeCalltoAction(section, index, cta) {
+      const content = Object.assign({}, this.content)
+
+      content[section]['content'][index] = cta
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_content`)
     },
     addCopy(section, index) {
       const content = Object.assign({}, this.content)
@@ -110,15 +131,29 @@ export default {
       })
 
       this.$emit('update', content)
-      this.$emit('clear', `content_${section}_copy`)
+      this.$emit('clear', `content_${section}_content`)
     },
-    removeCopy(section, index) {
+    addCallToAction(section, index) {
+      const content = Object.assign({}, this.content)
+
+      content[section]['content'].splice(index + 1, 0, {
+        type: 'cta',
+        title: '',
+        description: '',
+        url: '',
+        buttonText: '',
+      })
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_content`)
+    },
+    removeContent(section, index) {
       const content = Object.assign({}, this.content)
 
       content[section]['content'].splice(index, 1)
 
       this.$emit('update', content)
-      this.$emit('clear', `content_${section}_copy`)
+      this.$emit('clear', `content_${section}_content`)
     },
   },
 }
