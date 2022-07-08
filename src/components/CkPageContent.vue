@@ -5,24 +5,38 @@
       <ck-text-input
         v-if="Object.keys(section).includes('title')"
         :value="section.title"
-        @input="onChange(sectionId, 'title', null, $event)"
+        @input="onChangeTitle(sectionId, $event)"
         :id="`${sectionId}-title`"
         label="Title"
         type="text"
         :error="errors.get(`content_${sectionId}_title`)"
       />
-      <ck-wysiwyg-input
-        v-for="(copy, index) in section.copy"
+      <div
+        v-for="(content, index) in section.content"
         :key="`${sectionId}-copy-${index}`"
-        :value="copy"
-        @input="onChange(sectionId, 'copy', index, $event)"
-        :id="`${sectionId}-copy-${index}`"
-        :label="section.label"
-        :hint="section.hint"
-        :error="errors.get(`content_${sectionId}_copy_${index}`)"
-        large
-        :maxlength="60000"
-      />
+      >
+        <ck-wysiwyg-input
+          v-if="content.type === 'copy'"
+          :value="content.value"
+          @input="onChangeCopy(sectionId, 'copy', index, $event)"
+          :id="`${sectionId}-copy-${index}`"
+          :label="section.label"
+          :hint="section.hint"
+          :error="errors.get(`content_${sectionId}_copy_${index}`)"
+          large
+          :maxlength="60000"
+        />
+        <gov-button type="button" @click="addCopy(sectionId, index)"
+          >Add Content</gov-button
+        >&nbsp;
+        <gov-button
+          v-if="index > 0"
+          type="button"
+          :warning="true"
+          @click="removeCopy(sectionId, index)"
+          >Remove Content</gov-button
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -68,19 +82,46 @@ export default {
   },
 
   methods: {
-    onChange(section, field, index, value) {
-      const content = Object.assign({}, this.content);
+    onChangeTitle(section, value) {
+      const content = Object.assign({}, this.content)
 
-      if (null === index) {
-        content[section][field] = value;
-      } else {
-        content[section][field][index] = value;
+      content[section]['title'] = value
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_title`)
+    },
+    onChangeCopy(section, index, value) {
+      const content = Object.assign({}, this.content)
+
+      content[section]['content'][index] = {
+        type: 'copy',
+        value: value,
       }
-      this.$emit("update", content);
-      this.$emit("clear", `content_${section}_${field}`);
-    }
-  }
-};
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_copy`)
+    },
+    addCopy(section, index) {
+      const content = Object.assign({}, this.content)
+
+      content[section]['content'].splice(index + 1, 0, {
+        type: 'copy',
+        value: '',
+      })
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_copy`)
+    },
+    removeCopy(section, index) {
+      const content = Object.assign({}, this.content)
+
+      content[section]['content'].splice(index, 1)
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_copy`)
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped></style>

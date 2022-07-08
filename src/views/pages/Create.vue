@@ -66,42 +66,67 @@ export default {
         landing: {
           introduction: {
             order: 1,
-            label: "Introduction",
-            hint: "",
-            copy: [""]
+            label: 'Introduction',
+            hint: '',
+            content: [
+              {
+                type: 'copy',
+                value: '',
+              },
+            ],
           },
           about: {
             order: 2,
-            label: "About",
-            hint: "",
-            copy: ["", ""]
+            label: 'About',
+            hint: '',
+            content: [
+              {
+                type: 'copy',
+                value: '',
+              },
+            ],
           },
           info_pages: {
             order: 3,
-            label: "Information Pages",
-            hint: "",
-            title: "",
-            copy: [""]
+            label: 'Information Pages',
+            hint: '',
+            title: '',
+            content: [
+              {
+                type: 'copy',
+                value: '',
+              },
+            ],
           },
           collections: {
             order: 4,
-            label: "Collections",
-            hint: "",
-            title: "",
-            copy: [""]
-          }
+            label: 'Collections',
+            hint: '',
+            title: '',
+            content: [
+              {
+                type: 'copy',
+                value: '',
+              },
+            ],
+          },
         },
         information: {
           introduction: {
             order: 1,
             label: "Page content",
             hint:
-              "This is the largest content of the page. Use formatting to improve readability and impact.",
-            copy: [""]
-          }
-        }
-      }
-    };
+              'This is the largest content of the page. Use formatting to improve readability and impact.',
+            content: [
+              {
+                type: 'copy',
+                value: '',
+              },
+            ],
+          },
+        },
+      },
+    }
   },
 
   methods: {
