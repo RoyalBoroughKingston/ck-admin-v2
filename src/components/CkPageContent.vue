@@ -34,17 +34,27 @@
           :error="errors.get(`content.${sectionId}.content.${index}`)"
         />
         <gov-button type="button" @click="addCopy(sectionId, index)"
-          >Add Copy</gov-button
+          >Add Copy here</gov-button
         >&nbsp;
         <gov-button type="button" @click="addCallToAction(sectionId, index)"
-          >Add Call to action</gov-button
+          >Add Call to action here</gov-button
         >&nbsp;
+        <span v-if="index > 0">
+          <gov-button
+            type="button"
+            :warning="true"
+            @click="removeContent(sectionId, index)"
+            >Remove Content</gov-button
+          >&nbsp;
+          <gov-button type="button" @click="moveUp(sectionId, index)"
+            >Move up</gov-button
+          >&nbsp;
+        </span>
         <gov-button
-          v-if="index > 0"
+          v-if="index < section.content.length - 1"
           type="button"
-          :warning="true"
-          @click="removeContent(sectionId, index)"
-          >Remove Content</gov-button
+          @click="moveDown(sectionId, index)"
+          >Move down</gov-button
         >
       </div>
     </div>
@@ -151,6 +161,28 @@ export default {
       const content = Object.assign({}, this.content)
 
       content[section]['content'].splice(index, 1)
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_content`)
+    },
+
+    moveUp(section, index) {
+      const content = Object.assign({}, this.content)
+      const contentBlock = Object.assign({}, content[section]['content'][index])
+
+      content[section]['content'].splice(index, 1)
+      content[section]['content'].splice(index - 1, 0, contentBlock)
+
+      this.$emit('update', content)
+      this.$emit('clear', `content_${section}_content`)
+    },
+
+    moveDown(section, index) {
+      const content = Object.assign({}, this.content)
+      const contentBlock = Object.assign({}, content[section]['content'][index])
+
+      content[section]['content'].splice(index, 1)
+      content[section]['content'].splice(index + 1, 0, contentBlock)
 
       this.$emit('update', content)
       this.$emit('clear', `content_${section}_content`)
