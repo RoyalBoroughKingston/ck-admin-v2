@@ -1,6 +1,6 @@
 <template>
   <gov-form-group :invalid="error !== null">
-    <gov-label>Opening time</gov-label>
+    <gov-label>{{ opens_at_label }} / {{ closes_at_label }}</gov-label>
     <gov-select
       :value="opens_at"
       @input="$emit('update:opens_at', $event)"
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "TimePeriodInput",
+  name: "CkTimePeriodInput",
   props: {
     id: {
       required: true,
@@ -33,6 +33,12 @@ export default {
       required: true
     },
     closes_at: {
+      required: true
+    },
+    opens_at_label: {
+      required: true
+    },
+    closes_at_label: {
       required: true
     },
     error: {

@@ -68,6 +68,36 @@ let router = new Router({
       meta: { auth: true }
     },
     {
+      path: "/events",
+      name: "events-index",
+      component: () => import("@/views/events/Index"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/create",
+      name: "events-create",
+      component: () => import("@/views/events/Create"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/:event",
+      name: "events-show",
+      component: () => import("@/views/events/Show"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/:event/edit",
+      name: "events-edit",
+      component: () => import("@/views/events/Edit"),
+      meta: { auth: true }
+    },
+    {
+      path: "/events/:event/updated",
+      name: "events-updated",
+      component: () => import("@/views/events/Updated"),
+      meta: { auth: true }
+    },
+    {
       path: "/referrals",
       name: "referrals-index",
       component: () => import("@/views/referrals/Index"),
@@ -336,10 +366,15 @@ let router = new Router({
                 import("@/views/admin/index/collections/Categories")
             },
             {
-              path: "organisations",
+              path: "personas",
               name: "admin-index-collections-personas",
               component: () =>
                 import("@/views/admin/index/collections/Personas")
+            },
+            {
+              path: "events",
+              name: "admin-index-collections-events",
+              component: () => import("@/views/admin/index/collections/Events")
             }
           ]
         },
@@ -501,6 +536,18 @@ let router = new Router({
       path: "/collections/personas/:collection/edit",
       name: "collections-personas-edit",
       component: () => import("@/views/collections/personas/Edit"),
+      meta: { auth: true }
+    },
+    {
+      path: "/collections/events/create",
+      name: "collections-events-create",
+      component: () => import("@/views/collections/events/Create"),
+      meta: { auth: true }
+    },
+    {
+      path: "/collections/events/:collection/edit",
+      name: "collections-events-edit",
+      component: () => import("@/views/collections/events/Edit"),
       meta: { auth: true }
     },
     {

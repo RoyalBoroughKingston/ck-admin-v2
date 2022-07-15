@@ -24,6 +24,9 @@ Vue.use(VueGoogleMaps, {
   }
 });
 
+// Import Duet Date Picker
+import { defineCustomElements } from "@duetds/date-picker/dist/loader";
+
 // Vue
 import Vue from "vue";
 import App from "@/App.vue";
@@ -226,6 +229,12 @@ Vue.mixin({
 });
 
 Vue.config.productionTip = false;
+
+// configure Vue.js to ignore Duet Date Picker
+Vue.config.ignoredElements = [/duet-\w*/];
+
+// Register Duet Date Picker
+defineCustomElements(window);
 
 new Vue({
   router,

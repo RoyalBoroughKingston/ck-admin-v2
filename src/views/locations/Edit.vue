@@ -32,6 +32,7 @@
               :country.sync="form.country"
               :has_induction_loop.sync="form.has_induction_loop"
               :has_wheelchair_access.sync="form.has_wheelchair_access"
+              :has_accessible_toilet.sync="form.has_accessible_toilet"
               @update:image_file_id="form.image_file_id = $event"
               @clear="form.$errors.clear($event)"
             />
@@ -94,6 +95,7 @@ export default {
         accessibility_info: this.location.accessibility_info || "",
         has_wheelchair_access: this.location.has_wheelchair_access,
         has_induction_loop: this.location.has_induction_loop,
+        has_accessible_toilet: this.location.has_accessible_toilet,
         image_file_id: null
       });
 
@@ -137,6 +139,11 @@ export default {
           }
           if (data.has_induction_loop === this.location.has_induction_loop) {
             delete data.has_induction_loop;
+          }
+          if (
+            data.has_accessible_toilet === this.location.has_accessible_toilet
+          ) {
+            delete data.has_accessible_toilet;
           }
           // Remove the logo from the request if null, or delete if false.
           if (data.image_file_id === null) {

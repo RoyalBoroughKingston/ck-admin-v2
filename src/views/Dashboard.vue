@@ -60,6 +60,15 @@
           <gov-section-break size="m" />
         </gov-grid-column>
 
+        <gov-grid-column width="one-half" v-if="auth.isOrganisationAdmin">
+          <gov-heading size="l">Events</gov-heading>
+          <gov-body>Add or edit events on Hounslow Connect.</gov-body>
+          <gov-button start :to="{ name: 'events-index' }">
+            Go to events
+          </gov-button>
+          <gov-section-break size="m" />
+        </gov-grid-column>
+
         <gov-grid-column width="one-half">
           <gov-heading size="l">Users</gov-heading>
           <gov-body>View, add and edit users in your organisation.</gov-body>
