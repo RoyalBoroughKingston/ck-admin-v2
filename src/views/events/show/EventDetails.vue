@@ -148,7 +148,6 @@ export default {
       const startDate = new Date(
         `${this.event.start_date} ${this.event.start_time}`
       );
-      console.debug("Start Date:", startDate);
       return `${String(startDate.getDate()).padStart(2, "0")}/${String(
         startDate.getMonth() + 1
       ).padStart(2, "0")}/${startDate.getFullYear()} ${String(
@@ -157,7 +156,6 @@ export default {
     },
     endDateTimeStr() {
       const endDate = new Date(`${this.event.end_date} ${this.event.end_time}`);
-      console.debug("End Date:", endDate);
       return `${String(endDate.getDate()).padStart(2, "0")}/${String(
         endDate.getMonth() + 1
       ).padStart(2, "0")}/${endDate.getFullYear()} ${String(
