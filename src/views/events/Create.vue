@@ -76,9 +76,9 @@
                 :is_virtual.sync="form.is_virtual"
                 :homepage.sync="form.homepage"
                 :organisations="organisations"
-                @update:organisation_id="form.organisation_id = $event"
-                @update:location_id="form.location_id = $event"
-                @update:image_file_id="form.image_file_id = $event"
+                :organisation_id.sync="form.organisation_id"
+                :location_id.sync="form.location_id"
+                :image_file_id.sync="form.image_file_id"
                 @clear="form.$errors.clear($event)"
               />
               <taxonomies-tab
