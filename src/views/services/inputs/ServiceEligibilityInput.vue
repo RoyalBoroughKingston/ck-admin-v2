@@ -91,9 +91,9 @@ export default {
   },
 
   methods: {
-    onUpdateTaxonomies({ taxonomy, enabled }) {
-      this.$emit("update:taxonomies", { taxonomy, enabled });
-      this.$emit("clear");
+    onUpdateTaxonomies({ node: taxonomy, enabled }) {
+      this.$emit('update:taxonomies', { taxonomy, enabled })
+      this.$emit('clear')
     },
 
     onUpdateCustom(customEligibity) {
