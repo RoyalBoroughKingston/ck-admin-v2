@@ -169,7 +169,9 @@
 
         <gov-heading size="m">Tags</gov-heading>
 
-        <gov-body> Select tags to help users find the {{ type }}. </gov-body>
+        <gov-body v-if="auth.isGlobalAdmin">
+          Select tags to help users find the {{ type }}.
+        </gov-body>
 
         <tag-input
           :service-tags="tags"

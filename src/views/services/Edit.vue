@@ -457,6 +457,9 @@ export default {
           ) {
             delete data.eligibility_types;
           }
+          if (JSON.stringify(data.tags) === JSON.stringify(this.service.tags)) {
+            delete data.tags
+          }
 
           // Remove the logo from the request if null, or delete if false.
           if (data.logo_file_id === null) {
