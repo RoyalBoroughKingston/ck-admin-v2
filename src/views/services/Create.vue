@@ -79,6 +79,7 @@
                 :url.sync="form.url"
                 @update:logo_file_id="form.logo_file_id = $event"
                 :status.sync="form.status"
+                :ends_at.sync="form.ends_at"
                 :gallery_items.sync="form.gallery_items"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
@@ -239,6 +240,7 @@ export default {
         referral_button_text: "",
         referral_email: "",
         referral_url: "",
+        ends_at: "",
         criteria: {
           age_group: "",
           disability: "",
@@ -297,6 +299,11 @@ export default {
   methods: {
     async onSubmit() {
       const data = await this.form.post("/services", (config, data) => {
+        // Append time to end date (set to morning).
+        if (data.ends_at !== "") {
+          data.ends_at = `${data.ends_at}T00:00:00+0000`;
+        }
+
         // Remove useful info if only item and empty.
         if (
           data.useful_infos.length === 1 &&

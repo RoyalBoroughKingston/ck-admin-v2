@@ -97,6 +97,12 @@
           <gov-table-cell>{{ service.status | status }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="service.hasOwnProperty('ends_at')">
+          <gov-table-header top scope="row">End date</gov-table-header>
+          <gov-table-cell>{{ original.ends_at | endsAt }}</gov-table-cell>
+          <gov-table-cell>{{ service.ends_at | endsAt }}</gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="service.hasOwnProperty('is_free')">
           <gov-table-header top scope="row">Is free</gov-table-header>
           <gov-table-cell v-if="original">{{
@@ -496,6 +502,7 @@
 
 <script>
 import http from "@/http";
+import moment from "moment";
 import CkCarousel from "@/components/Ck/CkCarousel";
 import CkTaxonomyTree from "@/components/Ck/CkTaxonomyTree";
 
@@ -736,6 +743,13 @@ export default {
 
     showReferralDisclaimer(showReferralDisclaimer) {
       return showReferralDisclaimer ? "Show" : "Hide";
+    },
+
+    endsAt(date) {
+      if (date === null || date === "") {
+        return "";
+      }
+      return moment(date).format("D/M/YYYY");
     }
   },
 

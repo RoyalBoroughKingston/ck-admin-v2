@@ -52,6 +52,7 @@
                   @update:logo_file_id="form.logo_file_id = $event"
                   @update:logo="form.logo = $event"
                   :status.sync="form.status"
+                  :ends_at.sync="form.ends_at"
                   :gallery_items.sync="form.gallery_items"
                   :id="service.id"
                 >
@@ -310,6 +311,7 @@ export default {
         referral_button_text: this.service.referral_button_text || "",
         referral_email: this.service.referral_email || "",
         referral_url: this.service.referral_url || "",
+        ends_at: (this.service.ends_at || "").substring(0, 10),
         useful_infos: this.service.useful_infos,
         offerings: this.service.offerings,
         gallery_items: this.service.gallery_items.map(galleryItem => ({
@@ -334,6 +336,11 @@ export default {
         (config, data) => {
           // Append preview mode if enabled.
           data.preview = preview;
+
+          // Append time to end date (set to morning).
+          if (data.ends_at !== "") {
+            data.ends_at = `${data.ends_at}T00:00:00+0000`;
+          }
 
           // Remove any unchanged values.
           if (data.organisation_id === this.service.organisation_id) {
@@ -407,6 +414,9 @@ export default {
           }
           if (data.referral_url === (this.service.referral_url || "")) {
             delete data.referral_url;
+          }
+          if (data.ends_at === (this.service.ends_at || "")) {
+            delete data.ends_at;
           }
           if (
             JSON.stringify(data.useful_infos) ===
