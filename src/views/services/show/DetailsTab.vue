@@ -74,6 +74,20 @@
           <gov-table-cell>{{ service.ends_at | endsAt }}</gov-table-cell>
         </gov-table-row>
         <gov-table-row>
+          <gov-table-header top scope="row">Last updated</gov-table-header>
+          <gov-table-cell>
+            {{ service.last_modified_at | lastModifiedAt }}
+            <template v-if="auth.isServiceAdmin(service)">
+              <gov-link
+                v-if="!refreshForm.$submitting"
+                @click="onMarkAsStillUpToDate"
+                >(mark as still up to date)</gov-link
+              >
+              <template v-else>(marking as still up to date...)</template>
+            </template>
+          </gov-table-cell>
+        </gov-table-row>
+        <gov-table-row>
           <gov-table-header top scope="row"
             >Gallery items ({{ imageUrls.length }})</gov-table-header
           >
@@ -89,6 +103,7 @@
 
 <script>
 import moment from "moment";
+import Form from "@/classes/Form";
 import CkCarousel from "@/components/Ck/CkCarousel";
 
 export default {
@@ -103,6 +118,12 @@ export default {
     }
   },
 
+  data() {
+    return {
+      refreshForm: new Form({})
+    };
+  },
+
   computed: {
     imageUrls() {
       return this.service.gallery_items.map(galleryItem => galleryItem.url);
@@ -115,6 +136,17 @@ export default {
         return "No end date";
       }
       return moment(date).format("D/M/YYYY");
+    },
+
+    lastModifiedAt(date) {
+      return moment(date).format("D/M/YYYY");
+    }
+  },
+
+  methods: {
+    async onMarkAsStillUpToDate() {
+      await this.refreshForm.put(`/services/${this.service.id}/refresh`);
+      this.$router.go();
     }
   }
 };
