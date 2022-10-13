@@ -9,7 +9,7 @@ export default class Form {
    * @param {object} config
    * @param {object} httpClient
    */
-  constructor(data, config = {}, httpClient = http) {
+  constructor(data = {}, config = {}, httpClient = http) {
     this.$originalData = data;
 
     for (let field in data) {
