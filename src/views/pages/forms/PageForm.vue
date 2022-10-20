@@ -107,7 +107,7 @@ export default {
     isNew: {
       required: false,
       type: Boolean,
-      default: false,
+      default: false
     },
     parent_id: {
       required: true
@@ -118,11 +118,11 @@ export default {
     },
     slug: {
       type: String,
-      required: true,
+      required: true
     },
     excerpt: {
       type: String,
-      default: '',
+      default: ""
     },
     content: {
       type: Object,
@@ -211,12 +211,12 @@ export default {
 
   methods: {
     onInput(field, value) {
-      this.$emit(`update:${field}`, value)
-      this.$emit('clear', field)
+      this.$emit(`update:${field}`, value);
+      this.$emit("clear", field);
 
-      if (this.auth.isGlobalAdmin && field === 'title' && this.isNew) {
-        this.$emit('update:slug', this.slugify(value))
-        this.$emit('clear', 'slug')
+      if (this.auth.isGlobalAdmin && field === "title" && this.isNew) {
+        this.$emit("update:slug", this.slugify(value));
+        this.$emit("clear", "slug");
       }
     },
     async fetchPages() {

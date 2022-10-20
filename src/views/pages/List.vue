@@ -176,17 +176,17 @@ export default {
       page.order--;
       await http.put(`/pages/${page.id}`, {
         id: page.id,
-        order: page.order,
-      })
-      this.fetchPages()
+        order: page.order
+      });
+      this.fetchPages();
     },
     async onMoveDown(page) {
       page.order++;
       await http.put(`/pages/${page.id}`, {
         id: page.id,
-        order: page.order,
-      })
-      this.fetchPages()
+        order: page.order
+      });
+      this.fetchPages();
     },
     async onSearch() {
       await this.fetchPages();

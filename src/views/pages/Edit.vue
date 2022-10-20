@@ -98,10 +98,10 @@ export default {
           delete data.title;
         }
         if (data.slug === this.page.slug) {
-          delete data.slug
+          delete data.slug;
         }
         if (data.excerpt === this.page.excerpt) {
-          delete data.excerpt
+          delete data.excerpt;
         }
         if (data.content === this.page.content) {
           delete data.content;
@@ -118,12 +118,12 @@ export default {
 
         // Remove the image from the request if unchanged.
         if (this.page.image && data.image_file_id === this.page.image.id) {
-          delete data.image_file_id
+          delete data.image_file_id;
         }
 
         // Convert false to null if removed
         if (data.image_file_id === false) {
-          data.image_file_id = null
+          data.image_file_id = null;
         }
 
         if (

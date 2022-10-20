@@ -7,10 +7,7 @@
           class="govuk-header__link govuk-header__link--homepage"
         >
           <span class="govuk-header__logotype">
-            <img
-              src="@/assets/logo.svg"
-              class="govuk-header__logotype-crown"
-            />
+            <img src="@/assets/logo.svg" class="govuk-header__logotype-crown" />
           </span>
         </router-link>
       </div>

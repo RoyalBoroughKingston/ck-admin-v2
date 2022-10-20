@@ -62,13 +62,13 @@
 </template>
 
 <script>
-import CkCallToAction from './Ck/CkCallToAction'
+import CkCallToAction from "./Ck/CkCallToAction";
 
 export default {
   name: "PageContent",
 
   components: {
-    CkCallToAction,
+    CkCallToAction
   },
 
   props: {
@@ -109,86 +109,92 @@ export default {
 
   methods: {
     onChangeTitle(section, value) {
-      const content = Object.assign({}, this.content)
+      const content = Object.assign({}, this.content);
 
-      content[section]['title'] = value
+      content[section]["title"] = value;
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_title`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_title`);
     },
     onChangeCopy(section, index, value) {
-      const content = Object.assign({}, this.content)
+      const content = Object.assign({}, this.content);
 
-      content[section]['content'][index].value = value
+      content[section]["content"][index].value = value;
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
     },
     onChangeCalltoAction(section, index, cta) {
-      const content = Object.assign({}, this.content)
+      const content = Object.assign({}, this.content);
 
-      content[section]['content'][index] = cta
+      content[section]["content"][index] = cta;
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
     },
     addCopy(section, index) {
-      const content = Object.assign({}, this.content)
+      const content = Object.assign({}, this.content);
 
-      content[section]['content'].splice(index + 1, 0, {
-        type: 'copy',
-        value: '',
-      })
+      content[section]["content"].splice(index + 1, 0, {
+        type: "copy",
+        value: ""
+      });
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
     },
     addCallToAction(section, index) {
-      const content = Object.assign({}, this.content)
+      const content = Object.assign({}, this.content);
 
-      content[section]['content'].splice(index + 1, 0, {
-        type: 'cta',
-        title: '',
-        description: '',
-        url: '',
-        buttonText: '',
-      })
+      content[section]["content"].splice(index + 1, 0, {
+        type: "cta",
+        title: "",
+        description: "",
+        url: "",
+        buttonText: ""
+      });
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
     },
     removeContent(section, index) {
-      const content = Object.assign({}, this.content)
+      const content = Object.assign({}, this.content);
 
-      content[section]['content'].splice(index, 1)
+      content[section]["content"].splice(index, 1);
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
     },
 
     moveUp(section, index) {
-      const content = Object.assign({}, this.content)
-      const contentBlock = Object.assign({}, content[section]['content'][index])
+      const content = Object.assign({}, this.content);
+      const contentBlock = Object.assign(
+        {},
+        content[section]["content"][index]
+      );
 
-      content[section]['content'].splice(index, 1)
-      content[section]['content'].splice(index - 1, 0, contentBlock)
+      content[section]["content"].splice(index, 1);
+      content[section]["content"].splice(index - 1, 0, contentBlock);
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
     },
 
     moveDown(section, index) {
-      const content = Object.assign({}, this.content)
-      const contentBlock = Object.assign({}, content[section]['content'][index])
+      const content = Object.assign({}, this.content);
+      const contentBlock = Object.assign(
+        {},
+        content[section]["content"][index]
+      );
 
-      content[section]['content'].splice(index, 1)
-      content[section]['content'].splice(index + 1, 0, contentBlock)
+      content[section]["content"].splice(index, 1);
+      content[section]["content"].splice(index + 1, 0, contentBlock);
 
-      this.$emit('update', content)
-      this.$emit('clear', `content_${section}_content`)
-    },
-  },
-}
+      this.$emit("update", content);
+      this.$emit("clear", `content_${section}_content`);
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

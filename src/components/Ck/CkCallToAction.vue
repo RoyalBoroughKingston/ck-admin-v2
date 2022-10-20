@@ -38,27 +38,27 @@
 
 <script>
 export default {
-  name: 'CallToAction',
+  name: "CallToAction",
 
   props: {
     callToAction: {
       type: Object,
-      required: true,
+      required: true
     },
     error: {
-      required: true,
-    },
+      required: true
+    }
   },
 
   methods: {
     onInput(field, value) {
-      const callToAction = Object.assign({}, this.callToAction)
-      callToAction[field] = value
-      this.$emit('input', callToAction)
-      this.$emit('clear', 'callToAction')
-    },
-  },
-}
+      const callToAction = Object.assign({}, this.callToAction);
+      callToAction[field] = value;
+      this.$emit("input", callToAction);
+      this.$emit("clear", "callToAction");
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>
