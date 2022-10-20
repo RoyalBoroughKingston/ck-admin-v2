@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <vue-headful
-      title="Hounslow Connect"
+      :title="appName"
       :head="headAttributes"
       :html="htmlAttributes"
     />
 
     <gov-skip-link href="#main-content">Skip to main content</gov-skip-link>
 
-    <gov-header service-name="Hounslow Connect" :navigation="headerNav" />
+    <gov-header :service-name="appName" :navigation="headerNav" />
 
     <div class="govuk-width-container">
       <main

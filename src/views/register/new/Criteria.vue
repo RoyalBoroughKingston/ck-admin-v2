@@ -9,7 +9,7 @@
     </gov-back-link>
 
     <gov-heading size="l">
-      Is your organisation right for Hounslow Connect?
+      Is your organisation right for {{ appName }}?
     </gov-heading>
 
     <gov-body>
@@ -19,7 +19,7 @@
     <gov-form-group>
       <gov-label>
         <strong>
-          The organisation that you want to be listed on Hounslow Connect is:
+          The organisation that you want to be listed on {{ appName }} is:
         </strong>
       </gov-label>
 

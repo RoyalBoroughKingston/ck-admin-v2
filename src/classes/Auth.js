@@ -6,16 +6,14 @@ class Auth {
    */
   constructor() {
     this.http = axios.create({
-      baseURL: process.env.VUE_APP_API_URI
+      baseURL: this.appApiUri
     });
   }
 
   get authorizeUrl() {
-    return `${process.env.VUE_APP_API_URI}/oauth/authorize?client_id=${
-      process.env.VUE_APP_API_CLIENT_ID
-    }&redirect_uri=${encodeURI(
-      process.env.VUE_APP_URI + "/login"
-    )}&response_type=token`;
+    return `${this.appApiUri}/oauth/authorize?client_id=${
+      this.appApiClientId
+    }&redirect_uri=${encodeURI(this.appUri + "/login")}&response_type=token`;
   }
 
   /**
@@ -121,7 +119,7 @@ class Auth {
    * @param {number} time
    * @returns {boolean}
    */
-  inactive(minutes = process.env.VUE_APP_SESSION_TIMEOUT) {
+  inactive(minutes = this.appSessionTimeout) {
     const milliseconds = minutes * 60 * 1000;
 
     if (this.lastActive === null) {

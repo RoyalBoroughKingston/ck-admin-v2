@@ -5,9 +5,7 @@
       <ck-loader v-if="loading" />
       <gov-grid-row v-else>
         <vue-headful
-          :title="
-            `Hounslow Connect - User: ${user.first_name} ${user.last_name}`
-          "
+          :title="`${appName} - User: ${user.first_name} ${user.last_name}`"
         />
 
         <gov-grid-column width="two-thirds">

@@ -3,7 +3,7 @@
     <ck-loader v-if="loading" />
     <template v-else>
       <vue-headful
-        :title="`Hounslow Connect - Edit Location: ${location.address_line_1}`"
+        :title="`${appName} - Edit Location: ${location.address_line_1}`"
       />
 
       <gov-back-link

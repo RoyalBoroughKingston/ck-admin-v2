@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-headful title="Hounslow Connect - Admin: Page Feedback" />
+    <vue-headful :title="`${appName} - Admin: Page Feedback`" />
 
     <gov-heading size="l">Feedback</gov-heading>
 

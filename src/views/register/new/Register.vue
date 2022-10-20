@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Register" />
+    <vue-headful :title="`${appName} - Register`" />
 
     <gov-error-summary v-if="form.$errors.any()" title="Check for errors">
       <gov-list>
@@ -27,7 +27,7 @@ import Form from "@/classes/Form";
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: `${process.env.VUE_APP_API_URI}/core/v1`
+  baseURL: `${this.appApiUri}/core/v1`
 });
 http.defaults.headers.post["Content-Type"] = "application/json";
 

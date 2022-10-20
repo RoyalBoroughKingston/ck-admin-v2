@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Add Event" />
+    <vue-headful :title="`${appName} - Add Event`" />
 
     <gov-back-link :to="{ name: 'events-index' }">Back to events</gov-back-link>
     <gov-main-wrapper>

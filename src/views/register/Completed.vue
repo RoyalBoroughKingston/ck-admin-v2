@@ -4,9 +4,7 @@
       Registration complete
     </gov-heading>
 
-    <gov-body>
-      Thank you for registering on Hounslow Connect.
-    </gov-body>
+    <gov-body> Thank you for registering on {{ appName }}. </gov-body>
 
     <gov-body>
       Your details will be verified by our team within the next 5 working days.

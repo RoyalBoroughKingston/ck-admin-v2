@@ -53,7 +53,7 @@
               for="referral_button_text"
               v-if="referral_method === 'internal'"
             >
-              By enabling referrals through Hounslow Connect, a button will be
+              By enabling referrals through {{ appName }}, a button will be
               added to your page which will link to the referral form.
             </gov-hint>
             <gov-hint
@@ -162,7 +162,7 @@ export default {
     referralMethodOptions() {
       return [
         { text: "Please select", value: null, disabled: true },
-        { text: "Yes - Through Hounslow Connect", value: "internal" },
+        { text: `Yes - Through ${this.appName}`, value: "internal" },
         { text: "Yes - Through an external form", value: "external" },
         {
           text: `No - This ${this.type} doesn’t accept referrals`,
@@ -178,7 +178,9 @@ export default {
       const subject = `Turn referrals on for my ${this.type}`;
       const body = `${this.$options.filters.ucfirst(
         this.type
-      )} Name: XXX\n\nWe are interested in finding out more about accepting referrals through Hounslow Connect.`;
+      )} Name: XXX\n\nWe are interested in finding out more about accepting referrals through ${
+        this.appName
+      }.`;
 
       return `mailto:${to}?subject=${encodeURIComponent(
         subject

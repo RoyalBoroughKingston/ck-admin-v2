@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-headful title="Hounslow Connect - Admin: Audits" />
+    <vue-headful :title="`${appName} - Admin: Audits`" />
 
     <gov-heading size="l">Audit logs</gov-heading>
 
@@ -170,7 +170,7 @@ export default {
       let { data: oauthClients } = await http({
         method: "get",
         url: "/oauth/clients",
-        baseURL: process.env.VUE_APP_API_URI
+        baseURL: this.appApiUri
       });
 
       oauthClients = oauthClients.map(oauthClient => ({

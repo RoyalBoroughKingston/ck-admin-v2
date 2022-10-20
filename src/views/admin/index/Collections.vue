@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-headful title="Hounslow Connect - Admin: Collections" />
+    <vue-headful :title="`${appName} - Admin: Collections`" />
 
     <gov-tabs :tabs="tabs">
       <router-view />

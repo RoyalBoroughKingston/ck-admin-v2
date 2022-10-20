@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Add Service" />
+    <vue-headful :title="`${appName} - Add Service`" />
 
     <gov-back-link :to="{ name: 'services-index' }"
       >Back to services</gov-back-link
@@ -29,7 +29,7 @@
               <li>You can return to edit this {{ form.type }} at any time.</li>
               <li>
                 If you would like your service to accept referrals through
-                Hounslow Connect, please contact the team at
+                {{ appName }}, please contact the team at
                 <gov-link :href="`mailto:${contactEmail}`">
                   {{ contactEmail }}
                 </gov-link>
