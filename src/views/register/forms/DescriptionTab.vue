@@ -5,7 +5,7 @@
       <gov-grid-column width="one-half">
         <gov-body>
           These sections should describe what your {{ service.type }} offers and
-          is the main body of content on your page on Hounslow Connect.
+          is the main body of content on your page on {{ appName }}.
         </gov-body>
 
         <gov-section-break size="l" />

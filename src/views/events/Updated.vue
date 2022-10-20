@@ -2,9 +2,7 @@
   <gov-width-container>
     <ck-loader v-if="loading" />
     <template v-else>
-      <vue-headful
-        :title="`Hounslow Connect - Event Updated: ${event.title}`"
-      />
+      <vue-headful :title="`${appName} - Event Updated: ${event.title}`" />
 
       <gov-back-link :to="{ name: 'events-show', params: { event: event.id } }"
         >Back to event</gov-back-link

@@ -155,13 +155,31 @@ Vue.mixin({
     },
     sessionMinutes() {
       return process.env.VUE_APP_SESSION_TIMEOUT;
+    },
+    appName() {
+      return process.env.VUE_APP_NAME;
+    },
+    appApiClientId() {
+      return process.env.VUE_APP_API_CLIENT_ID;
+    },
+    appUri() {
+      return process.env.VUE_APP_URI;
+    },
+    appApiUri() {
+      return process.env.VUE_APP_API_URI;
+    },
+    appFrontendUri() {
+      return process.env.VUE_APP_FRONTEND_URI;
+    },
+    appSessionTimeout() {
+      return process.env.VUE_APP_SESSION_TIMEOUT;
     }
   },
   methods: {
     apiUrl(path) {
       const trimmedPath = path.replace(/^\//, "");
 
-      return `${process.env.VUE_APP_API_URI}/core/v1/${trimmedPath}`;
+      return `${this.appApiUri}/core/v1/${trimmedPath}`;
     },
     slugify(text) {
       return text

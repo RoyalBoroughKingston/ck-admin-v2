@@ -4,7 +4,7 @@
     <gov-main-wrapper>
       <ck-loader v-if="loading" />
       <gov-grid-row v-else>
-        <vue-headful :title="`Hounslow Connect - Event: ${event.title}`" />
+        <vue-headful :title="`${appName} - Event: ${event.title}`" />
 
         <gov-grid-column width="full">
           <gov-grid-row>

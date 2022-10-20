@@ -3,9 +3,7 @@
     <ck-loader v-if="loading" />
     <template v-else>
       <vue-headful
-        :title="
-          `Hounslow Connect - Edit Collection Persona: ${collection.name}`
-        "
+        :title="`${appName} - Edit Collection Persona: ${collection.name}`"
       />
 
       <gov-back-link :to="{ name: 'admin-index-collections-personas' }"

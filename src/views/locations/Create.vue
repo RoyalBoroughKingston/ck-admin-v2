@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Add Location" />
+    <vue-headful :title="`${appName} - Add Location`" />
 
     <gov-back-link :to="{ name: 'locations-index' }"
       >Back to locations</gov-back-link

@@ -8,7 +8,7 @@
       <gov-grid-row v-else>
         <vue-headful
           :title="
-            `Hounslow Connect - Notification: ${notification.message.substr(
+            `${appName} - Notification: ${notification.message.substr(
               0,
               10
             )}...`

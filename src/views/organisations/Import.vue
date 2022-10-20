@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Import Organisations" />
+    <vue-headful :title="`${appName} - Import Organisations`" />
 
     <gov-back-link :to="{ name: 'organisations-index' }"
       >Back to Organisations</gov-back-link
@@ -116,7 +116,7 @@ export default {
         : null;
     },
     exampleSpreadsheetDownloadLink() {
-      return `${process.env.VUE_APP_API_URI}/downloads/organisations_import_example.xls`;
+      return `${this.appApiUri}/downloads/organisations_import_example.xls`;
     }
   },
 

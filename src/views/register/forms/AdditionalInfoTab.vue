@@ -142,7 +142,7 @@
         <gov-body>
           Please provide your {{ service.type }}’s public-facing contact
           details. These will be displayed on your {{ service.type }}’s page on
-          the Hounslow Connect website.
+          the {{ appName }} website.
         </gov-body>
 
         <gov-section-break size="l" />
@@ -264,7 +264,7 @@ export default {
     videoEmbedHelpHref() {
       const to = this.contactEmail;
       const subject = `Make a video for my ${this.service.type}`;
-      const body = `My ${this.service.type} is: xxx\n\nI am interested in making a video for my ${this.service.type} page on Hounslow Connect.`;
+      const body = `My ${this.service.type} is: xxx\n\nI am interested in making a video for my ${this.service.type} page on ${this.appName}.`;
 
       return `mailto:${to}?subject=${encodeURIComponent(
         subject

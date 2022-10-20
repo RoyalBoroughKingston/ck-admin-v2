@@ -77,10 +77,10 @@ export default {
 
   computed: {
     termsAndConditionsUrl() {
-      return `${process.env.VUE_APP_FRONTEND_URI}/terms-and-conditions`;
+      return `${this.appFrontendUri}/terms-and-conditions`;
     },
     privacyPolicyUrl() {
-      return `${process.env.VUE_APP_FRONTEND_URI}/privacy-policy`;
+      return `${this.appFrontendUri}/privacy-policy`;
     }
   }
 };

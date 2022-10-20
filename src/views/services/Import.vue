@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Import Services" />
+    <vue-headful :title="`${appName} - Import Services`" />
 
     <gov-back-link :to="{ name: 'services-index' }"
       >Back to Services</gov-back-link
@@ -147,7 +147,7 @@ export default {
         : null;
     },
     exampleSpreadsheetDownloadLink() {
-      return `${process.env.VUE_APP_API_URI}/downloads/services_import_example.xlsx`;
+      return `${this.appApiUri}/downloads/services_import_example.xlsx`;
     }
   },
 

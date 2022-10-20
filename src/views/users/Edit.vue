@@ -3,9 +3,7 @@
     <ck-loader v-if="loading" />
     <template v-else>
       <vue-headful
-        :title="
-          `Hounslow Connect - Edit User: ${user.first_name} ${user.last_name}`
-        "
+        :title="`${appName} - Edit User: ${user.first_name} ${user.last_name}`"
       />
 
       <gov-back-link :to="{ name: 'users-show', params: { user: user.id } }"
@@ -17,9 +15,9 @@
             <gov-heading size="xl">Users</gov-heading>
             <gov-heading size="m">Edit user</gov-heading>
             <gov-body
-              >Edit users who can acces the back-end of the Hounslow Connect
-              service (deciding their permissions in what they have access
-              to)</gov-body
+              >Edit users who can acces the back-end of the
+              {{ appName }} service (deciding their permissions in what they
+              have access to)</gov-body
             >
 
             <user-form

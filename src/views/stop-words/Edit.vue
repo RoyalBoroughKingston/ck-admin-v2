@@ -1,6 +1,6 @@
 <template>
   <gov-width-container>
-    <vue-headful title="Hounslow Connect - Edit Stop Words" />
+    <vue-headful :title="`${appName} - Edit Stop Words`" />
 
     <gov-back-link :to="{ name: 'admin-index-search-engine-stop-words' }"
       >Back to stop words</gov-back-link
