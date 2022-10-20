@@ -90,6 +90,14 @@
         </gov-grid-column>
 
         <gov-grid-column width="one-half" v-if="auth.isGlobalAdmin">
+          <gov-heading size="l">Pages</gov-heading>
+          <gov-body>Manage pages on the platform.</gov-body>
+          <gov-button start :to="{ name: 'pages-index' }">
+            Go to pages
+          </gov-button>
+        </gov-grid-column>
+
+        <gov-grid-column width="one-half" v-if="auth.isGlobalAdmin">
           <gov-heading size="l">Admin</gov-heading>
           <gov-body>Admin tools for maintaining the site.</gov-body>
           <gov-button start :to="{ name: 'admin-index' }">

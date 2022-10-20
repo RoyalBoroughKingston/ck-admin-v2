@@ -42,6 +42,14 @@
       </template>
     </ck-image-input>
 
+    <collection-homepage-input
+      :value="homepage"
+      @input="onInput('homepage', $event)"
+      id="homepage"
+      label="Show the Category on the homepage"
+      :error="errors.get('homepage')"
+    />
+
     <collection-enabled-input
       :value="enabled"
       @input="onInput('enabled', $event)"
@@ -82,11 +90,13 @@ import CkImageInput from "@/components/Ck/CkImageInput";
 import CkTaxonomyInput from "@/components/Ck/CkTaxonomyInput";
 import CkSideboxesInput from "@/views/collections/inputs/SideboxesInput";
 import CollectionEnabledInput from "@/views/collections/inputs/CollectionEnabledInput";
+import CollectionHomepageInput from "@/views/collections/inputs/CollectionHomepageInput";
 
 export default {
   name: "CollectionForm",
   components: {
     CollectionEnabledInput,
+    CollectionHomepageInput,
     CkTaxonomyInput,
     CkSideboxesInput,
     CkImageInput
@@ -110,6 +120,9 @@ export default {
       required: true
     },
     enabled: {
+      required: true
+    },
+    homepage: {
       required: true
     },
     sideboxes: {

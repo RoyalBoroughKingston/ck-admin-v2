@@ -26,6 +26,7 @@
             :intro.sync="form.intro"
             :order.sync="form.order"
             :enabled.sync="form.enabled"
+            :homepage.sync="form.homepage"
             :sideboxes.sync="form.sideboxes"
             :category_taxonomies.sync="form.category_taxonomies"
             @update:image_file_id="form.image_file_id = $event"
@@ -60,6 +61,7 @@ export default {
         subtitle: "",
         order: 1,
         enabled: true,
+        homepage: false,
         sideboxes: [],
         category_taxonomies: [],
         image_file_id: null
