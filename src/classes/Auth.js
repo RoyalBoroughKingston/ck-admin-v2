@@ -5,6 +5,9 @@ class Auth {
    * Constructor.
    */
   constructor() {
+    this.appApiUri = process.env.VUE_APP_API_URI;
+    this.appUri = process.env.VUE_APP_URI;
+    this.appApiClientId = process.env.VUE_APP_API_CLIENT_ID;
     this.http = axios.create({
       baseURL: this.appApiUri
     });
