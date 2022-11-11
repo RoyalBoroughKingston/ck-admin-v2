@@ -70,10 +70,13 @@
         </nav>
       </div>
     </div>
+    <ck-environment-warning />
   </header>
 </template>
 
 <script>
+import CkEnvironmentWarning from "@/components/CkEnvironmentWarning";
+
 export default {
   name: "GovHeader",
   props: {
@@ -88,6 +91,9 @@ export default {
         return [];
       }
     }
+  },
+  components: {
+    CkEnvironmentWarning
   },
   data() {
     return {
