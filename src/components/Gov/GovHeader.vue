@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import CkEnvironmentWarning from '@/components/CkEnvironmentWarning'
+import CkEnvironmentWarning from "@/components/CkEnvironmentWarning";
 
 export default {
   name: "GovHeader",
@@ -93,7 +93,7 @@ export default {
     }
   },
   components: {
-    CkEnvironmentWarning,
+    CkEnvironmentWarning
   },
   data() {
     return {

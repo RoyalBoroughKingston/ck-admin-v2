@@ -16,14 +16,14 @@
 
 <script>
 export default {
-  name: 'EnvironmentWarning',
+  name: "EnvironmentWarning",
 
   computed: {
     environment() {
-      return process.env.VUE_APP_ENV
-    },
-  },
-}
+      return process.env.VUE_APP_ENV;
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
