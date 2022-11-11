@@ -128,7 +128,7 @@ export default {
       required: true
     },
     homepage: {
-      required: true,
+      required: true
     },
     sideboxes: {
       required: true
