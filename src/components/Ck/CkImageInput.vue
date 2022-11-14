@@ -127,8 +127,10 @@ export default {
         data: { id }
       } = await this.form.post("/files");
 
-      // Emit the file ID.
-      this.$emit("input", { file_id: id, image: this.form.file });
+      if (!this.form.$errors.any()) {
+        // Emit the file ID.
+        this.$emit("input", { file_id: id, image: this.form.file });
+      }
     },
 
     onRemove() {
