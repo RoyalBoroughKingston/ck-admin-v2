@@ -79,6 +79,7 @@
                 :url.sync="form.url"
                 @update:logo_file_id="form.logo_file_id = $event"
                 :status.sync="form.status"
+                :score.sync="form.score"
                 :ends_at.sync="form.ends_at"
                 :gallery_items.sync="form.gallery_items"
               >
@@ -223,6 +224,7 @@ export default {
         slug: "",
         type: "service",
         status: "inactive",
+        score: "",
         intro: "",
         description: "",
         wait_time: null,

@@ -50,6 +50,7 @@
                   @update:logo_file_id="form.logo_file_id = $event"
                   @update:logo="form.logo = $event"
                   :status.sync="form.status"
+                  :score.sync="form.score"
                   :ends_at.sync="form.ends_at"
                   :gallery_items.sync="form.gallery_items"
                   :id="service.id"
@@ -292,6 +293,7 @@ export default {
         slug: this.service.slug,
         type: this.service.type,
         status: this.service.status,
+        score: this.service.score || "",
         intro: this.service.intro,
         description: this.service.description,
         wait_time: this.service.wait_time,
@@ -355,6 +357,9 @@ export default {
           }
           if (data.status === this.service.status) {
             delete data.status;
+          }
+          if (data.score === this.service.score) {
+            delete data.score;
           }
           if (data.intro === this.service.intro) {
             delete data.intro;

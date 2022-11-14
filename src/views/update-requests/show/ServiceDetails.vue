@@ -97,6 +97,14 @@
           <gov-table-cell>{{ service.status | status }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="service.hasOwnProperty('score')">
+          <gov-table-header top scope="row">Quality Score</gov-table-header>
+          <gov-table-cell v-if="original">{{
+            original.score | score
+          }}</gov-table-cell>
+          <gov-table-cell>{{ service.score | score }}</gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="service.hasOwnProperty('ends_at')">
           <gov-table-header top scope="row">End date</gov-table-header>
           <gov-table-cell>{{ original.ends_at | endsAt }}</gov-table-cell>
@@ -712,6 +720,18 @@ export default {
   filters: {
     status(status) {
       return status === "active" ? "Enabled" : "Disabled";
+    },
+
+    score(score) {
+      const qualityScores = {
+        0: "Unrated",
+        1: "Poor",
+        2: "Below Average",
+        3: "Average",
+        4: "Above Average",
+        5: "Excellent"
+      };
+      return qualityScores[score];
     },
 
     isFree(isFree) {
