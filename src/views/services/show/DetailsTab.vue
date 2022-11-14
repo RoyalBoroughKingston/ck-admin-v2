@@ -69,6 +69,10 @@
             v-html="service.status === 'active' ? 'Enabled' : 'Disabled'"
           />
         </gov-table-row>
+        <gov-table-row v-if="auth.isSuperAdmin">
+          <gov-table-header top scope="row">Quality Score</gov-table-header>
+          <gov-table-cell v-html="qualityScores[service.score]" />
+        </gov-table-row>
         <gov-table-row>
           <gov-table-header top scope="row">End date</gov-table-header>
           <gov-table-cell>{{ service.ends_at | endsAt }}</gov-table-cell>
@@ -120,7 +124,15 @@ export default {
 
   data() {
     return {
-      refreshForm: new Form({})
+      refreshForm: new Form({}),
+      qualityScores: {
+        0: "Unrated",
+        1: "Poor",
+        2: "Below Average",
+        3: "Average",
+        4: "Above Average",
+        5: "Excellent"
+      }
     };
   },
 

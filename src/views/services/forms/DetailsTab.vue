@@ -82,6 +82,22 @@
           :error="errors.get('url')"
         />
 
+        <ck-select-input
+          :value="score"
+          @input="
+            $emit('update:score', $event);
+            $emit('clear', 'score');
+          "
+          id="score"
+          label="Quality Score"
+          :hint="
+            `Rate the overall effectiveness and quality of the ${type} between 1 (poor) and 5 (excellent). This is not displayed but affects positioning within search results.`
+          "
+          :options="scoreOptions"
+          :error="errors.get('score')"
+          v-if="auth.isSuperAdmin"
+        />
+
         <ck-image-input
           @input="
             $emit('update:logo_file_id', $event.file_id);
@@ -192,6 +208,9 @@ export default {
     status: {
       required: true
     },
+    score: {
+      required: true
+    },
     ends_at: {
       required: true
     },
@@ -216,6 +235,14 @@ export default {
       statusOptions: [
         { label: "Enabled", value: "active" },
         { label: "Disabled", value: "inactive" }
+      ],
+      scoreOptions: [
+        { text: "Unrated", value: "" },
+        { text: "Poor", value: 1 },
+        { text: "Below Average", value: 2 },
+        { text: "Average", value: 3 },
+        { text: "Above Average", value: 4 },
+        { text: "Excellent", value: 5 }
       ]
     };
   },
