@@ -335,6 +335,14 @@
           <gov-table-cell>{{ service.contact_phone }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="service.hasOwnProperty('cqc_location_id')">
+          <gov-table-header top scope="row">CQC Location ID</gov-table-header>
+          <gov-table-cell v-if="original">{{
+            original.cqc_location_id | originalExists
+          }}</gov-table-cell>
+          <gov-table-cell>{{ service.cqc_location_id }}</gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="service.hasOwnProperty('social_medias')">
           <gov-table-header top scope="row">Social medias</gov-table-header>
           <gov-table-cell break v-if="original">

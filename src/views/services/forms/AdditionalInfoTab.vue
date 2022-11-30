@@ -90,6 +90,27 @@
         </gov-inset-text>
         <!-- /Extra fee info -->
 
+        <ck-text-input
+          v-if="appCqcLocationActive"
+          :value="cqc_location_id"
+          @input="
+            $emit('update:cqc_location_id', $event);
+            $emit('clear', 'cqc_location_id');
+          "
+          id="cqc_location_id"
+          label="CQC Location ID number"
+          type="text"
+          :error="errors.get('cqc_location_id')"
+        >
+          <template slot="hint">
+            <gov-hint for="cqc_location_id">
+              Please provide the service's Care Quality Commission Location ID
+              number if it has one. This will be used to display information
+              about the CQC rating on the service page.
+            </gov-hint>
+          </template>
+        </ck-text-input>
+
         <ck-textarea-input
           :value="testimonial"
           @input="
@@ -248,6 +269,10 @@ export default {
     },
     contact_email: {
       required: true
+    },
+    cqc_location_id: {
+      type: String,
+      default: null
     }
   },
   computed: {

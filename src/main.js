@@ -173,6 +173,11 @@ Vue.mixin({
     },
     appSessionTimeout() {
       return process.env.VUE_APP_SESSION_TIMEOUT;
+    },
+    appCqcLocationActive() {
+      return process.env.hasOwnProperty("VUE_APP_CQC_LOCATION_ACTIVE")
+        ? process.env.VUE_APP_CQC_LOCATION_ACTIVE
+        : false;
     }
   },
   methods: {

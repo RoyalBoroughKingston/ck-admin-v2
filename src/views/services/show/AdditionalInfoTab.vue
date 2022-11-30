@@ -13,6 +13,10 @@
           >
           <gov-table-cell>{{ isFree }}</gov-table-cell>
         </gov-table-row>
+        <gov-table-row v-if="appCqcLocationActive">
+          <gov-table-header scope="row" top>CQC Location ID</gov-table-header>
+          <gov-table-cell>{{ service.cqc_location_id || "-" }}</gov-table-cell>
+        </gov-table-row>
         <gov-table-row>
           <gov-table-header scope="row" top>Testimonial</gov-table-header>
           <gov-table-cell>{{ service.testimonial || "-" }}</gov-table-cell>
