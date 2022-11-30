@@ -319,6 +319,11 @@ export default {
       });
       const serviceId = data.data.id;
 
+      // Remove any flagged items that are not used
+      if (!this.appCqcLocationActive) {
+        delete data.cqc_location_id;
+      }
+
       // Refetch the user as new permissions added for the new service.
       await this.auth.fetchUser();
 

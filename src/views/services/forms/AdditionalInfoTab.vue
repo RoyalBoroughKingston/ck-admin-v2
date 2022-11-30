@@ -91,6 +91,7 @@
         <!-- /Extra fee info -->
 
         <ck-text-input
+          v-if="appCqcLocationActive"
           :value="cqc_location_id"
           @input="
             $emit('update:cqc_location_id', $event);
@@ -270,7 +271,8 @@ export default {
       required: true
     },
     cqc_location_id: {
-      required: true
+      type: String,
+      default: null
     }
   },
   computed: {

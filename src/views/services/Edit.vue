@@ -399,7 +399,10 @@ export default {
           if (data.contact_email === (this.service.contact_email || "")) {
             delete data.contact_email;
           }
-          if (data.cqc_location_id === (this.service.cqc_location_id || "")) {
+          if (
+            !this.appCqcLocationActive ||
+            data.cqc_location_id === (this.service.cqc_location_id || "")
+          ) {
             delete data.cqc_location_id;
           }
           if (
