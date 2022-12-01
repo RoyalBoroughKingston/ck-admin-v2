@@ -82,6 +82,7 @@
                 :score.sync="form.score"
                 :ends_at.sync="form.ends_at"
                 :gallery_items.sync="form.gallery_items"
+                :tags.sync="form.tags"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
               </details-tab>
@@ -264,6 +265,7 @@ export default {
         ],
         offerings: [],
         gallery_items: [],
+        tags: [],
         category_taxonomies: [],
         eligibility_types: {
           taxonomies: [],
@@ -316,13 +318,17 @@ export default {
         ) {
           data.useful_infos = [];
         }
+
+        // Remove any flagged items that are not used
+        if (!this.appCqcLocationActive) {
+          delete data.cqc_location_id;
+        }
+
+        if (!this.appServiceTagsActive) {
+          delete data.tags;
+        }
       });
       const serviceId = data.data.id;
-
-      // Remove any flagged items that are not used
-      if (!this.appCqcLocationActive) {
-        delete data.cqc_location_id;
-      }
 
       // Refetch the user as new permissions added for the new service.
       await this.auth.fetchUser();

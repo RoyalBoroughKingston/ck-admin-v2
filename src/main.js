@@ -176,7 +176,12 @@ Vue.mixin({
     },
     appCqcLocationActive() {
       return process.env.hasOwnProperty("VUE_APP_CQC_LOCATION_ACTIVE")
-        ? process.env.VUE_APP_CQC_LOCATION_ACTIVE
+        ? process.env.VUE_APP_CQC_LOCATION_ACTIVE === "true"
+        : false;
+    },
+    appServiceTagsActive() {
+      return process.env.hasOwnProperty("VUE_APP_SERVICE_TAGS")
+        ? process.env.VUE_APP_SERVICE_TAGS === "true"
         : false;
     }
   },

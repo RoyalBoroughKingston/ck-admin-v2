@@ -227,11 +227,6 @@ export default {
 
       this.loading = false;
     },
-    async fetchCollections() {
-      this.loading = true;
-      const { data } = await http.get("/collections/categories/all");
-      this.loading = data.data;
-    },
     parsePages(pages, parsed = [], depth = 0) {
       pages
         .filter(page => !this.page || page.id !== this.page.id)

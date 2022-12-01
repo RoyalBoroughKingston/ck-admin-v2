@@ -167,6 +167,21 @@
           :errors="errors"
         />
 
+        <template v-if="appServiceTagsActive">
+          <gov-heading size="m">Tags</gov-heading>
+
+          <gov-body v-if="auth.isGlobalAdmin">
+            Select tags to help users find the {{ type }}.
+          </gov-body>
+
+          <tag-input
+            :service-tags="tags"
+            @input="$emit('update:tags', $event)"
+            @clear="$emit('clear', $event)"
+            :errors="errors"
+          />
+        </template>
+
         <slot />
       </gov-grid-column>
     </gov-grid-row>
@@ -177,10 +192,16 @@
 import CkImageInput from "@/components/Ck/CkImageInput";
 import CkDateInput from "@/components/Ck/CkDateInput";
 import CkGalleryItemsInput from "@/views/services/inputs/GalleryItemsInput";
+import TagInput from "@/views/services/inputs/TagInput";
 
 export default {
   name: "DetailsTab",
-  components: { CkImageInput, CkGalleryItemsInput, CkDateInput },
+  components: {
+    CkImageInput,
+    CkGalleryItemsInput,
+    CkDateInput,
+    TagInput
+  },
   props: {
     errors: {
       required: true
@@ -215,6 +236,9 @@ export default {
       required: true
     },
     gallery_items: {
+      required: true
+    },
+    tags: {
       required: true
     },
     id: {
