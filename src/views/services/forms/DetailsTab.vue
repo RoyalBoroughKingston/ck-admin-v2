@@ -167,18 +167,20 @@
           :errors="errors"
         />
 
-        <gov-heading size="m">Tags</gov-heading>
+        <template v-if="appServiceTagsActive">
+          <gov-heading size="m">Tags</gov-heading>
 
-        <gov-body v-if="auth.isGlobalAdmin">
-          Select tags to help users find the {{ type }}.
-        </gov-body>
+          <gov-body v-if="auth.isGlobalAdmin">
+            Select tags to help users find the {{ type }}.
+          </gov-body>
 
-        <tag-input
-          :service-tags="tags"
-          @input="$emit('update:tags', $event)"
-          @clear="$emit('clear', $event)"
-          :errors="errors"
-        />
+          <tag-input
+            :service-tags="tags"
+            @input="$emit('update:tags', $event)"
+            @clear="$emit('clear', $event)"
+            :errors="errors"
+          />
+        </template>
 
         <slot />
       </gov-grid-column>

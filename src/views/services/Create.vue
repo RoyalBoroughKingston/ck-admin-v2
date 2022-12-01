@@ -318,13 +318,17 @@ export default {
         ) {
           data.useful_infos = [];
         }
+
+        // Remove any flagged items that are not used
+        if (!this.appCqcLocationActive) {
+          delete data.cqc_location_id;
+        }
+
+        if (!this.appServiceTagsActive) {
+          delete data.tags;
+        }
       });
       const serviceId = data.data.id;
-
-      // Remove any flagged items that are not used
-      if (!this.appCqcLocationActive) {
-        delete data.cqc_location_id;
-      }
 
       // Refetch the user as new permissions added for the new service.
       await this.auth.fetchUser();

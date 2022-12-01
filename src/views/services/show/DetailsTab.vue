@@ -100,7 +100,7 @@
             <gov-body v-else>-</gov-body>
           </gov-table-cell>
         </gov-table-row>
-        <gov-table-row>
+        <gov-table-row v-if="appServiceTagsActive">
           <gov-table-header top scope="row">Tags</gov-table-header>
           <gov-table-cell>
             <gov-list v-if="service.tags.length > 0" bullet>
