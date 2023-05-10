@@ -2,7 +2,7 @@
 # This stack creates the API infrastructure.
 # ==================================================
 from troposphere import Template, Parameter, Ref, GetAtt, Join, Output
-from troposphere.s3 import Bucket, PublicRead
+from troposphere.s3 import Bucket, OwnershipControls, OwnershipControlsRule, PublicAccessBlockConfiguration
 import troposphere.iam as iam
 import troposphere.cloudfront as cloudfront
 import uuid
@@ -12,7 +12,7 @@ import uuid
 # ==================================================
 template = Template(
     'Create the infrastructure needed to run the Connected Places Backend')
-template.add_version('2010-09-09')
+template.set_version('2010-09-09')
 
 # ==================================================
 # Parameters.
@@ -70,7 +70,20 @@ bucket_resource = template.add_resource(
     Bucket(
         'Bucket',
         BucketName=bucket_name_variable,
-        AccessControl=PublicRead
+        PublicAccessBlockConfiguration=PublicAccessBlockConfiguration(
+            BlockPublicAcls=False,
+            BlockPublicPolicy=False,
+            IgnorePublicAcls=False,
+            RestrictPublicBuckets=False
+        ),
+        OwnershipControls=OwnershipControls(
+            Rules=[
+                OwnershipControlsRule(
+                    ObjectOwnership="BucketOwnerPreferred"
+                )
+            ]
+        )
+
     )
 )
 
@@ -114,7 +127,7 @@ distribution_resource = template.add_resource(
                 cloudfront.Origin(
                     DomainName=GetAtt(bucket_resource, 'DomainName'),
                     Id=Join('-', ['S3', Ref(bucket_resource)]),
-                    S3OriginConfig=cloudfront.S3Origin()
+                    S3OriginConfig=cloudfront.S3OriginConfig()
                 )
             ],
             ViewerCertificate=cloudfront.ViewerCertificate(
