@@ -1,12 +1,8 @@
 <template>
   <div>
-    <gov-heading size="l">
-      Registration - step 2 of 5
-    </gov-heading>
+    <gov-heading size="l"> Registration - step 2 of 5 </gov-heading>
 
-    <gov-back-link :to="{ name: 'register-index' }">
-      Back
-    </gov-back-link>
+    <gov-back-link :to="{ name: 'register-index' }"> Back </gov-back-link>
 
     <gov-heading size="l">
       Is your organisation right for {{ appName }}?
@@ -23,9 +19,7 @@
         </strong>
       </gov-label>
 
-      <gov-hint>
-        Tick all that apply.
-      </gov-hint>
+      <gov-hint> Tick all that apply. </gov-hint>
 
       <gov-checkboxes>
         <gov-checkbox
@@ -76,31 +70,31 @@
 export default {
   model: {
     prop: "form",
-    event: "update"
+    event: "update",
   },
   props: {
     form: {
       type: Object,
-      required: true
+      required: true,
     },
     errors: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
 
   methods: {
     onInput(organisationType) {
       if (this.form.organisation_types.includes(organisationType)) {
         this.form.organisation_types = this.form.organisation_types.filter(
-          type => type !== organisationType
+          (type) => type !== organisationType
         );
       } else {
         const organisationTypes = this.form.organisation_types.slice();
         organisationTypes.push(organisationType);
         this.form.organisation_types = organisationTypes;
       }
-    }
-  }
+    },
+  },
 };
 </script>

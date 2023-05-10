@@ -1,8 +1,6 @@
 <template>
   <div>
-    <gov-heading size="l">
-      Registration complete
-    </gov-heading>
+    <gov-heading size="l"> Registration complete </gov-heading>
 
     <gov-body> Thank you for registering on {{ appName }}. </gov-body>
 

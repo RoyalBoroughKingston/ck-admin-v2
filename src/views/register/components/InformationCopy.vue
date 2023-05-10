@@ -1,8 +1,6 @@
 <template>
   <div>
-    <gov-heading size="l">
-      Important information
-    </gov-heading>
+    <gov-heading size="l"> Important information </gov-heading>
     <gov-body>
       Once your organisation is listed on {{ appName }}, it is really important
       that you keep your organisation and service information up-to-date. For
