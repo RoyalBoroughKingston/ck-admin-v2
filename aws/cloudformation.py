@@ -1,8 +1,8 @@
 # ==================================================
 # This stack creates the API infrastructure.
 # ==================================================
-from troposphere import Template, Parameter, Ref, GetAtt, Join, Output
-from troposphere.s3 import Bucket, OwnershipControls, OwnershipControlsRule, PublicAccessBlockConfiguration
+from troposphere import Template, Parameter, Ref, GetAtt, Join, Sub, Output
+from troposphere.s3 import Bucket, BucketPolicy, OwnershipControls, OwnershipControlsRule, PublicAccessBlockConfiguration
 import troposphere.iam as iam
 import troposphere.cloudfront as cloudfront
 import uuid
@@ -71,10 +71,10 @@ bucket_resource = template.add_resource(
         'Bucket',
         BucketName=bucket_name_variable,
         PublicAccessBlockConfiguration=PublicAccessBlockConfiguration(
-            BlockPublicAcls=False,
-            BlockPublicPolicy=False,
-            IgnorePublicAcls=False,
-            RestrictPublicBuckets=False
+            BlockPublicAcls=True,
+            BlockPublicPolicy=True,
+            IgnorePublicAcls=True,
+            RestrictPublicBuckets=True
         ),
         OwnershipControls=OwnershipControls(
             Rules=[
@@ -82,8 +82,45 @@ bucket_resource = template.add_resource(
                     ObjectOwnership="BucketOwnerPreferred"
                 )
             ]
-        )
+        ),
+    )
+)
 
+cloudfront_oai = template.add_resource(
+    cloudfront.CloudFrontOriginAccessIdentity(
+        'CloudFrontOAI',
+        CloudFrontOriginAccessIdentityConfig=cloudfront.CloudFrontOriginAccessIdentityConfig(
+            Comment=Sub("Cloudfront OAI for ${Cname}")
+        )
+    )
+)
+
+bucket_policy = template.add_resource(
+    BucketPolicy(
+        'PublicBucketPolicy',
+        Bucket=Ref(bucket_resource),
+        PolicyDocument={
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Action": [
+                        "s3:GetObject"
+                    ],
+                    "Effect": "Allow",
+                    "Resource": [
+                        Join("", [
+                                "arn:aws:s3:::",
+                                Ref(bucket_resource),
+                                "/*"
+                            ]
+                        )
+                    ],
+                    "Principal": {
+                        'CanonicalUser': GetAtt(cloudfront_oai, 'S3CanonicalUserId')
+                    }
+                }
+            ]
+        }
     )
 )
 
@@ -111,6 +148,11 @@ distribution_resource = template.add_resource(
                     ErrorCode=404,
                     ResponseCode=200,
                     ResponsePagePath='/index.html'
+                ),
+                cloudfront.CustomErrorResponse(
+                    ErrorCode=403,
+                    ResponseCode=200,
+                    ResponsePagePath='/index.html'
                 )
             ],
             DefaultCacheBehavior=cloudfront.DefaultCacheBehavior(
@@ -127,7 +169,9 @@ distribution_resource = template.add_resource(
                 cloudfront.Origin(
                     DomainName=GetAtt(bucket_resource, 'DomainName'),
                     Id=Join('-', ['S3', Ref(bucket_resource)]),
-                    S3OriginConfig=cloudfront.S3OriginConfig()
+                    S3OriginConfig=cloudfront.S3OriginConfig(
+                        OriginAccessIdentity=Join('', ['origin-access-identity/cloudfront/', Ref(cloudfront_oai)])
+                    )
                 )
             ],
             ViewerCertificate=cloudfront.ViewerCertificate(
