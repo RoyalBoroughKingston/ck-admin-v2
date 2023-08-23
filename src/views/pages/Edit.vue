@@ -2,7 +2,7 @@
   <gov-width-container>
     <ck-loader v-if="loading" />
     <template v-else>
-      <vue-headful :title="`Help Yourself Sutton - Edit Page ${page.title}`" />
+      <vue-headful :title="`${appName} - Edit Page ${page.title}`" />
 
       <gov-back-link :to="{ name: 'pages-index' }">Back to pages</gov-back-link>
       <gov-main-wrapper>
