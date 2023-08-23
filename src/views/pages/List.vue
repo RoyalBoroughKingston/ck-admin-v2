@@ -1,6 +1,6 @@
 <template>
   <div>
-    <vue-headful title="Help Yourself Sutton - Pages" />
+    <vue-headful :title="`${appName} - Pages`" />
 
     <gov-grid-row>
       <gov-grid-column width="two-thirds">
