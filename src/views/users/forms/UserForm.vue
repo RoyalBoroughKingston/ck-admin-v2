@@ -31,7 +31,7 @@
       :value="phone"
       @input="onInput('phone', $event)"
       id="phone"
-      label="Phone"
+      label="Mobile Phone"
       type="tel"
       :error="errors.get('phone')"
     />
