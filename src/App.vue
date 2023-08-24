@@ -61,7 +61,12 @@ export default {
         { text: "Services", to: { name: "services-index" } },
         { text: "Locations", to: { name: "locations-index" } },
         { text: "Referrals", to: { name: "referrals-index" } },
-        { text: "Organisations", to: { name: "organisations-index" } },
+        {
+          text: "Organisations",
+          to: { name: "organisations-index" },
+          hide: !Auth.isOrganisationAdmin(),
+        },
+        { text: "Events", to: { name: "events-index" } },
         { text: "Pages", to: { name: "pages-index" } },
         {
           text: "Users",
