@@ -6,10 +6,10 @@
     <gov-main-wrapper>
       <page-form
         :errors="form.$errors"
-        :is-new="true"
         :page_type.sync="form.page_type"
         :parent_id.sync="form.parent_id"
-        :title.sync="form.title"
+        @update:title="onUpdateTitle"
+        :title="form.title"
         :slug.sync="form.slug"
         :excerpt.sync="form.excerpt"
         :content.sync="form.content"
@@ -132,6 +132,10 @@ export default {
     async onSubmit() {
       await this.form.post("/pages");
       this.$router.push({ name: "pages-index" });
+    },
+    onUpdateTitle(title) {
+      this.form.title = title;
+      this.form.slug = this.slugify(title);
     },
   },
 

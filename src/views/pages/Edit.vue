@@ -9,7 +9,6 @@
         <page-form
           :page="page"
           :errors="form.$errors"
-          :is-new="false"
           :parent_id.sync="form.parent_id"
           :page_type.sync="form.page_type"
           :title.sync="form.title"
@@ -65,10 +64,10 @@ export default {
   },
   computed: {
     updateButtonText() {
-      return this.auth.isGlobalAdmin ? "Update" : "Request update";
+      return this.auth.isContentAdmin ? "Update" : "Request update";
     },
     canDelete() {
-      return this.auth.isGlobalAdmin && this.page.children.length === 0;
+      return this.auth.isContentAdmin && this.page.children.length === 0;
     },
   },
   methods: {

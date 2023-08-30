@@ -51,6 +51,10 @@
 
     <gov-list bullet>
       <li>
+        <strong>Content admins:</strong>
+        Add pages, edit pages and remove pages
+      </li>
+      <li>
         <strong>Organisation admins:</strong>
         Add services, add users, edit services, edit users, manage referrals
       </li>
