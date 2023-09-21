@@ -96,7 +96,7 @@
                 </template>
               </ck-table-filters>
             </gov-grid-column>
-            <gov-grid-column v-if="auth.isServiceAdmin()" width="one-third">
+            <gov-grid-column v-if="auth.canAdd('user')" width="one-third">
               <gov-button @click="onAddUser" type="submit" success expand
                 >Add user</gov-button
               >

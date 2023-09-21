@@ -47,7 +47,7 @@
                 </template>
               </ck-table-filters>
             </gov-grid-column>
-            <gov-grid-column v-if="auth.isServiceAdmin()" width="one-third">
+            <gov-grid-column v-if="auth.canAdd('location')" width="one-third">
               <gov-button @click="onAddLocation" type="submit" success expand
                 >Add location</gov-button
               >

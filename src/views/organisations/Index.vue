@@ -22,7 +22,10 @@
                 </gov-form-group>
               </ck-table-filters>
             </gov-grid-column>
-            <gov-grid-column v-if="auth.isGlobalAdmin" width="one-third">
+            <gov-grid-column
+              v-if="auth.canAdd('organisation')"
+              width="one-third"
+            >
               <gov-button
                 @click="onAddOrganisation"
                 type="submit"
@@ -31,7 +34,7 @@
                 >Add organisation</gov-button
               >
               <gov-button
-                v-if="auth.isSuperAdmin"
+                v-if="auth.canImport('organisations')"
                 :to="{ name: 'organisations-import' }"
                 type="submit"
                 success
