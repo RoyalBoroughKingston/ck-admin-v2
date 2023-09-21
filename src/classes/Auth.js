@@ -296,29 +296,8 @@ class Auth {
    * @returns {boolean}
    */
   canView(type) {
-    if (type === "admin") {
-      return this.isSuperAdmin;
-    }
-    if (type === "audits") {
-      return this.isSuperAdmin;
-    }
-    if (type === "notifications") {
-      return this.isSuperAdmin;
-    }
-    if (type === "feedback") {
-      return this.isSuperAdmin;
-    }
-    if (type === "taxonomies") {
-      return this.isSuperAdmin;
-    }
-    if (type === "collections") {
-      return this.isSuperAdmin;
-    }
-    if (type === "search engine") {
-      return this.isSuperAdmin;
-    }
-    if (type === "cms") {
-      return this.isSuperAdmin;
+    if (this.isSuperAdmin) {
+      return true;
     }
     if (type === "events") {
       return this.isOrganisationAdmin();
@@ -338,12 +317,6 @@ class Auth {
     if (type === "pages") {
       return this.isContentAdmin;
     }
-    if (type === "reports") {
-      return this.isSuperAdmin;
-    }
-    if (type === "update requests") {
-      return this.isSuperAdmin;
-    }
     if (type === "users") {
       return (
         !this.isOnlyContentAdmin &&
@@ -359,14 +332,8 @@ class Auth {
    * @returns {boolean}
    */
   canAdd(type) {
-    if (type === "admin") {
-      return this.isSuperAdmin;
-    }
-    if (type === "taxonomies") {
-      return this.isSuperAdmin;
-    }
-    if (type === "collections") {
-      return this.isSuperAdmin;
+    if (this.isSuperAdmin) {
+      return true;
     }
     if (type === "event") {
       return this.isOrganisationAdmin();
@@ -382,9 +349,6 @@ class Auth {
     }
     if (type === "page") {
       return this.isContentAdmin;
-    }
-    if (type === "report") {
-      return this.isSuperAdmin;
     }
     if (type === "user") {
       return (
@@ -402,20 +366,8 @@ class Auth {
    * @returns {boolean}
    */
   canEdit(type, model = null) {
-    if (type === "admin") {
-      return this.isSuperAdmin;
-    }
-    if (type === "taxonomies") {
-      return this.isSuperAdmin;
-    }
-    if (type === "collections") {
-      return this.isSuperAdmin;
-    }
-    if (type === "search engine") {
-      return this.isSuperAdmin;
-    }
-    if (type === "cms") {
-      return this.isSuperAdmin;
+    if (this.isSuperAdmin) {
+      return true;
     }
     if (type === "event") {
       return this.isOrganisationAdmin(model);
@@ -435,12 +387,6 @@ class Auth {
     if (type === "referral") {
       return this.isServiceWorker() && !this.isOnlyGlobalAdmin;
     }
-    if (type === "report") {
-      return this.isSuperAdmin;
-    }
-    if (type === "update request") {
-      return this.isSuperAdmin;
-    }
     if (type === "user") {
       return (
         !this.isOnlyContentAdmin &&
@@ -456,12 +402,9 @@ class Auth {
    * @param {string} type
    * @returns {boolean}
    */
-  canImport(type) {
-    if (type === "services") {
-      return this.isSuperAdmin;
-    }
-    if (type === "organisations") {
-      return this.isSuperAdmin;
+  canImport() {
+    if (this.isSuperAdmin) {
+      return true;
     }
     return false;
   }
@@ -472,35 +415,11 @@ class Auth {
    * @returns {boolean}
    */
   canDelete(type) {
-    if (type === "admin") {
-      return this.isSuperAdmin;
-    }
-    if (type === "taxonomies") {
-      return this.isSuperAdmin;
-    }
-    if (type === "collections") {
-      return this.isSuperAdmin;
-    }
-    if (type === "event") {
-      return this.isSuperAdmin;
-    }
-    if (type === "service") {
-      return this.isSuperAdmin;
-    }
-    if (type === "organisation") {
-      return this.isSuperAdmin;
-    }
-    if (type === "location") {
-      return this.isSuperAdmin;
+    if (this.isSuperAdmin) {
+      return true;
     }
     if (type === "page") {
       return this.isContentAdmin;
-    }
-    if (type === "referral") {
-      return this.isSuperAdmin;
-    }
-    if (type === "update request") {
-      return this.isSuperAdmin;
     }
     if (type === "user") {
       return (
