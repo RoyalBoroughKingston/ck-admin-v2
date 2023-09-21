@@ -15,13 +15,13 @@
           </gov-grid-column>
         </gov-grid-row>
         <gov-section-break size="l" />
-        <gov-grid-row width="two-thirds">
+        <gov-grid-row v-if="auth.canUpdate('referral')" width="two-thirds">
           <gov-grid-column width="two-thirds">
             <gov-heading size="m">Update case</gov-heading>
 
             <gov-hint>
-              You can change the status of the referral to ‘Complete’,
-              ‘Incomplete’ or ‘In progress’ and add a comment.
+              You can change the status of the referral to 'Complete',
+              'Incomplete' or 'In progress' and add a comment.
             </gov-hint>
 
             <ck-select-input
@@ -95,7 +95,7 @@
             </template>
           </gov-grid-column>
         </gov-grid-row>
-        <template v-if="auth.isSuperAdmin">
+        <template v-if="auth.canDelete('referral')">
           <gov-section-break size="l" />
           <gov-grid-row width="two-thirds">
             <gov-grid-column width="two-thirds">

@@ -36,7 +36,7 @@
           </template>
         </gov-grid-column>
         <gov-grid-column
-          v-if="auth.isOrganisationAdmin(organisation)"
+          v-if="auth.canEdit('organisation', organisation)"
           width="one-third"
           class="text-right"
         >

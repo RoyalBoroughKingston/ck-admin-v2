@@ -84,37 +84,39 @@
 
           <gov-section-break size="xl" />
 
-          <gov-heading size="m">Do you approve these changes?</gov-heading>
+          <template v-if="auth.canEdit('update request')">
+            <gov-heading size="m">Do you approve these changes?</gov-heading>
 
-          <gov-radios inline>
-            <gov-radio
-              v-model="approve"
-              id="approve"
-              name="approve"
-              label="Approve"
-              :value="true"
-            />
-            <gov-radio
-              v-model="approve"
-              id="reject"
-              name="approve"
-              label="Reject"
-              :value="false"
-            />
-          </gov-radios>
+            <gov-radios inline>
+              <gov-radio
+                v-model="approve"
+                id="approve"
+                name="approve"
+                label="Approve"
+                :value="true"
+              />
+              <gov-radio
+                v-model="approve"
+                id="reject"
+                name="approve"
+                label="Reject"
+                :value="false"
+              />
+            </gov-radios>
 
-          <gov-section-break size="l" />
+            <gov-section-break size="l" />
 
-          <gov-button v-if="submitting" disabled type="submit"
-            >Submitting...</gov-button
-          >
-          <gov-button
-            v-else
-            @click="onSubmit"
-            :disabled="approve === null"
-            type="submit"
-            >Submit</gov-button
-          >
+            <gov-button v-if="submitting" disabled type="submit"
+              >Submitting...</gov-button
+            >
+            <gov-button
+              v-else
+              @click="onSubmit"
+              :disabled="approve === null"
+              type="submit"
+              >Submit</gov-button
+            >
+          </template>
         </gov-grid-column>
       </gov-grid-row>
     </gov-main-wrapper>

@@ -238,14 +238,21 @@ class Auth {
    * @returns {boolean}
    */
   get isGlobalAdmin() {
-    return this.hasRole("Global Admin") || this.isSuperAdmin;
+    return this.hasRole("Global Admin");
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  get isOnlyGlobalAdmin() {
+    return this.hasRole("Global Admin") && !this.isSuperAdmin;
   }
 
   /**
    * @returns {boolean}
    */
   get isContentAdmin() {
-    return this.hasRole("Content Admin") || this.isSuperAdmin;
+    return this.hasRole("Content Admin");
   }
 
   /**
@@ -259,29 +266,250 @@ class Auth {
    * @returns {boolean}
    */
   isOrganisationAdmin(organisation = null) {
-    return (
-      this.hasRole("Organisation Admin", null, organisation) ||
-      this.isGlobalAdmin
-    );
+    return this.hasRole("Organisation Admin", null, organisation);
   }
 
   /**
    * @returns {boolean}
    */
   isServiceAdmin(service = null) {
-    return (
-      this.hasRole("Service Admin", service) ||
-      this.isOrganisationAdmin(service !== null ? service.organisation : null)
-    );
+    return this.hasRole("Service Admin", service);
   }
 
   /**
    * @returns {boolean}
    */
   isServiceWorker(service = null) {
-    return (
-      this.hasRole("Service Worker", service) || this.isServiceAdmin(service)
-    );
+    return this.hasRole("Service Worker", service);
+  }
+
+  /**
+   * @returns {boolean}
+   */
+  get isOnlyServiceWorker() {
+    return this.hasRole("Service Worker") && this.user.roles.length === 1;
+  }
+
+  /**
+   * Can the user view a content type
+   * @param {string} type
+   * @returns {boolean}
+   */
+  canView(type) {
+    if (type === "admin") {
+      return this.isSuperAdmin;
+    }
+    if (type === "audits") {
+      return this.isSuperAdmin;
+    }
+    if (type === "notifications") {
+      return this.isSuperAdmin;
+    }
+    if (type === "feedback") {
+      return this.isSuperAdmin;
+    }
+    if (type === "taxonomies") {
+      return this.isSuperAdmin;
+    }
+    if (type === "collections") {
+      return this.isSuperAdmin;
+    }
+    if (type === "search engine") {
+      return this.isSuperAdmin;
+    }
+    if (type === "cms") {
+      return this.isSuperAdmin;
+    }
+    if (type === "events") {
+      return this.isOrganisationAdmin();
+    }
+    if (type === "services") {
+      return !this.isOnlyContentAdmin;
+    }
+    if (type === "organisations") {
+      return !this.isOnlyContentAdmin && !this.isOnlyServiceWorker;
+    }
+    if (type === "locations") {
+      return !this.isOnlyContentAdmin;
+    }
+    if (type === "referrals") {
+      return !this.isOnlyContentAdmin && !this.isOnlyGlobalAdmin;
+    }
+    if (type === "pages") {
+      return this.isContentAdmin;
+    }
+    if (type === "reports") {
+      return this.isSuperAdmin;
+    }
+    if (type === "update requests") {
+      return this.isSuperAdmin;
+    }
+    if (type === "users") {
+      return (
+        !this.isOnlyContentAdmin &&
+        !this.isOnlyGlobalAdmin &&
+        !this.isOnlyServiceWorker
+      );
+    }
+  }
+
+  /**
+   * Can the user add a content type
+   * @param {string} type
+   * @returns {boolean}
+   */
+  canAdd(type) {
+    if (type === "admin") {
+      return this.isSuperAdmin;
+    }
+    if (type === "taxonomies") {
+      return this.isSuperAdmin;
+    }
+    if (type === "collections") {
+      return this.isSuperAdmin;
+    }
+    if (type === "event") {
+      return this.isOrganisationAdmin();
+    }
+    if (type === "service") {
+      return this.isOrganisationAdmin();
+    }
+    if (type === "organisation") {
+      return this.isGlobalAdmin;
+    }
+    if (type === "location") {
+      return this.isServiceAdmin();
+    }
+    if (type === "page") {
+      return this.isContentAdmin;
+    }
+    if (type === "report") {
+      return this.isSuperAdmin;
+    }
+    if (type === "user") {
+      return (
+        !this.isOnlyContentAdmin &&
+        !this.isOnlyGlobalAdmin &&
+        !this.isOnlyServiceWorker
+      );
+    }
+    return false;
+  }
+
+  /**
+   * Can the user update a content type
+   * @param {string} type
+   * @returns {boolean}
+   */
+  canEdit(type, model = null) {
+    if (type === "admin") {
+      return this.isSuperAdmin;
+    }
+    if (type === "taxonomies") {
+      return this.isSuperAdmin;
+    }
+    if (type === "collections") {
+      return this.isSuperAdmin;
+    }
+    if (type === "search engine") {
+      return this.isSuperAdmin;
+    }
+    if (type === "cms") {
+      return this.isSuperAdmin;
+    }
+    if (type === "event") {
+      return this.isOrganisationAdmin(model);
+    }
+    if (type === "service") {
+      return this.isServiceAdmin(model);
+    }
+    if (type === "organisation") {
+      return this.isOrganisationAdmin(model);
+    }
+    if (type === "location") {
+      return this.isServiceAdmin(model);
+    }
+    if (type === "page") {
+      return this.isContentAdmin;
+    }
+    if (type === "referral") {
+      return this.isServiceWorker() && !this.isOnlyGlobalAdmin;
+    }
+    if (type === "report") {
+      return this.isSuperAdmin;
+    }
+    if (type === "update request") {
+      return this.isSuperAdmin;
+    }
+    if (type === "user") {
+      return (
+        !this.isOnlyContentAdmin &&
+        !this.isOnlyGlobalAdmin &&
+        !this.isOnlyServiceWorker
+      );
+    }
+    return false;
+  }
+
+  /**
+   * Can the user bulk import a content type
+   * @param {string} type
+   * @returns {boolean}
+   */
+  canImport(type) {
+    if (type === "services") {
+      return this.isSuperAdmin;
+    }
+    if (type === "organisations") {
+      return this.isSuperAdmin;
+    }
+    return false;
+  }
+
+  /**
+   * Can the user delete a content type
+   * @param {string} type
+   * @returns {boolean}
+   */
+  canDelete(type) {
+    if (type === "admin") {
+      return this.isSuperAdmin;
+    }
+    if (type === "taxonomies") {
+      return this.isSuperAdmin;
+    }
+    if (type === "collections") {
+      return this.isSuperAdmin;
+    }
+    if (type === "event") {
+      return this.isSuperAdmin;
+    }
+    if (type === "service") {
+      return this.isSuperAdmin;
+    }
+    if (type === "organisation") {
+      return this.isSuperAdmin;
+    }
+    if (type === "location") {
+      return this.isSuperAdmin;
+    }
+    if (type === "page") {
+      return this.isContentAdmin;
+    }
+    if (type === "referral") {
+      return this.isSuperAdmin;
+    }
+    if (type === "update request") {
+      return this.isSuperAdmin;
+    }
+    if (type === "user") {
+      return (
+        !this.isOnlyContentAdmin &&
+        !this.isOnlyGlobalAdmin &&
+        !this.isOnlyServiceWorker
+      );
+    }
+    return false;
   }
 
   /**

@@ -18,7 +18,7 @@
               >
             </gov-grid-column>
             <gov-grid-column
-              v-if="auth.isOrganisationAdmin(event.organisation)"
+              v-if="auth.canEdit('event', event.organisation)"
               width="one-third"
               class="text-right"
             >
@@ -31,7 +31,7 @@
 
           <event-details :event="event" />
 
-          <template v-if="auth.isGlobalAdmin">
+          <template v-if="auth.canDelete('event')">
             <gov-section-break size="l" />
 
             <gov-body
