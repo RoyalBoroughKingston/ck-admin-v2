@@ -2,6 +2,10 @@
   <div>
     <vue-headful :title="`${appName} - Pages`" />
 
+    <gov-inset-text v-if="updated"
+      >page {{ updatedPage.title }} has been updated</gov-inset-text
+    >
+
     <gov-grid-row>
       <gov-grid-column width="two-thirds">
         <gov-heading size="l">Pages</gov-heading>
@@ -135,6 +139,7 @@ export default {
         { value: "information", text: "Information page" },
         { value: "landing", text: "Landing page" },
       ],
+      updated: false,
     };
   },
   computed: {
@@ -157,6 +162,11 @@ export default {
     },
     showEdit() {
       return this.auth.isContentAdmin;
+    },
+    updatedPage() {
+      return this.updated
+        ? this.pages.find((page) => page.id === this.updated)
+        : null;
     },
   },
   methods: {
@@ -221,6 +231,7 @@ export default {
     },
   },
   created() {
+    this.updated = this.$route.query.updated || false;
     this.fetchPages();
   },
 };

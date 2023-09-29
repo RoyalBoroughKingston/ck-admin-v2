@@ -33,16 +33,10 @@
           />
 
           <service-details
-            v-else-if="updateRequest.updateable_type === 'services'"
-            :update-request-id="updateRequest.id"
-            :requested-at="updateRequest.created_at"
-            :service="updateRequest.data"
-          />
-
-          <service-details
             v-else-if="
+              updateRequest.updateable_type === 'services' ||
               updateRequest.updateable_type ===
-              'new_service_created_by_org_admin'
+                'new_service_created_by_org_admin'
             "
             :update-request-id="updateRequest.id"
             :requested-at="updateRequest.created_at"
@@ -64,20 +58,24 @@
           />
 
           <organisation-event-details
-            v-else-if="updateRequest.updateable_type === 'organisation_events'"
+            v-else-if="
+              updateRequest.updateable_type === 'organisation_events' ||
+              updateRequest.updateable_type ===
+                'new_organisation_event_created_by_org_admin'
+            "
             :update-request-id="updateRequest.id"
             :requested-at="updateRequest.created_at"
             :event="updateRequest.data"
           />
 
-          <organisation-event-details
+          <page-details
             v-else-if="
-              updateRequest.updateable_type ===
-              'new_organisation_event_created_by_org_admin'
+              updateRequest.updateable_type === 'pages' ||
+              updateRequest.updateable_type === 'new_page'
             "
             :update-request-id="updateRequest.id"
             :requested-at="updateRequest.created_at"
-            :event="updateRequest.data"
+            :page="updateRequest.data"
           />
 
           <gov-body v-else>Update request is invalid</gov-body>
@@ -125,21 +123,23 @@
 
 <script>
 import http from "@/http";
+import LocationDetails from "@/views/update-requests/show/LocationDetails";
 import OrganisationDetails from "@/views/update-requests/show/OrganisationDetails";
 import OrganisationEventDetails from "@/views/update-requests/show/OrganisationEventDetails";
 import OrganisationSignUpFormDetails from "@/views/update-requests/show/OrganisationSignUpFormDetails";
+import PageDetails from "@/views/update-requests/show/PageDetails.vue";
 import ServiceDetails from "@/views/update-requests/show/ServiceDetails";
-import LocationDetails from "@/views/update-requests/show/LocationDetails";
 import ServiceLocationDetails from "@/views/update-requests/show/ServiceLocationDetails";
 
 export default {
   name: "ShowUpdateRequest",
   components: {
+    LocationDetails,
     OrganisationDetails,
     OrganisationEventDetails,
     OrganisationSignUpFormDetails,
+    PageDetails,
     ServiceDetails,
-    LocationDetails,
     ServiceLocationDetails,
   },
   data() {
@@ -204,6 +204,11 @@ export default {
               this.$router.push({
                 name: "events-show",
                 params: { event: this.updateRequest.updateable_id },
+              });
+              break;
+            case "pages":
+              this.$router.push({
+                name: "pages-index",
               });
               break;
             case "organisations":

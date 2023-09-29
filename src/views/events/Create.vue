@@ -192,7 +192,7 @@ export default {
 
       const eventId = response.data.id;
 
-      if (this.auth.isGlobalAdmin && eventId) {
+      if (this.auth.isSuperAdmin && eventId) {
         this.$router.push({
           name: "events-show",
           params: { event: eventId },

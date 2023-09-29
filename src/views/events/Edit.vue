@@ -128,7 +128,7 @@ export default {
       return this.tabs;
     },
     updateButtonText() {
-      return this.auth.isGlobalAdmin ? "Update" : "Request update";
+      return this.auth.isSuperAdmin ? "Update" : "Request update";
     },
   },
 
@@ -262,7 +262,7 @@ export default {
         params: { event: this.event.id },
       };
 
-      if (this.auth.isGlobalAdmin) {
+      if (this.auth.isSuperAdmin) {
         try {
           const { data } = await http.get(
             `/update-requests/${updateRequestId}`
