@@ -4,7 +4,9 @@
     <template v-else>
       <vue-headful :title="`${appName} - Page Updated: ${page.title}`" />
 
-      <gov-back-link :to="{ name: 'pages-index' }">Back to pages</gov-back-link>
+      <gov-back-link :to="{ name: 'pages-show', params: { page: page.id } }"
+        >Back to page</gov-back-link
+      >
       <gov-main-wrapper>
         <gov-grid-row>
           <gov-grid-column width="one-half">
@@ -16,9 +18,10 @@
 
             <gov-button
               :to="{
-                name: 'pages-index',
+                name: 'pages-show',
+                params: { page: page.id },
               }"
-              >Back to pages</gov-button
+              >Back to page</gov-button
             >
           </gov-grid-column>
         </gov-grid-row>

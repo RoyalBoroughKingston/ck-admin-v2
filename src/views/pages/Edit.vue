@@ -4,7 +4,9 @@
     <template v-else>
       <vue-headful :title="`${appName} - Edit Page ${page.title}`" />
 
-      <gov-back-link :to="{ name: 'pages-index' }">Back to pages</gov-back-link>
+      <gov-back-link :to="{ name: 'pages-show', params: { page: page.id } }"
+        >Back to page</gov-back-link
+      >
       <gov-main-wrapper>
         <page-form
           :page="page"

@@ -29,13 +29,48 @@
             </gov-grid-column>
           </gov-grid-row>
 
-          <gov-heading tag="h3" size="m">{{
-            pageTypes[page_type]
-          }}</gov-heading>
+          <gov-table>
+            <template slot="body">
+              <gov-table-row>
+                <gov-table-header top scope="row">Page type</gov-table-header>
+                <gov-table-cell>{{ pageTypes[page.page_type] }}</gov-table-cell>
+              </gov-table-row>
 
-          <gov-heading tag="h2" size="l">{{ page.title }}</gov-heading>
+              <gov-table-row>
+                <gov-table-header top scope="row">Status</gov-table-header>
+                <gov-table-cell>{{
+                  page.enabled ? "Enabled" : "Disabled"
+                }}</gov-table-cell>
+              </gov-table-row>
 
-          <page-content :content="page.content" />
+              <gov-table-row>
+                <gov-table-header top scope="row">Title</gov-table-header>
+                <gov-table-cell>{{ page.title }}</gov-table-cell>
+              </gov-table-row>
+
+              <gov-table-row>
+                <gov-table-header top scope="row"
+                  >Page content</gov-table-header
+                >
+                <gov-table-cell>
+                  <page-content :content="page.content" />
+                </gov-table-cell>
+              </gov-table-row>
+
+              <gov-table-row>
+                <gov-table-header top scope="row">Image</gov-table-header>
+                <gov-table-cell>
+                  <img
+                    :src="
+                      apiUrl(`/pages/${page.id}/image.png?v=${page.updated_at}`)
+                    "
+                    :alt="page.title"
+                    class="ck-logo"
+                  />
+                </gov-table-cell>
+              </gov-table-row>
+            </template>
+          </gov-table>
 
           <template v-if="auth.canDelete('page')">
             <gov-section-break size="l" />
@@ -72,6 +107,10 @@ export default {
       loading: false,
       page: null,
       updated: false,
+      pageTypes: {
+        information: "Information page",
+        landing: "Landing page",
+      },
     };
   },
 
@@ -84,6 +123,10 @@ export default {
 
       this.loading = false;
     },
+  },
+
+  created() {
+    this.fetchPage();
   },
 };
 </script>
