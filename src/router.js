@@ -340,6 +340,12 @@ let router = new Router({
           component: () => import("@/views/pages/Edit"),
         },
         {
+          path: ":page/updated",
+          name: "pages-updated",
+          component: () => import("@/views/pages/Updated"),
+          meta: { auth: true },
+        },
+        {
           path: "",
           name: "pages-index",
           component: () => import("@/views/pages/List"),

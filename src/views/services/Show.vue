@@ -21,7 +21,7 @@
               >
             </gov-grid-column>
             <gov-grid-column
-              v-if="auth.isServiceAdmin(service)"
+              v-if="auth.canEdit('service', service)"
               width="one-third"
               class="text-right"
             >
@@ -36,7 +36,7 @@
             <router-view :service="service" />
           </gov-tabs>
 
-          <template v-if="auth.isGlobalAdmin">
+          <template v-if="auth.canDelete('service')">
             <gov-body
               >Please be certain of the action before deleting a
               {{ service.type }}</gov-body

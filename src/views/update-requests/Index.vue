@@ -119,6 +119,10 @@ export default {
           return "Event";
         case "new_organisation_event_created_by_org_admin":
           return "New Event";
+        case "pages":
+          return "Page";
+        case "new_page":
+          return "New Page";
         default:
           return "Invalid type";
       }

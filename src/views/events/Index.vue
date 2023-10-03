@@ -23,10 +23,7 @@
                 </gov-form-group>
               </ck-table-filters>
             </gov-grid-column>
-            <gov-grid-column
-              v-if="auth.isOrganisationAdmin()"
-              width="one-third"
-            >
+            <gov-grid-column v-if="auth.canAdd('event')" width="one-third">
               <gov-button @click="onAddEvent" type="submit" success expand
                 >Add event</gov-button
               >

@@ -61,52 +61,52 @@ export default {
         {
           text: "Services",
           to: { name: "services-index" },
-          hide: Auth.isOnlyContentAdmin,
+          hide: !Auth.canView("services"),
         },
         {
           text: "Locations",
           to: { name: "locations-index" },
-          hide: Auth.isOnlyContentAdmin,
+          hide: !Auth.canView("locations"),
         },
         {
           text: "Referrals",
           to: { name: "referrals-index" },
-          hide: Auth.isOnlyContentAdmin,
+          hide: !Auth.canView("referrals"),
         },
         {
           text: "Organisations",
           to: { name: "organisations-index" },
-          hide: !Auth.isOrganisationAdmin(),
+          hide: !Auth.canView("organisations"),
         },
         {
           text: "Events",
           to: { name: "events-index" },
-          hide: Auth.isOnlyContentAdmin,
+          hide: !Auth.canView("events"),
         },
         {
           text: "Pages",
           to: { name: "pages-index" },
-          hide: !Auth.isContentAdmin,
+          hide: !Auth.canView("pages"),
         },
         {
           text: "Users",
           to: { name: "users-index" },
-          hide: Auth.isOnlyContentAdmin,
+          hide: !Auth.canView("users"),
         },
         {
           text: "Reports",
           to: { name: "reports-index" },
-          hide: !Auth.isGlobalAdmin,
+          hide: !Auth.canView("reports"),
         },
         {
           text: "Admin",
           to: { name: "admin-index" },
-          hide: !Auth.isGlobalAdmin,
+          hide: !Auth.canView("admin"),
         },
         {
           text: "Update requests",
           to: { name: "update-requests-index" },
-          hide: !Auth.isGlobalAdmin,
+          hide: !Auth.canView("update requests"),
         },
         {
           text: "Help",
