@@ -33,15 +33,6 @@
         }}</gov-button>
 
         <ck-submit-error v-if="form.$errors.any()" />
-
-        <gov-section-break size="l" />
-
-        <ck-delete-button
-          v-if="canDelete"
-          resource="page"
-          :endpoint="`/pages/${this.page.id}`"
-          @deleted="onDelete"
-        />
       </gov-main-wrapper>
     </template>
   </gov-width-container>
@@ -160,11 +151,6 @@ export default {
         }
       }
       this.$router.push(next);
-    },
-    onDelete() {
-      this.$router.push({
-        name: "pages-index",
-      });
     },
   },
   created() {

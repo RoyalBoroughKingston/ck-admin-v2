@@ -9,6 +9,10 @@
       >page {{ updatedPage.title }} has been updated</gov-inset-text
     >
 
+    <gov-inset-text v-if="orderChangedMessage">{{
+      orderChangedMessage
+    }}</gov-inset-text>
+
     <gov-grid-row>
       <gov-grid-column width="two-thirds">
         <ck-table-filters @search="onSearch">
@@ -138,6 +142,7 @@ export default {
         { value: "landing", text: "Landing page" },
       ],
       updated: false,
+      orderChangedMessage: null,
     };
   },
   computed: {
@@ -184,19 +189,35 @@ export default {
       this.loading = false;
     },
     async onMoveUp(page) {
+      this.orderChangedMessage = null;
+      const orderWas = page.order;
       page.order--;
       await http.put(`/pages/${page.id}`, {
         id: page.id,
         order: page.order,
       });
+      if (!this.auth.isSuperAdmin) {
+        this.orderChangedMessage = this.orderUpdateRequestMessage(
+          orderWas,
+          page
+        );
+      }
       this.fetchPages();
     },
     async onMoveDown(page) {
+      this.orderChangedMessage = null;
+      const orderWas = page.order;
       page.order++;
       await http.put(`/pages/${page.id}`, {
         id: page.id,
         order: page.order,
       });
+      if (!this.auth.isSuperAdmin) {
+        this.orderChangedMessage = this.orderUpdateRequestMessage(
+          orderWas,
+          page
+        );
+      }
       this.fetchPages();
     },
     async onSearch() {
@@ -226,6 +247,9 @@ export default {
         });
 
       return parsed;
+    },
+    orderUpdateRequestMessage(orderWas, page) {
+      return `An update request has been created to change the order of page ${page.title} from ${orderWas} to ${page.order}`;
     },
   },
   created() {

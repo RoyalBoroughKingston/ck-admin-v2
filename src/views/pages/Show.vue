@@ -123,6 +123,11 @@ export default {
 
       this.loading = false;
     },
+    onDelete() {
+      this.$router.push({
+        name: "pages-index",
+      });
+    },
   },
 
   created() {

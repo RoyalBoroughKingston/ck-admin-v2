@@ -56,6 +56,12 @@
           <gov-table-cell>{{ page.enabled | status }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="page.hasOwnProperty('order')">
+          <gov-table-header top scope="row">Order</gov-table-header>
+          <gov-table-cell v-if="original">{{ original.order }}</gov-table-cell>
+          <gov-table-cell>{{ page.order }}</gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="page.hasOwnProperty('content')">
           <gov-table-header top scope="row">Content</gov-table-header>
           <gov-table-cell v-if="original">
