@@ -419,7 +419,7 @@ class Auth {
       return true;
     }
     if (type === "page") {
-      return this.isContentAdmin;
+      return this.isSuperAdmin;
     }
     if (type === "user") {
       return (
