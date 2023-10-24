@@ -20,7 +20,7 @@
             >From</gov-table-header
           >
           <gov-table-header scope="column">{{
-            original ? 'To' : 'New'
+            original ? "To" : "New"
           }}</gov-table-header>
         </gov-table-row>
 
@@ -160,85 +160,85 @@
 </template>
 
 <script>
-  import http from '@/http';
+import http from "@/http";
 
-  import PageContent from '@/views/pages/show/PageContent.vue';
+import PageContent from "@/views/pages/show/PageContent.vue";
 
-  export default {
-    name: 'PageDetails',
+export default {
+  name: "PageDetails",
 
-    components: {
-      PageContent,
+  components: {
+    PageContent,
+  },
+
+  props: {
+    updateRequestId: {
+      required: true,
+      type: String,
     },
 
-    props: {
-      updateRequestId: {
-        required: true,
-        type: String,
-      },
-
-      requestedAt: {
-        required: true,
-        type: String,
-      },
-
-      page: {
-        required: true,
-        type: Object,
-      },
+    requestedAt: {
+      required: true,
+      type: String,
     },
-    data() {
-      return {
-        loading: false,
-        original: null,
-        collections: [],
-      };
-    },
-    methods: {
-      async fetchOriginal() {
-        if (this.page.id !== null) {
-          this.loading = true;
-          const {
-            data: { data: original },
-          } = await http.get(`/pages/${this.page.id}`);
-          this.original = original;
-          this.loading = false;
-        } else {
-          this.original = null;
-        }
-      },
 
-      async fetchCollections() {
+    page: {
+      required: true,
+      type: Object,
+    },
+  },
+  data() {
+    return {
+      loading: false,
+      original: null,
+      collections: [],
+    };
+  },
+  methods: {
+    async fetchOriginal() {
+      if (this.page.id !== null) {
+        this.loading = true;
         const {
-          data: { data: collections },
-        } = await http.get('/collections/categories/all');
-        this.collections = collections;
-      },
-      findCollection(collectionId) {
-        return this.collections.find(
-          (collection) => collection.id === collectionId
-        );
-      },
-      collectionName(collection) {
-        return collection ? collection.name : '';
-      },
+          data: { data: original },
+        } = await http.get(`/pages/${this.page.id}`);
+        this.original = original;
+        this.loading = false;
+      } else {
+        this.original = null;
+      }
     },
 
-    filters: {
-      status(status) {
-        return status ? 'Enabled' : 'Disabled';
-      },
+    async fetchCollections() {
+      const {
+        data: { data: collections },
+      } = await http.get("/collections/categories/all");
+      this.collections = collections;
+    },
+    findCollection(collectionId) {
+      return this.collections.find(
+        (collection) => collection.id === collectionId
+      );
+    },
+    collectionName(collection) {
+      return collection ? collection.name : "";
+    },
+  },
 
-      originalExists(field) {
-        return field || '';
-      },
+  filters: {
+    status(status) {
+      return status ? "Enabled" : "Disabled";
     },
 
-    created() {
-      this.fetchOriginal();
-      this.fetchCollections();
+    originalExists(field) {
+      return field || "";
     },
-  };
+  },
+
+  created() {
+    this.fetchOriginal();
+    this.fetchCollections();
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>
