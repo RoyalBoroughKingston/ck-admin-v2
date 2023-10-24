@@ -226,7 +226,7 @@ export default {
 
   filters: {
     status(status) {
-      return status === "enabled" ? "Enabled" : "Disabled";
+      return status ? "Enabled" : "Disabled";
     },
 
     originalExists(field) {
