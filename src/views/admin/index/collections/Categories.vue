@@ -96,6 +96,7 @@ export default {
         icon: collection.icon,
         order: collection.order,
         enabled: collection.enabled,
+        homepage: collection.homepage,
         sideboxes: collection.sideboxes,
         category_taxonomies: collection.category_taxonomies.map(
           (taxonomy) => taxonomy.id
