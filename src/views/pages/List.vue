@@ -48,7 +48,7 @@
           </template>
         </ck-table-filters>
       </gov-grid-column>
-      <gov-grid-column v-if="auth.isContentAdmin" width="one-third">
+      <gov-grid-column v-if="auth.canAdd('page')" width="one-third">
         <gov-button :to="{ name: 'pages-create-landing' }" success expand
           >Add a new Landing page</gov-button
         >

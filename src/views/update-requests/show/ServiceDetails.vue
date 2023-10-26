@@ -105,7 +105,9 @@
 
         <gov-table-row v-if="service.hasOwnProperty('ends_at')">
           <gov-table-header top scope="row">End date</gov-table-header>
-          <gov-table-cell>{{ original.ends_at | endsAt }}</gov-table-cell>
+          <gov-table-cell v-if="original">{{
+            original.ends_at | endsAt
+          }}</gov-table-cell>
           <gov-table-cell>{{ service.ends_at | endsAt }}</gov-table-cell>
         </gov-table-row>
 
