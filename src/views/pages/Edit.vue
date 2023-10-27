@@ -62,7 +62,7 @@ export default {
       return this.auth.isSuperAdmin ? "Update" : "Request update";
     },
     canDelete() {
-      return this.auth.isSuperAdmin && this.page.children.length === 0;
+      return this.auth.canDelete("page") && this.page.children.length === 0;
     },
   },
   methods: {

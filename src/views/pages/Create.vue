@@ -21,24 +21,12 @@
       />
     </gov-main-wrapper>
 
-    <template v-if="updateRequestCreated">
-      <gov-heading size="m" tag="h3">Create page request</gov-heading>
-      <gov-body>{{ updateRequestMessage }}</gov-body>
-      <gov-back-link :to="{ name: 'pages-index' }">Back to pages</gov-back-link>
-    </template>
-
     <gov-section-break size="l" />
 
     <gov-button v-if="form.$submitting" disabled type="submit"
       >Creating...</gov-button
     >
-    <gov-button
-      v-else
-      @click="onSubmit"
-      type="submit"
-      :disabled="updateRequestCreated"
-      >Create</gov-button
-    >
+    <gov-button v-else @click="onSubmit" type="submit">Create</gov-button>
 
     <ck-submit-error v-if="form.$errors.any()" />
   </gov-width-container>
@@ -139,9 +127,6 @@ export default {
           },
         },
       },
-
-      updateRequestCreated: false,
-      updateRequestMessage: null,
     };
   },
 
@@ -150,15 +135,15 @@ export default {
       const response = await this.form.post("/pages");
 
       const pageId = response.data.id;
-
       if (this.auth.isSuperAdmin && pageId) {
         this.$router.push({
           name: "pages-show",
           params: { page: pageId },
         });
       } else if (!this.form.$errors.any()) {
-        this.updateRequestCreated = true;
-        this.updateRequestMessage = response.message;
+        this.$router.push({
+          name: "pages-updated",
+        });
       }
     },
     onUpdateTitle(title) {

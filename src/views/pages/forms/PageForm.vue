@@ -30,7 +30,6 @@
       label="Unique slug"
       type="text"
       :error="errors.get('slug')"
-      v-if="auth.isContentAdmin"
     >
       <gov-hint slot="hint" for="slug">
         This will be used to access the page.<br />
