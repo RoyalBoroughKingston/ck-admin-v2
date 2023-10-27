@@ -2,26 +2,45 @@
   <gov-width-container>
     <ck-loader v-if="loading" />
     <template v-else>
-      <vue-headful :title="`${appName} - Page Updated: ${page.title}`" />
+      <vue-headful
+        v-if="page"
+        :title="`${appName} - Page Updated: ${page.title}`"
+      />
+      <vue-headful v-else :title="`${appName} - New Page`" />
 
-      <gov-back-link :to="{ name: 'pages-show', params: { page: page.id } }"
+      <gov-back-link
+        v-if="page"
+        :to="{ name: 'pages-show', params: { page: page.id } }"
         >Back to page</gov-back-link
+      >
+      <gov-back-link v-else :to="{ name: 'pages-index' }"
+        >Back to pages</gov-back-link
       >
       <gov-main-wrapper>
         <gov-grid-row>
           <gov-grid-column width="one-half">
             <gov-heading size="xl">Update request submitted</gov-heading>
             <gov-body>
-              Your update request for this page has been received. It will need
-              to be approved by an admin before the changes will be applied.
+              Your update request for
+              {{ page ? "this page" : "a new page" }} has been received. It will
+              need to be approved by an admin before the changes will be
+              applied.
             </gov-body>
 
             <gov-button
+              v-if="page"
               :to="{
                 name: 'pages-show',
                 params: { page: page.id },
               }"
               >Back to page</gov-button
+            >
+            <gov-button
+              v-else
+              :to="{
+                name: 'pages-index',
+              }"
+              >Back to pages</gov-button
             >
           </gov-grid-column>
         </gov-grid-row>
@@ -51,7 +70,9 @@ export default {
     },
   },
   created() {
-    this.fetchPage();
+    if (this.$route.params.page) {
+      this.fetchPage();
+    }
   },
 };
 </script>
