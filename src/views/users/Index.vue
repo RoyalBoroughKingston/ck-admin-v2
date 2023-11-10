@@ -142,7 +142,6 @@
 </template>
 
 <script>
-import Auth from "@/classes/Auth";
 import CkResourceListingTable from "@/components/Ck/CkResourceListingTable.vue";
 import CkTableFilters from "@/components/Ck/CkTableFilters.vue";
 
@@ -151,7 +150,6 @@ export default {
   components: { CkResourceListingTable, CkTableFilters },
   data() {
     return {
-      auth: Auth,
       filters: {
         first_name: "",
         last_name: "",
@@ -169,7 +167,9 @@ export default {
   },
   computed: {
     roles() {
-      return Auth.roles.slice().unshift({ value: "", text: "All" });
+      const roles = this.auth.roles.slice();
+      roles.splice(0, 0, { text: "All", value: "" });
+      return roles;
     },
     params() {
       const params = {
