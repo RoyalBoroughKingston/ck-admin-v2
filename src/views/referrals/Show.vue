@@ -15,7 +15,10 @@
           </gov-grid-column>
         </gov-grid-row>
         <gov-section-break size="l" />
-        <gov-grid-row v-if="auth.canUpdate('referral')" width="two-thirds">
+        <gov-grid-row
+          v-if="auth.canEdit('referral', referral)"
+          width="two-thirds"
+        >
           <gov-grid-column width="two-thirds">
             <gov-heading size="m">Update case</gov-heading>
 
