@@ -79,7 +79,7 @@ export default {
     onGalleryItemInput(event, index) {
       const galleryItems = this.clone();
       galleryItems[index].file_id = event.file_id;
-      galleryItems[index].image = event.iamge;
+      galleryItems[index].image = event.image;
       this.$emit("input", galleryItems);
     },
 

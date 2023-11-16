@@ -198,7 +198,13 @@
                     .filter(
                       galleryItem => typeof galleryItem.image !== 'undefined'
                     )
-                    .map(galleryItem => galleryItem.image)
+                    .map(galleryItem =>
+                      galleryItem.image
+                        ? galleryItem.image
+                        : galleryItem.url
+                        ? galleryItem.url
+                        : null
+                    )
                 "
               />
 
@@ -319,7 +325,8 @@ export default {
         offerings: this.service.offerings,
         gallery_items: this.service.gallery_items.map(galleryItem => ({
           file_id: galleryItem.file_id,
-          image: null
+          image: null,
+          url: galleryItem.url
         })),
         tags: this.service.tags,
         category_taxonomies: this.service.category_taxonomies.map(

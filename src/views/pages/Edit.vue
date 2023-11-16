@@ -143,8 +143,9 @@ export default {
             `/update-requests/${updateRequestId}`
           );
           if (data.approved_at) {
-            next.name = "pages-index";
-            next.query = { updated: this.page.id };
+            next.name = "pages-show";
+            next.page = this.page.id;
+            next.query = { updated: true };
           }
         } catch (err) {
           console.log(err);
