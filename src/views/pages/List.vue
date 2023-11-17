@@ -5,10 +5,6 @@
     <gov-heading size="xl">Pages</gov-heading>
     <gov-section-break size="m" />
 
-    <gov-inset-text v-if="updated"
-      >page {{ updatedPage.title }} has been updated</gov-inset-text
-    >
-
     <gov-inset-text v-if="orderChangedMessage">{{
       orderChangedMessage
     }}</gov-inset-text>
@@ -141,7 +137,6 @@ export default {
         { value: "information", text: "Information page" },
         { value: "landing", text: "Landing page" }
       ],
-      updated: false,
       orderChangedMessage: null
     };
   },
@@ -253,7 +248,6 @@ export default {
     }
   },
   created() {
-    this.updated = this.$route.query.updated || false;
     this.fetchPages();
   }
 };

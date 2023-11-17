@@ -385,7 +385,7 @@ class Auth {
       return this.isContentAdmin;
     }
     if (type === "referral") {
-      return this.isServiceWorker() && !this.isOnlyGlobalAdmin;
+      return this.isServiceWorker(model) && !this.isOnlyGlobalAdmin;
     }
     if (type === "user") {
       return (
