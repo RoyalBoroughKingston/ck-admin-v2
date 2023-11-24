@@ -55,7 +55,9 @@
               <details-tab
                 v-show="isTabActive('details')"
                 :errors="form.$errors"
-                :title.sync="form.title"
+                @update:title="onUpdateTitle"
+                :title="form.title"
+                :slug.sync="form.slug"
                 :start_date.sync="form.start_date"
                 :end_date.sync="form.end_date"
                 :start_time.sync="form.start_time"
@@ -122,6 +124,7 @@ export default {
     return {
       form: new Form({
         title: "",
+        slug: "",
         start_date: "",
         end_date: "",
         start_time: "",
@@ -211,6 +214,10 @@ export default {
       const tab = this.allowedTabs.find(tab => tab.id === id);
 
       return tab === undefined ? false : tab.active;
+    },
+    onUpdateTitle(title) {
+      this.form.title = title;
+      this.form.slug = this.slugify(title);
     }
   },
 
