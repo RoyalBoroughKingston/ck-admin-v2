@@ -20,6 +20,20 @@
       :error="errors.get('title')"
     />
 
+    <ck-text-input
+      :value="slug"
+      @input="onInput('slug', $event)"
+      id="slug"
+      label="Unique slug"
+      type="text"
+      :error="errors.get('slug')"
+    >
+      <gov-hint slot="hint" for="slug">
+        This will be used to access the event.<br />
+        e.g. example.com/events/{{ slug }}
+      </gov-hint>
+    </ck-text-input>
+
     <ck-date-picker
       id="start_date"
       :value="start_date"
@@ -308,6 +322,10 @@ export default {
     title: {
       required: true,
       type: String
+    },
+    slug: {
+      type: String,
+      required: true
     },
     intro: {
       required: true,
