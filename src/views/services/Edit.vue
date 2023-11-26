@@ -508,7 +508,7 @@ export default {
         params: { service: this.service.id }
       };
 
-      if (this.auth.isGlobalAdmin) {
+      if (this.auth.isSuperAdmin) {
         try {
           const { data } = await http.get(
             `/update-requests/${updateRequestId}`

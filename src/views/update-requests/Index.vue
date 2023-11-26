@@ -107,6 +107,8 @@ export default {
           return "Service";
         case "organisations":
           return "Organisation";
+        case "new_organisation_created_by_global_admin":
+          return "New Organisation";
         case "locations":
           return "Location";
         case "service_locations":
@@ -114,6 +116,7 @@ export default {
         case "organisation_sign_up_form":
           return "Organisation sign up form";
         case "new_service_created_by_org_admin":
+        case "new_service_created_by_global_admin":
           return "New Service";
         case "organisation_events":
           return "Event";

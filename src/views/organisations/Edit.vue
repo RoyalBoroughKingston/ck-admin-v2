@@ -214,7 +214,7 @@ export default {
         params: { organisation: this.organisation.id }
       };
 
-      if (this.auth.isGlobalAdmin) {
+      if (this.auth.isSuperAdmin) {
         try {
           const { data } = await http.get(
             `/update-requests/${updateRequestId}`
