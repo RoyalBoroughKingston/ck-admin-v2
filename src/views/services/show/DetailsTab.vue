@@ -81,7 +81,7 @@
           <gov-table-header top scope="row">Last updated</gov-table-header>
           <gov-table-cell>
             {{ service.last_modified_at | lastModifiedAt }}
-            <template v-if="auth.isServiceAdmin(service)">
+            <template v-if="auth.isServiceAdmin(service.id)">
               <gov-link
                 v-if="!refreshForm.$submitting"
                 @click="onMarkAsStillUpToDate"
