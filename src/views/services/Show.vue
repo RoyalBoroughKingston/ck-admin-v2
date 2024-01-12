@@ -84,8 +84,18 @@ export default {
           heading: "Eligibility",
           to: { name: "services-show-eligibility" }
         },
-        { heading: "Locations", to: { name: "services-show-locations" } },
-        { heading: "Referral", to: { name: "services-show-referral" } }
+        {
+          heading: "Locations",
+          to: { name: "services-show-locations" }
+        },
+        {
+          heading: "Referral",
+          to: { name: "services-show-referral" }
+        },
+        {
+          heading: "Taxonomies",
+          to: { name: "services-show-taxonomies" }
+        }
       ]
     };
   },
