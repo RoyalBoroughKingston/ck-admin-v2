@@ -20,10 +20,23 @@
       :error="errors.get('title')"
     />
 
+    <ck-text-input
+      :value="slug"
+      @input="onInput('slug', $event)"
+      id="slug"
+      label="Unique slug"
+      type="text"
+      :error="errors.get('slug')"
+    >
+      <gov-hint slot="hint" for="slug">
+        This will be used to access the event.<br />
+        e.g. example.com/events/{{ slug }}
+      </gov-hint>
+    </ck-text-input>
+
     <ck-date-picker
       id="start_date"
       :value="start_date"
-      :min="todayAsDate"
       :max="end_date"
       :required="true"
       :error="errors.get('start_date')"
@@ -34,7 +47,7 @@
     <ck-date-picker
       id="end_date"
       :value="end_date"
-      :min="start_date"
+      :min="earliestEndDate"
       :required="true"
       :error="errors.get('end_date')"
       @input="onInput('end_date', $event)"
@@ -309,6 +322,10 @@ export default {
       required: true,
       type: String
     },
+    slug: {
+      type: String,
+      required: true
+    },
     intro: {
       required: true,
       type: String
@@ -425,11 +442,20 @@ export default {
       ];
     },
     todayAsDate() {
-      const now = new Date();
-      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
-        2,
-        "0"
-      )}-${String(now.getDate()).padStart(2, "0")}`;
+      return this.dateToDateString(new Date());
+    },
+    earliestEndDate() {
+      if (!this.start_date) {
+        return this.todayAsDate;
+      }
+      const startDate = new Date(this.start_date);
+      const today = new Date();
+      today.setHours(0);
+      today.setMinutes(0);
+      today.setSeconds(0);
+      return today < startDate
+        ? this.dateToDateString(startDate)
+        : this.dateToDateString(today);
     }
   },
 
@@ -437,6 +463,11 @@ export default {
     onInput(field, value) {
       this.$emit(`update:${field}`, value);
       this.$emit("clear", field);
+    },
+    dateToDateString(dateObj) {
+      return `${dateObj.getFullYear()}-${String(
+        dateObj.getMonth() + 1
+      ).padStart(2, "0")}-${String(dateObj.getDate()).padStart(2, "0")}`;
     }
   },
 

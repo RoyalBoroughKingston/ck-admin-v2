@@ -102,6 +102,18 @@
               />
             </gov-radios>
 
+            <ck-textarea-input
+              v-if="approve === false"
+              id="updateRequestRejectionMessage"
+              :value="form.message"
+              label="Rejection message"
+              hint="Explain to the submitter why this update request is being rejected (required)"
+              :maxlength="1000"
+              :rows="3"
+              :error="form.$errors.get('message')"
+              @input="form.message = $event"
+            />
+
             <gov-section-break size="l" />
 
             <gov-button v-if="submitting" disabled type="submit"
@@ -110,7 +122,10 @@
             <gov-button
               v-else
               @click="onSubmit"
-              :disabled="approve === null"
+              :disabled="
+                approve === null ||
+                  (approve === false && form.message.length === 0)
+              "
               type="submit"
               >Submit</gov-button
             >
@@ -123,6 +138,7 @@
 
 <script>
 import http from "@/http";
+import Form from "@/classes/Form";
 import LocationDetails from "@/views/update-requests/show/LocationDetails";
 import OrganisationDetails from "@/views/update-requests/show/OrganisationDetails";
 import OrganisationEventDetails from "@/views/update-requests/show/OrganisationEventDetails";
@@ -147,7 +163,9 @@ export default {
       loading: false,
       updateRequest: null,
       approve: null,
-      submitting: false
+      rejectionMessage: "",
+      submitting: false,
+      form: new Form({ message: "" })
     };
   },
   methods: {
@@ -187,58 +205,63 @@ export default {
       this.loading = false;
     },
     async onSubmit() {
-      try {
-        this.submitting = true;
+      this.submitting = true;
+      this.form.$errors.clear();
 
-        if (this.approve) {
-          await http.put(`/update-requests/${this.updateRequest.id}/approve`);
+      if (this.approve) {
+        await http.put(`/update-requests/${this.updateRequest.id}/approve`);
 
-          switch (this.updateRequest.updateable_type) {
-            case "services":
-              this.$router.push({
-                name: "services-show",
-                params: { service: this.updateRequest.updateable_id }
-              });
-              break;
-            case "organisation_events":
-              this.$router.push({
-                name: "events-show",
-                params: { event: this.updateRequest.updateable_id }
-              });
-              break;
-            case "pages":
-              this.$router.push({
-                name: "pages-index"
-              });
-              break;
-            case "organisations":
-              this.$router.push({
-                name: "organisations-show",
-                params: { organisation: this.updateRequest.updateable_id }
-              });
-              break;
-            case "locations":
-              this.$router.push({
-                name: "locations-show",
-                params: { location: this.updateRequest.updateable_id }
-              });
-              break;
-            case "service_locations":
-              this.$router.push({
-                name: "service-locations-show",
-                params: { serviceLocation: this.updateRequest.updateable_id }
-              });
-              break;
-            default:
-              this.$router.push({ name: "update-requests-index" });
-              break;
-          }
-        } else {
-          await http.delete(`/update-requests/${this.updateRequest.id}`);
-          this.$router.push({ name: "update-requests-index" });
+        switch (this.updateRequest.updateable_type) {
+          case "services":
+            this.$router.push({
+              name: "services-show",
+              params: { service: this.updateRequest.updateable_id }
+            });
+            break;
+          case "organisation_events":
+            this.$router.push({
+              name: "events-show",
+              params: { event: this.updateRequest.updateable_id }
+            });
+            break;
+          case "pages":
+            this.$router.push({
+              name: "pages-index"
+            });
+            break;
+          case "organisations":
+            this.$router.push({
+              name: "organisations-show",
+              params: { organisation: this.updateRequest.updateable_id }
+            });
+            break;
+          case "locations":
+            this.$router.push({
+              name: "locations-show",
+              params: { location: this.updateRequest.updateable_id }
+            });
+            break;
+          case "service_locations":
+            this.$router.push({
+              name: "service-locations-show",
+              params: { serviceLocation: this.updateRequest.updateable_id }
+            });
+            break;
+          default:
+            this.$router.push({ name: "update-requests-index" });
+            break;
         }
-      } catch (error) {
-        this.submitting = false;
+      } else {
+        try {
+          await this.form.put(
+            `/update-requests/${this.updateRequest.id}/reject`
+          );
+          if (!this.form.$errors.any()) {
+            this.$router.push({ name: "update-requests-index" });
+          }
+        } catch (error) {
+          this.submitting = false;
+        }
       }
     }
   },

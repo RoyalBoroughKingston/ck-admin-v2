@@ -10,7 +10,7 @@
         <gov-grid-column width="full">
           <gov-heading size="xl">Services</gov-heading>
 
-          <template v-if="!auth.isGlobalAdmin">
+          <template v-if="!auth.isSuperAdmin">
             <gov-body class="govuk-!-font-weight-bold">
               Please review the process below on how to create a
               {{ form.type }}.
@@ -304,7 +304,7 @@ export default {
   },
   methods: {
     async onSubmit() {
-      const data = await this.form.post("/services", (config, data) => {
+      const response = await this.form.post("/services", (config, data) => {
         // Append time to end date (set to morning).
         if (data.ends_at !== "") {
           data.ends_at = `${data.ends_at}T00:00:00+0000`;
@@ -328,19 +328,19 @@ export default {
           delete data.tags;
         }
       });
-      const serviceId = data.data.id;
+      const serviceId = response.data.id;
 
       // Refetch the user as new permissions added for the new service.
       await this.auth.fetchUser();
 
-      if (this.auth.isGlobalAdmin && serviceId) {
+      if (this.auth.isSuperAdmin && serviceId) {
         this.$router.push({
           name: "services-post-create",
           params: { service: serviceId }
         });
       } else if (!this.form.$errors.any()) {
         this.updateRequestCreated = true;
-        this.updateRequestMessage = data.message;
+        this.updateRequestMessage = response.message;
       }
     },
     onTabChange({ index }) {

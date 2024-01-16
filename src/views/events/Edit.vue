@@ -35,6 +35,7 @@
                 :errors="form.$errors"
                 :id="event.id"
                 :title.sync="form.title"
+                :slug.sync="form.slug"
                 :start_date.sync="form.start_date"
                 :end_date.sync="form.end_date"
                 :start_time.sync="form.start_time"
@@ -142,6 +143,7 @@ export default {
       this.event = response.data.data;
       this.form = new Form({
         title: this.event.title,
+        slug: this.event.slug,
         start_date: this.event.start_date,
         end_date: this.event.end_date,
         start_time: this.event.start_time,
@@ -178,6 +180,9 @@ export default {
           // Remove any unchanged values.
           if (data.title === this.event.title) {
             delete data.title;
+          }
+          if (data.slug === this.event.slug) {
+            delete data.slug;
           }
           if (data.start_date === this.event.start_date) {
             delete data.start_date;
