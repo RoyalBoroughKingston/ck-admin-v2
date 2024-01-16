@@ -108,7 +108,7 @@ class Auth {
         const service = services.data.data.find(
           service => service.id === role.service_id
         );
-        role.organisation_id = service.organisation_id;
+        role.organisation_id = service ? service.organisation_id : null;
       }
     });
 
