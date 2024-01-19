@@ -369,7 +369,10 @@ export default {
           if (data.status === this.service.status) {
             delete data.status;
           }
-          if (data.score === this.service.score) {
+          if (
+            data.score === this.service.score ||
+            (!data.score && !this.service.score)
+          ) {
             delete data.score;
           }
           if (data.intro === this.service.intro) {
