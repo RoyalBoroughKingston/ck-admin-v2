@@ -21,7 +21,7 @@
               >
             </gov-grid-column>
             <gov-grid-column
-              v-if="auth.canEdit('service', service)"
+              v-if="auth.canEdit('service', service.id)"
               width="one-third"
               class="text-right"
             >
@@ -99,6 +99,7 @@ export default {
       ]
     };
   },
+
   methods: {
     async fetchService() {
       this.loading = true;

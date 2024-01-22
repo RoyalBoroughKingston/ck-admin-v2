@@ -396,27 +396,27 @@ class Auth {
    * @param {string} type
    * @returns {boolean}
    */
-  canEdit(type, model = null) {
+  canEdit(type, modelId = null) {
     if (this.isSuperAdmin) {
       return true;
     }
     if (type === "event") {
-      return this.isOrganisationAdmin(model);
+      return this.isOrganisationAdmin(modelId);
     }
     if (type === "service") {
-      return this.isServiceAdmin(model);
+      return this.isServiceAdmin(modelId);
     }
     if (type === "organisation") {
-      return this.isOrganisationAdmin(model);
+      return this.isOrganisationAdmin(modelId);
     }
     if (type === "location") {
-      return this.isServiceAdmin(model);
+      return this.isServiceAdmin(modelId);
     }
     if (type === "page") {
       return this.isContentAdmin;
     }
     if (type === "referral") {
-      return this.isServiceWorker(model) && !this.isOnlyGlobalAdmin;
+      return this.isServiceWorker(modelId) && !this.isOnlyGlobalAdmin;
     }
     if (type === "user") {
       return (
