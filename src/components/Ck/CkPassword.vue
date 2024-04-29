@@ -9,9 +9,9 @@
     @input="$emit('input', $event)"
   >
     <template v-slot:after-input>
-      <GovButton type="button" @click="toggleShowPassword"
-        >Show Password</GovButton
-      >
+      <GovButton type="button" @click="toggleShowPassword">{{
+        toggleShowPasswordText
+      }}</GovButton>
     </template>
   </ck-text-input>
 </template>
@@ -41,6 +41,11 @@ export default {
     return {
       type: "password"
     };
+  },
+  computed: {
+    toggleShowPasswordText() {
+      return this.type === "password" ? "Show Password" : "Hide Password";
+    }
   },
   methods: {
     toggleShowPassword() {
