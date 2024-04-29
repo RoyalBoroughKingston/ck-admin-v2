@@ -47,19 +47,22 @@
       :error="errors.get('user.phone')"
     />
 
-    <ck-text-input
+    <ck-password
       v-model="form.user.password"
       id="password"
       label="Password"
-      type="password"
-      hint="The password must be at least eight characters long, contain one uppercase letter, one lowercase letter, one number and one special character (!#$%&()*+,-./:;<=>?@[]^_`{|}~)"
       :error="errors.get('user.password')"
     />
   </div>
 </template>
 
 <script>
+import CkPassword from "@/components/Ck/CkPassword.vue";
 export default {
+  components: {
+    CkPassword
+  },
+
   props: {
     form: {
       type: Object,
