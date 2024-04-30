@@ -39,7 +39,6 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Persona image"
-      accept="image/x-png"
       :existing-url="
         id
           ? apiUrl(`/collections/personas/${id}/image.png?v=${now}`)

@@ -26,7 +26,6 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Category image"
-      accept="image/x-svg"
       :existing-url="
         id
           ? apiUrl(`/collections/categories/${id}/image.svg?v=${now}`)

@@ -128,7 +128,6 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Location image"
-      accept="image/x-png"
       :existing-url="
         id ? apiUrl(`/locations/${id}/image.png?v=${now}`) : undefined
       "

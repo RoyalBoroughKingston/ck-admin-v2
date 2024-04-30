@@ -64,7 +64,6 @@
       @input="onInput('logo_file_id', $event.file_id)"
       id="logo"
       label="Organisation logo"
-      accept="image/x-png"
       :existing-url="
         id ? apiUrl(`/organisations/${id}/logo.png?v=${now}`) : undefined
       "
