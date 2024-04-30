@@ -69,7 +69,7 @@ export default {
     },
     accept: {
       required: false,
-      default: null
+      default: "image/png,image/jpeg,image/svg+xml"
     },
     id: {
       required: true,

@@ -8,7 +8,6 @@
         @input="onGalleryItemInput($event, index)"
         :id="`Ck::GalleryItem::${galleryItem.$index}`"
         label="Upload an item to the gallery"
-        accept="image/x-png"
         :existing-url="
           galleryItem.hasOwnProperty('url') ? galleryItem.url : undefined
         "
