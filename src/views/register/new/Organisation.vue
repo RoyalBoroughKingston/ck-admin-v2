@@ -82,7 +82,7 @@ export default {
   computed: {
     fieldsEmpty() {
       return Object.entries(this.form.organisation).some(([field, value]) => {
-        return !["id", "slug"].includes(field) && value == "";
+        return !["id", "slug", "phone", "email"].includes(field) && value == "";
       });
     }
   }
