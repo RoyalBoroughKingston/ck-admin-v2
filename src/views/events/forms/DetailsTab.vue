@@ -84,7 +84,7 @@
       "
       :error="errors.get('description')"
       large
-      :maxlength="3000"
+      :maxlength="10000"
     />
 
     <ck-radio-input
