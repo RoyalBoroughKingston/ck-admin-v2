@@ -49,6 +49,11 @@
               </gov-table-row>
 
               <gov-table-row>
+                <gov-table-header top scope="row">Excerpt</gov-table-header>
+                <gov-table-cell>{{ page.excerpt || "" }}</gov-table-cell>
+              </gov-table-row>
+
+              <gov-table-row>
                 <gov-table-header top scope="row"
                   >Page content</gov-table-header
                 >
