@@ -38,7 +38,6 @@
     </ck-text-input>
 
     <ck-text-input
-      v-if="page_type === 'information'"
       :value="excerpt || ''"
       @input="onInput('excerpt', $event)"
       id="excerpt"

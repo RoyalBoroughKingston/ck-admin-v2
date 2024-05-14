@@ -84,7 +84,7 @@
       "
       :error="errors.get('description')"
       large
-      :maxlength="3000"
+      :maxlength="10000"
     />
 
     <ck-radio-input
@@ -278,7 +278,6 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Event image"
-      accept="image/x-png"
       :existing-url="
         id ? apiUrl(`/organisation-events/${id}/image.png?v=${now}`) : undefined
       "

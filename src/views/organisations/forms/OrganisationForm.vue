@@ -28,6 +28,7 @@
       :value="description"
       @input="onInput('description', $event)"
       id="description"
+      :maxlength="3000"
       label="Please provide a one-line summary of organisation"
       hint="This should be a short line or two that summarises who the organisation is and will appear below the Organisation name on it's page."
       :error="errors.get('description')"
@@ -64,7 +65,6 @@
       @input="onInput('logo_file_id', $event.file_id)"
       id="logo"
       label="Organisation logo"
-      accept="image/x-png"
       :existing-url="
         id ? apiUrl(`/organisations/${id}/logo.png?v=${now}`) : undefined
       "
