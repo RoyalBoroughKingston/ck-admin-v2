@@ -61,11 +61,7 @@
         :disabled="!form.file || !form.alt_text || !form.mime_type"
         >{{ fileId ? "Update" : "Upload" }} file</gov-button
       >&nbsp;
-      <gov-button
-        v-if="(existingUrl && !removeExisting) || form.file"
-        @click="onRemove"
-        type="button"
-        error
+      <gov-button v-if="form.file" @click="onRemove" type="button" error
         >Remove file</gov-button
       >
     </div>
@@ -91,17 +87,13 @@ export default {
     },
     accept: {
       required: false,
-      default: "image/png,image/jpeg,image/svg+xml"
+      default: "image/png,image/jpg,image/jpeg,image/svg+xml"
     },
     id: {
       required: true,
       type: String
     },
     fileId: {
-      required: false,
-      type: String
-    },
-    existingUrl: {
       required: false,
       type: String
     },

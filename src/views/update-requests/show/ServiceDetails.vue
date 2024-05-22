@@ -517,16 +517,24 @@
             <ck-carousel
               v-if="
                 original.hasOwnProperty('gallery_items') &&
-                  Array.isArray(original.gallery_items)
+                  Array.isArray(original.gallery_items) &&
+                  original.gallery_items.length
               "
-              :image-urls="imageUrls(original)"
+              :image-ids="
+                original.gallery_items.map(galleryItem => galleryItem.file_id)
+              "
             />
             <gov-body v-else>-</gov-body>
           </gov-table-cell>
           <gov-table-cell :style="original ? 'width: 25%;' : 'width: 50%;'">
             <ck-carousel
-              v-if="Array.isArray(service.gallery_items)"
-              :image-urls="serviceGalleryItems"
+              v-if="
+                Array.isArray(service.gallery_items) &&
+                  service.gallery_items.length
+              "
+              :image-ids="
+                service.gallery_items.map(galleryItem => galleryItem.file_id)
+              "
             />
             <gov-body v-else>-</gov-body>
           </gov-table-cell>

@@ -85,10 +85,17 @@
         </gov-table-row>
         <gov-table-row>
           <gov-table-header top scope="row"
-            >Gallery items ({{ imageUrls.length }})</gov-table-header
+            >Gallery items ({{
+              service.gallery_items.length
+            }})</gov-table-header
           >
           <gov-table-cell style="width: 50%">
-            <ck-carousel v-if="imageUrls.length > 0" :image-urls="imageUrls" />
+            <ck-carousel
+              v-if="service.gallery_items.length"
+              :image-ids="
+                service.gallery_items.map(galleryItem => galleryItem.file_id)
+              "
+            />
             <gov-body v-else>-</gov-body>
           </gov-table-cell>
         </gov-table-row>
