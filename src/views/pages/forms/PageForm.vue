@@ -57,7 +57,7 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Page Image"
-      :existing-url="existingImageUrl"
+      :file-id="image_file_id"
     />
 
     <ck-collection-input
@@ -163,22 +163,6 @@ export default {
           })
         )
       ];
-    },
-    imageFileSuffix() {
-      return this.page.image
-        ? {
-            "image/jpeg": "jpg",
-            "image/png": "png",
-            "image/svg+xml": "svg"
-          }[this.page.image.mime_type]
-        : null;
-    },
-    existingImageUrl() {
-      return this.page && this.page.image
-        ? this.apiUrl(
-            `/pages/${this.page.id}/image.${this.imageFileSuffix}?v=${this.now}`
-          )
-        : undefined;
     },
     contentErrors() {
       let errors = {};

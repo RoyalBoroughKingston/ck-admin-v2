@@ -27,6 +27,7 @@
       :src="form.file"
       :key="`UploadedImage::${_uid}`"
       :alt="form.alt_text"
+      class="ck-logo"
     />
 
     <ck-text-input

@@ -32,12 +32,17 @@ export default {
   },
   data() {
     return {
-      image: {}
+      image: {
+        src: null,
+        alt_text: ""
+      }
     };
   },
   async created() {
-    const { data: file } = await http.get(`files/${this.fileId}`);
-    this.image = file.data;
+    if (this.fileId) {
+      const { data: file } = await http.get(`files/${this.fileId}`);
+      this.image = file.data;
+    }
   }
 };
 </script>

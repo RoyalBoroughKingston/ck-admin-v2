@@ -24,7 +24,10 @@
       <gov-table-row>
         <gov-table-header top scope="row">Logo</gov-table-header>
         <gov-table-cell>
-          <ck-image :file-id="organisation.image.id" />
+          <ck-image
+            v-if="organisation.image"
+            :file-id="organisation.image.id"
+          />
         </gov-table-cell>
       </gov-table-row>
       <gov-table-row>

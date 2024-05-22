@@ -26,7 +26,7 @@
             >{{ service.type | ucfirst }} logo</gov-table-header
           >
           <gov-table-cell>
-            <ck-image :file-id="service.image.id" />
+            <ck-image v-if="service.image" :file-id="service.image.id" />
           </gov-table-cell>
         </gov-table-row>
         <gov-table-row>

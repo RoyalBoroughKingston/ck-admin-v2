@@ -129,9 +129,6 @@
       id="image"
       label="Location image"
       :file-id="image_file_id"
-      :existing-url="
-        id ? apiUrl(`/locations/${id}/image.png?v=${now}`) : undefined
-      "
     />
   </div>
 </template>

@@ -106,9 +106,6 @@
           id="logo"
           :label="`Upload your ${type} logo`"
           :file-id="logo_file_id"
-          :existing-url="
-            id ? apiUrl(`/services/${id}/logo.png?v=${now}`) : undefined
-          "
         >
           <template slot="hint">
             <gov-hint for="logo">

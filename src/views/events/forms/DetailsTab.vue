@@ -278,9 +278,7 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Event image"
-      :existing-url="
-        id ? apiUrl(`/organisation-events/${id}/image.png?v=${now}`) : undefined
-      "
+      :file-id="image_file_id"
     />
 
     <event-homepage-input

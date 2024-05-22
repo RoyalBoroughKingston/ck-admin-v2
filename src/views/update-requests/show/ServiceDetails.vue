@@ -490,10 +490,13 @@
         <gov-table-row v-if="service.hasOwnProperty('logo_file_id')">
           <gov-table-header top scope="row">Logo</gov-table-header>
           <gov-table-cell v-if="original">
-            <ck-image :file-id="original.image.id" />
+            <ck-image v-if="original.image" :file-id="original.image.id" />
           </gov-table-cell>
           <gov-table-cell>
-            <ck-image v-if="service.id" :file-id="service.logo_file_id" />
+            <ck-image
+              v-if="service.logo_file_id"
+              :file-id="service.logo_file_id"
+            />
             <img
               v-else
               :src="

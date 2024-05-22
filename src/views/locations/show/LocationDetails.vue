@@ -51,7 +51,7 @@
       <gov-table-row>
         <gov-table-header top scope="row">Image</gov-table-header>
         <gov-table-cell>
-          <ck-image :file-id="location.image.id" />
+          <ck-image v-if="location.image" :file-id="location.image.id" />
         </gov-table-cell>
       </gov-table-row>
       <gov-table-row>
