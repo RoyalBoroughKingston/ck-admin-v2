@@ -23,7 +23,7 @@
     <ck-loader v-if="form.$submitting">Uploading</ck-loader>
     <!-- Uploaded image -->
     <img
-      if="form.file"
+      v-else-if="form.file"
       :src="form.file"
       :key="`UploadedImage::${_uid}`"
       :alt="form.alt_text"
