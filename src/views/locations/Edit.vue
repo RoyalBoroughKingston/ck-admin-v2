@@ -96,7 +96,7 @@ export default {
         has_wheelchair_access: this.location.has_wheelchair_access,
         has_induction_loop: this.location.has_induction_loop,
         has_accessible_toilet: this.location.has_accessible_toilet,
-        image_file_id: this.location.image.id
+        image_file_id: this.location.image ? this.location.image.id : null
       });
 
       this.loading = false;

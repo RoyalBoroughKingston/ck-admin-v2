@@ -336,7 +336,7 @@ export default {
         eligibility_types: JSON.parse(
           JSON.stringify(this.service.eligibility_types)
         ),
-        logo_file_id: this.service.image.id || null,
+        logo_file_id: this.service.image ? this.service.image.id : null,
         logo: null
       });
 

@@ -164,7 +164,7 @@ export default {
         is_virtual: this.event.is_virtual,
         homepage: this.event.homepage || false,
         location_id: this.event.location_id,
-        image_file_id: this.event.image.id,
+        image_file_id: this.event.image ? this.event.image.id : null,
         category_taxonomies: this.event.category_taxonomies.map(
           taxonomy => taxonomy.id
         )

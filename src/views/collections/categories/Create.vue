@@ -28,7 +28,7 @@
             :homepage.sync="form.homepage"
             :sideboxes.sync="form.sideboxes"
             :category_taxonomies.sync="form.category_taxonomies"
-            @update:image_file_id="form.image_file_id = $event"
+            :image_file_id.sync="form.image_file_id"
             @clear="form.$errors.clear($event)"
           />
 

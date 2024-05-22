@@ -129,7 +129,7 @@ export default {
       if ($event === null) {
         this.form.mime_type = null;
         this.form.file = null;
-        this.$emit("input", { file_id: null, image: null, alt: null });
+        this.$emit("input", { file_id: null, image: null });
         return;
       }
       // Destructure the payload with the variables we need.
@@ -154,8 +154,7 @@ export default {
         // Emit the file ID.
         this.$emit("input", {
           file_id: id,
-          image: this.form.file,
-          alt: this.form.alt_text
+          image: this.form.file
         });
       }
     },
