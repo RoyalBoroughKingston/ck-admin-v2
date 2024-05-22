@@ -490,24 +490,10 @@
         <gov-table-row v-if="service.hasOwnProperty('logo_file_id')">
           <gov-table-header top scope="row">Logo</gov-table-header>
           <gov-table-cell v-if="original">
-            <img
-              :src="apiUrl(`/services/${service.id}/logo.png?v=${requestedAt}`)"
-              alt="Service logo"
-              class="ck-logo"
-            />
+            <ck-image :file-id="original.image.id" />
           </gov-table-cell>
           <gov-table-cell>
-            <img
-              v-if="service.id"
-              :src="
-                logoDataUri ||
-                  apiUrl(
-                    `/services/${service.id}/logo.png?update_request_id=${updateRequestId}`
-                  )
-              "
-              alt="Service logo"
-              class="ck-logo"
-            />
+            <ck-image v-if="service.id" :file-id="service.logo_file_id" />
             <img
               v-else
               :src="
@@ -516,7 +502,7 @@
                     `/services/new/logo.png?update_request_id=${updateRequestId}`
                   )
               "
-              alt="Service logo"
+              :alt="logoAlt"
               class="ck-logo"
             />
           </gov-table-cell>
@@ -551,6 +537,7 @@
 import http from "@/http";
 import moment from "moment";
 import CkCarousel from "@/components/Ck/CkCarousel";
+import CkImage from "@/components/Ck/CkImage";
 import CkTaxonomyTree from "@/components/Ck/CkTaxonomyTree";
 
 export default {
@@ -577,13 +564,18 @@ export default {
       type: String
     },
 
+    logoAlt: {
+      required: false,
+      type: String
+    },
+
     galleryItemsDataUris: {
       required: false,
       type: Array
     }
   },
 
-  components: { CkCarousel, CkTaxonomyTree },
+  components: { CkCarousel, CkImage, CkTaxonomyTree },
 
   data() {
     return {

@@ -128,6 +128,7 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Location image"
+      :file-id="image_file_id"
       :existing-url="
         id ? apiUrl(`/locations/${id}/image.png?v=${now}`) : undefined
       "
@@ -191,6 +192,10 @@ export default {
     has_accessible_toilet: {
       required: true,
       type: Boolean
+    },
+    image_file_id: {
+      required: true,
+      type: String
     },
     id: {
       required: false,

@@ -26,15 +26,7 @@
             >{{ service.type | ucfirst }} logo</gov-table-header
           >
           <gov-table-cell>
-            <img
-              :src="
-                apiUrl(
-                  `/services/${service.id}/logo.png?v=${service.updated_at}`
-                )
-              "
-              :alt="`${service.type} logo`"
-              class="ck-logo"
-            />
+            <ck-image :file-id="service.image.id" />
           </gov-table-cell>
         </gov-table-row>
         <gov-table-row>
@@ -122,12 +114,13 @@
 <script>
 import moment from "moment";
 import Form from "@/classes/Form";
+import CkImage from "@/components/Ck/CkImage";
 import CkCarousel from "@/components/Ck/CkCarousel";
 
 export default {
   name: "DetailsTab",
 
-  components: { CkCarousel },
+  components: { CkCarousel, CkImage },
 
   props: {
     service: {

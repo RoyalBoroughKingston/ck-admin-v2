@@ -27,7 +27,7 @@
             :has_induction_loop.sync="form.has_induction_loop"
             :has_wheelchair_access.sync="form.has_wheelchair_access"
             :has_accessible_toilet.sync="form.has_accessible_toilet"
-            @update:image_file_id="form.image_file_id = $event"
+            :image_file_id.sync="form.image_file_id"
             @clear="form.$errors.clear($event)"
           />
 

@@ -105,6 +105,7 @@
           "
           id="logo"
           :label="`Upload your ${type} logo`"
+          :file-id="logo_file_id"
           :existing-url="
             id ? apiUrl(`/services/${id}/logo.png?v=${now}`) : undefined
           "
@@ -232,6 +233,9 @@ export default {
       required: true
     },
     ends_at: {
+      required: true
+    },
+    logo_file_id: {
       required: true
     },
     gallery_items: {
