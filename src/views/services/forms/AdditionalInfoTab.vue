@@ -226,6 +226,26 @@
           type="email"
           :error="errors.get('contact_email')"
         />
+
+        <gov-section-break size="l" />
+
+        <gov-heading size="m">Social media links</gov-heading>
+
+        <gov-body>
+          If you have any social media accounts for your {{ type }}, please
+          select the appropriate platform from the dropdown and add the relevant
+          URL.
+        </gov-body>
+        <gov-body>
+          If you don’t have accounts for the specific {{ type }}, please add the
+          accounts of the overall organisation.
+        </gov-body>
+
+        <ck-social-medias-input
+          :social-medias="social_medias"
+          @input="$emit('update:social_medias', $event)"
+          :errors="errors"
+        />
       </gov-grid-column>
     </gov-grid-row>
 
@@ -234,8 +254,11 @@
 </template>
 
 <script>
+import CkSocialMediasInput from "@/components/Ck/CkSocialMediasInput";
+
 export default {
   name: "AdditionalInfoTab",
+  components: { CkSocialMediasInput },
   props: {
     errors: {
       required: true
@@ -268,6 +291,9 @@ export default {
       required: true
     },
     contact_email: {
+      required: true
+    },
+    social_medias: {
       required: true
     },
     cqc_location_id: {
