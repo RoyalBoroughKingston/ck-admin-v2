@@ -7,7 +7,7 @@
           class="govuk-header__link govuk-header__link--homepage"
         >
           <span class="govuk-header__logotype">
-            <img src="@/assets/logo.svg" class="govuk-header__logotype-crown" />
+            <img src="@/assets/logo.png" class="govuk-header__logotype-crown" />
           </span>
         </router-link>
       </div>
@@ -75,47 +75,47 @@
 </template>
 
 <script>
-import CkEnvironmentWarning from "@/components/CkEnvironmentWarning";
+  import CkEnvironmentWarning from '@/components/CkEnvironmentWarning';
 
-export default {
-  name: "GovHeader",
-  props: {
-    serviceName: {
-      type: String,
-      required: true
+  export default {
+    name: 'GovHeader',
+    props: {
+      serviceName: {
+        type: String,
+        required: true,
+      },
+      navigation: {
+        type: Array,
+        required: false,
+        default() {
+          return [];
+        },
+      },
     },
-    navigation: {
-      type: Array,
-      required: false,
-      default() {
-        return [];
-      }
-    }
-  },
-  components: {
-    CkEnvironmentWarning
-  },
-  data() {
-    return {
-      navExpanded: false
-    };
-  },
-  methods: {
-    itemActiveClass(item) {
-      return item.active ? "govuk-header__navigation-item--active" : null;
+    components: {
+      CkEnvironmentWarning,
     },
-    onToggleMenu() {
-      this.navExpanded = !this.navExpanded;
-    }
-  }
-};
+    data() {
+      return {
+        navExpanded: false,
+      };
+    },
+    methods: {
+      itemActiveClass(item) {
+        return item.active ? 'govuk-header__navigation-item--active' : null;
+      },
+      onToggleMenu() {
+        this.navExpanded = !this.navExpanded;
+      },
+    },
+  };
 </script>
 
 <style lang="scss">
-.ck-header__main {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: flex-start;
-}
+  .ck-header__main {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
 </style>
