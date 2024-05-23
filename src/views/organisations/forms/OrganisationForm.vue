@@ -65,9 +65,7 @@
       @input="onInput('logo_file_id', $event.file_id)"
       id="logo"
       label="Organisation logo"
-      :existing-url="
-        id ? apiUrl(`/organisations/${id}/logo.png?v=${now}`) : undefined
-      "
+      :file-id="logo_file_id"
     />
 
     <gov-section-break size="l" />
@@ -128,6 +126,10 @@ export default {
     },
     id: {
       required: false,
+      type: String
+    },
+    logo_file_id: {
+      required: true,
       type: String
     },
     social_medias: {

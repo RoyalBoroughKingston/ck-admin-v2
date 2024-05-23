@@ -52,7 +52,7 @@
                   :email.sync="form.email"
                   :phone.sync="form.phone"
                   :social_medias.sync="form.social_medias"
-                  @update:logo_file_id="form.logo_file_id = $event"
+                  :logo_file_id.sync="form.logo_file_id"
                   @clear="form.$errors.clear($event)"
                 />
               </organisation-tab>
@@ -151,7 +151,7 @@ export default {
         url: this.organisation.url,
         email: this.organisation.email || "",
         phone: this.organisation.phone || "",
-        logo_file_id: null,
+        logo_file_id: this.organisation.image.id || "",
         social_medias: this.organisation.social_medias,
         category_taxonomies: this.organisation.category_taxonomies.map(
           taxonomy => taxonomy.id

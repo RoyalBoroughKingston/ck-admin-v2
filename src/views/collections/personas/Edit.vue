@@ -34,7 +34,7 @@
               :homepage.sync="form.homepage"
               :sideboxes.sync="form.sideboxes"
               :category_taxonomies.sync="form.category_taxonomies"
-              @update:image_file_id="form.image_file_id = $event"
+              :image_file_id.sync="form.image_file_id"
               @clear="form.$errors.clear($event)"
             />
 
@@ -94,7 +94,7 @@ export default {
         category_taxonomies: this.collection.category_taxonomies.map(
           taxonomy => taxonomy.id
         ),
-        image_file_id: null
+        image_file_id: this.collection.image ? this.collection.image.id : null
       });
 
       this.loading = false;

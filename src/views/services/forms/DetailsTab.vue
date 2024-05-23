@@ -105,9 +105,7 @@
           "
           id="logo"
           :label="`Upload your ${type} logo`"
-          :existing-url="
-            id ? apiUrl(`/services/${id}/logo.png?v=${now}`) : undefined
-          "
+          :file-id="logo_file_id"
         >
           <template slot="hint">
             <gov-hint for="logo">
@@ -232,6 +230,9 @@ export default {
       required: true
     },
     ends_at: {
+      required: true
+    },
+    logo_file_id: {
       required: true
     },
     gallery_items: {

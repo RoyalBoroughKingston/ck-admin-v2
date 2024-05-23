@@ -59,18 +59,15 @@
         <gov-table-row v-if="organisation.hasOwnProperty('logo_file_id')">
           <gov-table-header top scope="row">Logo</gov-table-header>
           <gov-table-cell>
-            <img
-              :src="
-                apiUrl(
-                  `/organisations/${organisation.id}/logo.png?v=${requestedAt}`
-                )
-              "
-              alt="Organisation logo"
-              class="ck-logo"
-            />
+            <ck-image v-if="original.image" :file-id="original.image.id" />
           </gov-table-cell>
           <gov-table-cell>
+            <ck-image
+              v-if="organisation.logo_file_id"
+              :file-id="organisation.logo_file_id"
+            />
             <img
+              v-else-if="organisation.id"
               :src="
                 apiUrl(
                   `/organisations/${organisation.id}/logo.png?update_request_id=${updateRequestId}`
@@ -88,9 +85,11 @@
 
 <script>
 import http from "@/http";
+import CkImage from "@/components/Ck/CkImage";
 
 export default {
   name: "OrganisationDetails",
+  components: { CkImage },
   props: {
     updateRequestId: {
       required: true,

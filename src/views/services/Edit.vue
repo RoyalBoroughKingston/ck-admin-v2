@@ -47,7 +47,7 @@
                   :slug.sync="form.slug"
                   :type.sync="form.type"
                   :url.sync="form.url"
-                  @update:logo_file_id="form.logo_file_id = $event"
+                  :logo_file_id.sync="form.logo_file_id"
                   @update:logo="form.logo = $event"
                   :status.sync="form.status"
                   :score.sync="form.score"
@@ -193,6 +193,7 @@
                 requested-at="PREVIEW"
                 :service="updateRequest.data"
                 :logo-data-uri="form.logo"
+                :logo-alt="form.logo_alt"
                 :gallery-items-data-uris="
                   form.gallery_items
                     .filter(
@@ -335,7 +336,7 @@ export default {
         eligibility_types: JSON.parse(
           JSON.stringify(this.service.eligibility_types)
         ),
-        logo_file_id: null,
+        logo_file_id: this.service.image ? this.service.image.id : null,
         logo: null
       });
 
@@ -475,7 +476,7 @@ export default {
           }
 
           // Remove the logo from the request if null, or delete if false.
-          if (data.logo_file_id === null) {
+          if (data.logo_file_id === this.service.image.id) {
             delete data.logo_file_id;
           } else if (data.logo_file_id === false) {
             data.logo_file_id = null;

@@ -26,11 +26,7 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Category image"
-      :existing-url="
-        id
-          ? apiUrl(`/collections/categories/${id}/image.svg?v=${now}`)
-          : undefined
-      "
+      :file-id="image_file_id"
     >
       <template slot="after-error-message">
         <gov-error-message
@@ -128,6 +124,9 @@ export default {
       required: true
     },
     category_taxonomies: {
+      required: true
+    },
+    image_file_id: {
       required: true
     }
   },

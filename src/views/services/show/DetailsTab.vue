@@ -26,15 +26,7 @@
             >{{ service.type | ucfirst }} logo</gov-table-header
           >
           <gov-table-cell>
-            <img
-              :src="
-                apiUrl(
-                  `/services/${service.id}/logo.png?v=${service.updated_at}`
-                )
-              "
-              :alt="`${service.type} logo`"
-              class="ck-logo"
-            />
+            <ck-image v-if="service.image" :file-id="service.image.id" />
           </gov-table-cell>
         </gov-table-row>
         <gov-table-row>
@@ -93,10 +85,17 @@
         </gov-table-row>
         <gov-table-row>
           <gov-table-header top scope="row"
-            >Gallery items ({{ imageUrls.length }})</gov-table-header
+            >Gallery items ({{
+              service.gallery_items.length
+            }})</gov-table-header
           >
           <gov-table-cell style="width: 50%">
-            <ck-carousel v-if="imageUrls.length > 0" :image-urls="imageUrls" />
+            <ck-carousel
+              v-if="service.gallery_items.length"
+              :image-ids="
+                service.gallery_items.map(galleryItem => galleryItem.file_id)
+              "
+            />
             <gov-body v-else>-</gov-body>
           </gov-table-cell>
         </gov-table-row>
@@ -122,12 +121,13 @@
 <script>
 import moment from "moment";
 import Form from "@/classes/Form";
+import CkImage from "@/components/Ck/CkImage";
 import CkCarousel from "@/components/Ck/CkCarousel";
 
 export default {
   name: "DetailsTab",
 
-  components: { CkCarousel },
+  components: { CkCarousel, CkImage },
 
   props: {
     service: {

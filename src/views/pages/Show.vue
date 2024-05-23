@@ -65,13 +65,7 @@
               <gov-table-row>
                 <gov-table-header top scope="row">Image</gov-table-header>
                 <gov-table-cell>
-                  <img
-                    :src="
-                      apiUrl(`/pages/${page.id}/image.png?v=${page.updated_at}`)
-                    "
-                    :alt="page.title"
-                    class="ck-logo"
-                  />
+                  <ck-image v-if="page.image" :file-id="page.image.id" />
                 </gov-table-cell>
               </gov-table-row>
             </template>
@@ -86,7 +80,7 @@
 
             <ck-delete-button
               resource="page"
-              :endpoint="`/pages/${this.page.id}`"
+              :endpoint="`/pages/${page.id}`"
               @deleted="onDelete"
             />
           </template>
@@ -98,12 +92,14 @@
 
 <script>
 import http from "@/http";
+import CkImage from "@/components/Ck/CkImage";
 import PageContent from "@/views/pages/show/PageContent.vue";
 
 export default {
   name: "ShowPage",
 
   components: {
+    CkImage,
     PageContent
   },
 

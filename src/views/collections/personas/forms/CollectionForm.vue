@@ -39,11 +39,7 @@
       @input="onInput('image_file_id', $event.file_id)"
       id="image"
       label="Persona image"
-      :existing-url="
-        id
-          ? apiUrl(`/collections/personas/${id}/image.png?v=${now}`)
-          : undefined
-      "
+      :file-id="image_file_id"
     />
 
     <collection-homepage-input
@@ -133,6 +129,9 @@ export default {
       required: true
     },
     category_taxonomies: {
+      required: true
+    },
+    image_file_id: {
       required: true
     },
     id: {
