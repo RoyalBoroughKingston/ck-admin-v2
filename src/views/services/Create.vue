@@ -104,6 +104,7 @@
                 :contact_name.sync="form.contact_name"
                 :contact_phone.sync="form.contact_phone"
                 :contact_email.sync="form.contact_email"
+                :social_medias.sync="form.social_medias"
                 :cqc_location_id.sync="form.cqc_location_id"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
@@ -264,6 +265,7 @@ export default {
           }
         ],
         offerings: [],
+        social_medias: [],
         gallery_items: [],
         tags: [],
         category_taxonomies: [],
