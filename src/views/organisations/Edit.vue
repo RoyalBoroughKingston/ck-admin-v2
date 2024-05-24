@@ -151,7 +151,7 @@ export default {
         url: this.organisation.url,
         email: this.organisation.email || "",
         phone: this.organisation.phone || "",
-        logo_file_id: this.organisation.image.id || "",
+        logo_file_id: this.organisation.image ? this.organisation.image.id : "",
         social_medias: this.organisation.social_medias,
         category_taxonomies: this.organisation.category_taxonomies.map(
           taxonomy => taxonomy.id
