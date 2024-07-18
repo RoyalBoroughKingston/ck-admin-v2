@@ -17,7 +17,11 @@
           <gov-heading size="m">View update request</gov-heading>
 
           <organisation-details
-            v-if="updateRequest.updateable_type === 'organisations'"
+            v-if="
+              updateRequest.updateable_type === 'organisations' ||
+                updateRequest.updateable_type ===
+                  'new_organisation_created_by_global_admin'
+            "
             :update-request-id="updateRequest.id"
             :requested-at="updateRequest.created_at"
             :organisation="updateRequest.data"
@@ -36,7 +40,9 @@
             v-else-if="
               updateRequest.updateable_type === 'services' ||
                 updateRequest.updateable_type ===
-                  'new_service_created_by_org_admin'
+                  'new_service_created_by_org_admin' ||
+                updateRequest.updateable_type ===
+                  'new_service_created_by_global_admin'
             "
             :update-request-id="updateRequest.id"
             :requested-at="updateRequest.created_at"
