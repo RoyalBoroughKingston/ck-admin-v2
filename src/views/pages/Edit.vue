@@ -113,7 +113,10 @@ export default {
           }
 
           // Remove the image from the request if unchanged.
-          if (this.page.image && data.image_file_id === this.page.image.id) {
+          if (
+            (this.page.image && data.image_file_id === this.page.image.id) ||
+            (this.page.image === null && data.image_file_id === null)
+          ) {
             delete data.image_file_id;
           }
 

@@ -191,7 +191,6 @@ export default {
       type: Boolean
     },
     image_file_id: {
-      required: true,
       type: String
     },
     id: {

@@ -91,6 +91,18 @@
           }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="location.hasOwnProperty('has_accessible_toilet')">
+          <gov-table-header top scope="row"
+            >Has accessible toilet</gov-table-header
+          >
+          <gov-table-cell>{{
+            original.has_accessible_toilet ? "Yes" : "No"
+          }}</gov-table-cell>
+          <gov-table-cell>{{
+            location.has_accessible_toilet ? "Yes" : "No"
+          }}</gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="location.hasOwnProperty('image_file_id')">
           <gov-table-header top scope="row">Image</gov-table-header>
           <gov-table-cell>

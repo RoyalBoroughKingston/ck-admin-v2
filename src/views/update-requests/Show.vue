@@ -97,19 +97,26 @@
                 id="approve"
                 name="approve"
                 label="Approve"
-                :value="true"
+                value="approve"
               />
               <gov-radio
                 v-model="approve"
                 id="reject"
                 name="approve"
                 label="Reject"
-                :value="false"
+                value="reject"
+              />
+              <gov-radio
+                v-model="approve"
+                id="approve_edit"
+                name="approve_edit"
+                label="Approve and Edit"
+                value="approve_edit"
               />
             </gov-radios>
 
             <ck-textarea-input
-              v-if="approve === false"
+              v-if="approve === 'reject'"
               id="updateRequestRejectionMessage"
               :value="form.message"
               label="Rejection message"
@@ -214,43 +221,61 @@ export default {
       this.submitting = true;
       this.form.$errors.clear();
 
-      if (this.approve) {
-        await http.put(`/update-requests/${this.updateRequest.id}/approve`);
+      if (this.approve === "approve" || this.approve === "approve_edit") {
+        const {
+          data: { updateable_id }
+        } = await http.put(`/update-requests/${this.updateRequest.id}/approve`);
+
+        const routeAction = this.approve === "approve_edit" ? "edit" : "show";
 
         switch (this.updateRequest.updateable_type) {
           case "services":
+          case "new_service_created_by_org_admin":
+          case "new_service_created_by_global_admin":
+            if (this.approve === "approve_edit") {
+              await new Form({ status: "inactive" }).put(
+                `/services/${updateable_id}`
+              );
+            }
             this.$router.push({
-              name: "services-show",
-              params: { service: this.updateRequest.updateable_id }
+              name: "services-" + routeAction,
+              params: { service: updateable_id }
             });
             break;
           case "organisation_events":
+          case "new_organisation_event_created_by_org_admin":
             this.$router.push({
-              name: "events-show",
-              params: { event: this.updateRequest.updateable_id }
+              name: "events-" + routeAction,
+              params: { event: updateable_id }
             });
             break;
           case "pages":
+          case "new_page":
+            if (this.approve === "approve_edit") {
+              await new Form({ enabled: false }).put(`/pages/${updateable_id}`);
+            }
             this.$router.push({
-              name: "pages-index"
+              name: "pages-" + routeAction,
+              params: { page: updateable_id }
             });
             break;
           case "organisations":
+          case "new_organisation_created_by_global_admin":
             this.$router.push({
-              name: "organisations-show",
-              params: { organisation: this.updateRequest.updateable_id }
+              name: "organisations-" + routeAction,
+              params: { organisation: updateable_id }
             });
             break;
           case "locations":
             this.$router.push({
-              name: "locations-show",
-              params: { location: this.updateRequest.updateable_id }
+              name: "locations-" + routeAction,
+              params: { location: updateable_id }
             });
             break;
           case "service_locations":
             this.$router.push({
-              name: "service-locations-show",
-              params: { serviceLocation: this.updateRequest.updateable_id }
+              name: "service-locations-" + routeAction,
+              params: { serviceLocation: updateable_id }
             });
             break;
           default:
