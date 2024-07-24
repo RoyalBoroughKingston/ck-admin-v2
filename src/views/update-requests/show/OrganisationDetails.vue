@@ -1,7 +1,7 @@
 <template>
   <ck-loader v-if="loading" />
   <div v-else>
-    <gov-body>
+    <gov-body v-if="original">
       For organisation
       <gov-link
         :to="{
@@ -22,45 +22,61 @@
 
         <gov-table-row v-if="organisation.hasOwnProperty('url')">
           <gov-table-header top scope="row">URL</gov-table-header>
-          <gov-table-cell break>{{ original.url }}</gov-table-cell>
+          <gov-table-cell v-if="original" break>{{
+            original.url
+          }}</gov-table-cell>
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell break>{{ organisation.url }}</gov-table-cell>
         </gov-table-row>
 
         <gov-table-row v-if="organisation.hasOwnProperty('name')">
           <gov-table-header top scope="row">Name</gov-table-header>
-          <gov-table-cell>{{ original.name }}</gov-table-cell>
+          <gov-table-cell v-if="original">{{ original.name }}</gov-table-cell>
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell>{{ organisation.name }}</gov-table-cell>
         </gov-table-row>
 
         <gov-table-row v-if="organisation.hasOwnProperty('slug')">
           <gov-table-header top scope="row">Slug</gov-table-header>
-          <gov-table-cell>{{ original.slug }}</gov-table-cell>
+          <gov-table-cell v-if="original">{{ original.slug }}</gov-table-cell>
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell>{{ organisation.slug }}</gov-table-cell>
         </gov-table-row>
 
         <gov-table-row v-if="organisation.hasOwnProperty('email')">
           <gov-table-header top scope="row">Email</gov-table-header>
-          <gov-table-cell>{{ original.email || "-" }}</gov-table-cell>
+          <gov-table-cell v-if="original">{{
+            original.email || "-"
+          }}</gov-table-cell>
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell>{{ organisation.email || "-" }}</gov-table-cell>
         </gov-table-row>
 
         <gov-table-row v-if="organisation.hasOwnProperty('phone')">
           <gov-table-header top scope="row">Phone</gov-table-header>
-          <gov-table-cell>{{ original.phone || "-" }}</gov-table-cell>
+          <gov-table-cell v-if="original">{{
+            original.phone || "-"
+          }}</gov-table-cell>
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell>{{ organisation.phone || "-" }}</gov-table-cell>
         </gov-table-row>
 
         <gov-table-row v-if="organisation.hasOwnProperty('description')">
           <gov-table-header top scope="row">Description</gov-table-header>
-          <gov-table-cell v-html="toHtml(original.description)" />
+          <gov-table-cell
+            v-if="original"
+            v-html="toHtml(original.description)"
+          />
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell v-html="toHtml(organisation.description)" />
         </gov-table-row>
 
         <gov-table-row v-if="organisation.hasOwnProperty('logo_file_id')">
           <gov-table-header top scope="row">Logo</gov-table-header>
-          <gov-table-cell>
+          <gov-table-cell v-if="original">
             <ck-image v-if="original.image" :file-id="original.image.id" />
           </gov-table-cell>
+          <gov-table-cell v-else>-</gov-table-cell>
           <gov-table-cell>
             <ck-image
               v-if="organisation.logo_file_id"
@@ -114,12 +130,14 @@ export default {
   },
   methods: {
     async fetchOriginal() {
-      this.loading = true;
-      const {
-        data: { data: original }
-      } = await http.get(`/organisations/${this.organisation.id}`);
-      this.original = original;
-      this.loading = false;
+      if (this.organisation.id !== null) {
+        this.loading = true;
+        const {
+          data: { data: original }
+        } = await http.get(`/organisations/${this.organisation.id}`);
+        this.original = original;
+        this.loading = false;
+      }
     }
   },
   created() {
