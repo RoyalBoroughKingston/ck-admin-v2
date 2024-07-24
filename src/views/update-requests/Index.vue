@@ -97,7 +97,14 @@ export default {
       updateableTypes: [
         { value: "", text: "All" },
         { value: "services", text: "Service update" },
-        { value: "new_service_created_by_global_admin", text: "New Service" },
+        {
+          value: "new_service_created_by_org_admin",
+          text: "New Service by Organisation Admin"
+        },
+        {
+          value: "new_service_created_by_global_admin",
+          text: "New Service by Global Admin"
+        },
         { value: "service_locations", text: "Service location" },
         { value: "organisations", text: "Organisation update" },
         {

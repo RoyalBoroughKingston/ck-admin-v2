@@ -88,7 +88,13 @@
 
           <gov-section-break size="xl" />
 
-          <template v-if="auth.canEdit('update request')">
+          <template
+            v-if="
+              auth.canEdit('update request') &&
+                !updateRequest.approved_at &&
+                !updateRequest.deleted_at
+            "
+          >
             <gov-heading size="m">Do you approve these changes?</gov-heading>
 
             <gov-radios inline>
@@ -196,7 +202,9 @@ export default {
       if (
         ((this.updateRequest.updateable_type === "services" ||
           this.updateRequest.updateable_type ===
-            "new_service_created_by_org_admin") &&
+            "new_service_created_by_org_admin" ||
+          this.updateRequest.updateable_type ===
+            "new_service_created_by_global_admin") &&
           this.updateRequest.data.hasOwnProperty("organisation_id")) ||
         ((this.updateRequest.updateable_type === "organisation_events" ||
           this.updateRequest.updateable_type ===
