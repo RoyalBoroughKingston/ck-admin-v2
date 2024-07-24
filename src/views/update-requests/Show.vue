@@ -28,7 +28,9 @@
           />
 
           <organisation-sign-up-form-details
-            v-if="updateRequest.updateable_type === 'organisation_sign_up_form'"
+            v-else-if="
+              updateRequest.updateable_type === 'organisation_sign_up_form'
+            "
             :update-request-id="updateRequest.id"
             :requested-at="updateRequest.created_at"
             :user="updateRequest.data.user"
