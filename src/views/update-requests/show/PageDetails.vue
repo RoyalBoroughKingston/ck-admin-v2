@@ -48,6 +48,14 @@
           <gov-table-cell>{{ page.slug }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="page.hasOwnProperty('excerpt')">
+          <gov-table-header top scope="row">Excerpt</gov-table-header>
+          <gov-table-cell v-if="original">{{
+            original.excerpt | originalExists
+          }}</gov-table-cell>
+          <gov-table-cell>{{ page.excerpt }}</gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="page.hasOwnProperty('enabled')">
           <gov-table-header top scope="row">Status</gov-table-header>
           <gov-table-cell v-if="original">{{
