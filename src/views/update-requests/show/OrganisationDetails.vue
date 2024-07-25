@@ -61,6 +61,43 @@
           <gov-table-cell>{{ organisation.phone || "-" }}</gov-table-cell>
         </gov-table-row>
 
+        <gov-table-row v-if="organisation.hasOwnProperty('social_medias')">
+          <gov-table-header top scope="row">Social medias</gov-table-header>
+          <gov-table-cell break v-if="original">
+            <gov-list
+              v-if="
+                original.hasOwnProperty('social_medias') &&
+                  Array.isArray(original.social_medias)
+              "
+            >
+              <li
+                v-for="(socialMedia, index) in original.social_medias"
+                :key="`social_media.${index}`"
+              >
+                <span class="govuk-!-font-weight-bold"
+                  >{{ socialMedia.type | socialMediaType }}:</span
+                >
+                {{ socialMedia.url }}
+              </li>
+            </gov-list>
+            <template v-else>None</template>
+          </gov-table-cell>
+          <gov-table-cell break>
+            <gov-list v-if="Array.isArray(organisation.social_medias)">
+              <li
+                v-for="(socialMedia, index) in organisation.social_medias"
+                :key="`social_media.${index}`"
+              >
+                <span class="govuk-!-font-weight-bold"
+                  >{{ socialMedia.type | socialMediaType }}:</span
+                >
+                {{ socialMedia.url }}
+              </li>
+            </gov-list>
+            <template v-else>None</template>
+          </gov-table-cell>
+        </gov-table-row>
+
         <gov-table-row v-if="organisation.hasOwnProperty('description')">
           <gov-table-header top scope="row">Description</gov-table-header>
           <gov-table-cell
