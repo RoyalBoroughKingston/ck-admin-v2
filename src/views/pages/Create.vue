@@ -26,7 +26,13 @@
     <gov-button v-if="form.$submitting" disabled type="submit"
       >Creating...</gov-button
     >
-    <gov-button v-else @click="onSubmit" type="submit">Create</gov-button>
+    <gov-button
+      v-else
+      :disabled="form.$errors.any()"
+      @click="onSubmit"
+      type="submit"
+      >Create</gov-button
+    >
 
     <ck-submit-error v-if="form.$errors.any()" />
   </gov-width-container>

@@ -134,7 +134,7 @@ export default {
       content[section]["content"][index].value = value;
 
       this.$emit("update", content);
-      this.$emit("clear", `content_${section}_content`);
+      this.$emit("clear", `content_${section}_content_${index}`);
     },
     onChangeCalltoAction(section, index, cta) {
       const content = Object.assign({}, this.content);
@@ -142,7 +142,7 @@ export default {
       content[section]["content"][index] = cta;
 
       this.$emit("update", content);
-      this.$emit("clear", `content_${section}_content`);
+      this.$emit("clear", `content_${section}_content_${index}`);
     },
     onChangeVideo(section, index, video) {
       const content = Object.assign({}, this.content);
@@ -150,7 +150,7 @@ export default {
       content[section]["content"][index] = video;
 
       this.$emit("update", content);
-      this.$emit("clear", `content_${section}_content`);
+      this.$emit("clear", `content_${section}_content_${index}`);
     },
     addCopy(section, index) {
       const content = Object.assign({}, this.content);
