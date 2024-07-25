@@ -164,7 +164,7 @@
 
     <gov-section-break size="m" visible />
 
-    <gov-heading size="l">Contact details</gov-heading>
+    <gov-heading size="l">Public contact details</gov-heading>
     <gov-grid-row>
       <gov-grid-column width="one-half">
         <gov-body>
@@ -198,7 +198,7 @@
             $emit('clear', 'contact_phone');
           "
           id="contact_phone"
-          label="Contact phone number"
+          label="Phone number"
           type="tel"
           :error="errors.get('contact_phone')"
         >
@@ -222,7 +222,7 @@
             $emit('clear', 'contact_email');
           "
           id="contact_email"
-          :label="`Public ${type} email address`"
+          :label="`Email address`"
           :hint="
             `Please provide the <strong>public facing</strong> contact email address for the ${type}.`
           "
