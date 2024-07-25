@@ -50,6 +50,7 @@
       :content="content"
       id="content"
       @update="onInput('content', $event)"
+      @clear="$emit('clear', $event)"
       :errors="errors"
     />
 
