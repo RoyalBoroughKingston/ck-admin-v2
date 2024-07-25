@@ -168,8 +168,9 @@
     <gov-grid-row>
       <gov-grid-column width="one-half">
         <gov-body>
-          Please provide your {{ type }}’s public-facing contact details. These
-          will be displayed on your {{ type }}’s page on the {{ appName }}
+          Please provide your {{ type }}’s
+          <strong>public-facing</strong> contact details. These will be
+          displayed on your {{ type }}’s page on the {{ appName }}
           website.
         </gov-body>
 
@@ -203,8 +204,8 @@
         >
           <template slot="hint">
             <gov-hint for="contact_phone">
-              Please provide a public facing phone number for people to contact
-              you on.
+              Please provide a <strong>public facing</strong> phone number for
+              people to contact you on.
             </gov-hint>
             <gov-hint for="contact_phone">
               Please use the following formatting:
@@ -222,7 +223,9 @@
           "
           id="contact_email"
           :label="`Public ${type} email address`"
-          :hint="`Please provide the contact email address for the ${type}.`"
+          :hint="
+            `Please provide the <strong>public facing</strong> contact email address for the ${type}.`
+          "
           type="email"
           :error="errors.get('contact_email')"
         />
