@@ -231,22 +231,19 @@ export default {
       this.submitting = true;
       this.form.$errors.clear();
 
-      if (this.approve === "approve" || this.approve === "approve_edit") {
+      if (this.approve !== "reject") {
+        const routeAction = this.approve === "approve_edit" ? "edit" : "show";
+
         const {
           data: { updateable_id }
-        } = await http.put(`/update-requests/${this.updateRequest.id}/approve`);
-
-        const routeAction = this.approve === "approve_edit" ? "edit" : "show";
+        } = await http.put(
+          `/update-requests/${this.updateRequest.id}/approve?action=${routeAction}`
+        );
 
         switch (this.updateRequest.updateable_type) {
           case "services":
           case "new_service_created_by_org_admin":
           case "new_service_created_by_global_admin":
-            if (this.approve === "approve_edit") {
-              await new Form({ status: "inactive" }).put(
-                `/services/${updateable_id}`
-              );
-            }
             this.$router.push({
               name: "services-" + routeAction,
               params: { service: updateable_id }
@@ -261,9 +258,6 @@ export default {
             break;
           case "pages":
           case "new_page":
-            if (this.approve === "approve_edit") {
-              await new Form({ enabled: false }).put(`/pages/${updateable_id}`);
-            }
             this.$router.push({
               name: "pages-" + routeAction,
               params: { page: updateable_id }
