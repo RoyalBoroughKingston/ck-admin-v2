@@ -35,12 +35,17 @@
               :category_taxonomies.sync="form.category_taxonomies"
               :image_file_id.sync="form.image_file_id"
               @clear="form.$errors.clear($event)"
+              @image-changed="imageChanged = $event"
             />
 
             <gov-button v-if="form.$submitting" disabled type="submit"
               >Updating...</gov-button
             >
-            <gov-button v-else @click="onSubmit" type="submit"
+            <gov-button
+              v-else
+              @click="onSubmit"
+              :disabled="imageChanged"
+              type="submit"
               >Update</gov-button
             >
             <ck-submit-error v-if="form.$errors.any()" />
@@ -73,7 +78,8 @@ export default {
     return {
       loading: false,
       collection: null,
-      form: null
+      form: null,
+      imageChanged: false
     };
   },
   methods: {

@@ -32,7 +32,7 @@
 
     <ck-text-input
       :value="form.alt_text || ''"
-      @input="form.alt_text = $event"
+      @input="onChangeAltText"
       id="altText"
       label="Image description"
       hint="Describe the image for visually impaired visitors"
@@ -50,6 +50,13 @@
       <gov-hint v-if="success" class="upload-success">
         Image updated
       </gov-hint>
+      <gov-warning-text v-else-if="form.file && !form.alt_text"
+        >Image description is required</gov-warning-text
+      >
+      <gov-warning-text v-else-if="imageChanged">
+        The image or description has changed, click
+        <em>{{ fileId ? "Update" : "Upload" }} file</em> to commit these changes
+      </gov-warning-text>
     </transition>
 
     <slot name="after-error-message" />
@@ -105,7 +112,7 @@ export default {
   },
   data() {
     return {
-      removeExisting: false,
+      imageChanged: false,
       success: false,
       form: new Form({
         is_private: this.private,
@@ -126,14 +133,18 @@ export default {
       }
       // Destructure the payload with the variables we need.
       const { mime_type, content } = $event;
-      /*
-       * Reset remove existing flag to false since the user has interacted with
-       * the search input.
-       */
-      this.removeExisting = false;
+      // Set the outstanding changes flag
+      this.imageChanged = true;
+      this.$emit("image-changed", true);
       // Set the variables in the form.
       this.form.mime_type = mime_type;
       this.form.file = content;
+    },
+    onChangeAltText($event) {
+      this.form.alt_text = $event;
+      // Set the outstanding changes flag
+      this.imageChanged = true;
+      this.$emit("image-changed", true);
     },
     async onUpload() {
       // Upload the file and retrieve the ID.
@@ -143,6 +154,9 @@ export default {
       if (!this.form.$errors.any()) {
         this.success = true;
         setTimeout(() => (this.success = false), 3000);
+        // Reset the outstanding changes flag
+        this.imageChanged = false;
+        this.$emit("image-changed", false);
         // Emit the file ID.
         this.$emit("input", {
           file_id: id,
@@ -161,8 +175,9 @@ export default {
         this.$emit("input", { file_id: null, image: null, alt: null });
         return;
       }
-      // For existing file.
-      this.removeExisting = true;
+      // Reset the outstanding changes flag
+      this.imageChanged = false;
+      this.$emit("image-changed", false);
       this.$emit("input", { file_id: false, image: null, alt: null });
     },
     async loadFile(fileId) {

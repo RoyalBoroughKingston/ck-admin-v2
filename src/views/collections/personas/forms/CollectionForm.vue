@@ -37,10 +37,19 @@
 
     <ck-image-input
       @input="onInput('image_file_id', $event.file_id)"
+      @image-changed="$emit('image-changed', $event)"
       id="image"
       label="Persona image"
       :file-id="image_file_id"
-    />
+    >
+      <template slot="after-error-message">
+        <gov-error-message
+          v-if="errors.get('image_file_id')"
+          v-text="errors.get('image_file_id')"
+          for="image"
+        />
+      </template>
+    </ck-image-input>
 
     <collection-homepage-input
       :value="homepage"
