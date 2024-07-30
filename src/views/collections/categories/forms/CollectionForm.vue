@@ -24,6 +24,7 @@
 
     <ck-image-input
       @input="onInput('image_file_id', $event.file_id)"
+      @image-changed="$emit('image-changed', $event)"
       id="image"
       label="Category image"
       :file-id="image_file_id"

@@ -58,6 +58,7 @@
                 :location_id.sync="form.location_id"
                 :image_file_id.sync="form.image_file_id"
                 @clear="form.$errors.clear($event)"
+                @image-changed="imageChanged = $event"
               />
               <taxonomies-tab
                 v-if="isTabActive('taxonomies')"
@@ -80,9 +81,13 @@
             <gov-button v-if="form.$submitting" disabled type="submit"
               >Requesting...</gov-button
             >
-            <gov-button v-else @click="onSubmit" type="submit">{{
-              updateButtonText
-            }}</gov-button>
+            <gov-button
+              v-else
+              @click="onSubmit"
+              :disabled="imageChanged"
+              type="submit"
+              >{{ updateButtonText }}</gov-button
+            >
             <ck-submit-error v-if="form.$errors.any()" />
           </gov-grid-column>
         </gov-grid-row>
@@ -110,7 +115,8 @@ export default {
       ],
       loading: false,
       event: null,
-      form: null
+      form: null,
+      imageChanged: false
     };
   },
 

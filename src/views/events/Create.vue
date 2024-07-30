@@ -82,6 +82,7 @@
                 :location_id.sync="form.location_id"
                 :image_file_id.sync="form.image_file_id"
                 @clear="form.$errors.clear($event)"
+                @image-changed="imageChanged = $event"
               />
               <taxonomies-tab
                 v-if="isTabActive('taxonomies')"
@@ -99,7 +100,11 @@
             <gov-button v-if="form.$submitting" disabled type="submit"
               >Creating...</gov-button
             >
-            <gov-button v-else @click="onSubmit" type="submit"
+            <gov-button
+              v-else
+              @click="onSubmit"
+              :disabled="imageChanged"
+              type="submit"
               >Create</gov-button
             >
             <ck-submit-error v-if="form.$errors.any()" />
@@ -158,7 +163,8 @@ export default {
       organisations: [{ text: "Please select", value: null }],
       updateRequestCreated: false,
       updateRequestMessage: null,
-      loading: false
+      loading: false,
+      imageChanged: false
     };
   },
 

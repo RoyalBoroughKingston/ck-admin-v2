@@ -63,6 +63,7 @@
 
     <ck-image-input
       @input="onInput('logo_file_id', $event.file_id)"
+      @image-changed="$emit('image-changed', $event)"
       id="logo"
       label="Organisation logo"
       :file-id="logo_file_id"

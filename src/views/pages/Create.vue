@@ -18,6 +18,7 @@
         :collections.sync="form.collections"
         :enabled.sync="form.enabled"
         @clear="form.$errors.clear($event)"
+        @image-changed="imageChanged = $event"
       />
     </gov-main-wrapper>
 
@@ -28,7 +29,7 @@
     >
     <gov-button
       v-else
-      :disabled="form.$errors.any()"
+      :disabled="form.$errors.any() || imageChanged"
       @click="onSubmit"
       type="submit"
       >Create</gov-button
@@ -133,7 +134,8 @@ export default {
             ]
           }
         }
-      }
+      },
+      imageChanged: false
     };
   },
 

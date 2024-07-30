@@ -37,10 +37,6 @@
               >
                 <details-tab
                   v-show="isTabActive('details')"
-                  @clear="
-                    form.$errors.clear($event);
-                    errors = {};
-                  "
                   :errors="form.$errors"
                   :organisation_id.sync="form.organisation_id"
                   :name.sync="form.name"
@@ -48,13 +44,18 @@
                   :type.sync="form.type"
                   :url.sync="form.url"
                   :logo_file_id.sync="form.logo_file_id"
-                  @update:logo="form.logo = $event"
                   :status.sync="form.status"
                   :score.sync="form.score"
                   :ends_at.sync="form.ends_at"
                   :gallery_items.sync="form.gallery_items"
                   :tags.sync="form.tags"
                   :id="service.id"
+                  @clear="
+                    form.$errors.clear($event);
+                    errors = {};
+                  "
+                  @update:logo="form.logo = $event"
+                  @image-changed="imageChanged = $event"
                 >
                   <gov-button @click="onNext" start>Next</gov-button>
                 </details-tab>
@@ -218,9 +219,13 @@
               <gov-button v-if="form.$submitting" disabled type="submit"
                 >Requesting...</gov-button
               >
-              <gov-button v-else @click="onSubmit" type="submit">{{
-                updateButtonText
-              }}</gov-button>
+              <gov-button
+                v-else
+                @click="onSubmit"
+                :disabled="imageChanged"
+                type="submit"
+                >{{ updateButtonText }}</gov-button
+              >
             </gov-grid-column>
           </gov-grid-row>
         </gov-main-wrapper>
@@ -268,7 +273,8 @@ export default {
       errors: {},
       service: null,
       loading: false,
-      updateRequest: null
+      updateRequest: null,
+      imageChanged: false
     };
   },
   computed: {

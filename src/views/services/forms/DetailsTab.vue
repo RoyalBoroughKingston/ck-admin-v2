@@ -103,6 +103,7 @@
             $emit('update:logo_file_id', $event.file_id);
             $emit('update:logo', $event.image);
           "
+          @image-changed="$emit('image-changed', $event)"
           id="logo"
           :label="`Upload your ${type} logo`"
           :file-id="logo_file_id"
