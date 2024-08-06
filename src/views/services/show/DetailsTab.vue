@@ -41,7 +41,7 @@
           >
           <gov-table-cell v-html="toHtml(service.description)" />
         </gov-table-row>
-        <gov-table-row>
+        <gov-table-row v-if="appServiceOfferingsActive">
           <gov-table-header top scope="row">Offerings</gov-table-header>
           <gov-table-cell>
             <gov-list v-if="service.offerings.length > 0" bullet>
