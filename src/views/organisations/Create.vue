@@ -57,6 +57,7 @@
                   :social_medias.sync="form.social_medias"
                   @update:logo_file_id="form.logo_file_id = $event"
                   @clear="form.$errors.clear($event)"
+                  @image-changed="imageChanged = $event"
                 />
               </organisation-tab>
 
@@ -99,7 +100,11 @@
             <gov-button v-if="form.$submitting" disabled type="submit"
               >Creating...</gov-button
             >
-            <gov-button v-else @click="onSubmit" type="submit"
+            <gov-button
+              v-else
+              @click="onSubmit"
+              :disabled="imageChanged"
+              type="submit"
               >Create</gov-button
             >
             <ck-submit-error v-if="form.$errors.any()" />
@@ -137,7 +142,8 @@ export default {
         { id: "taxonomies", heading: "Taxonomies", active: false }
       ],
       updateRequestCreated: false,
-      updateRequestMessage: null
+      updateRequestMessage: null,
+      imageChanged: false
     };
   },
   watch: {

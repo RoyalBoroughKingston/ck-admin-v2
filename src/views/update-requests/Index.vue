@@ -96,27 +96,30 @@ export default {
       },
       updateableTypes: [
         { value: "", text: "All" },
-        { value: "services", text: "Service update" },
-        { value: "new_service_created_by_global_admin", text: "New Service" },
-        { value: "service_locations", text: "Service location" },
-        { value: "organisations", text: "Organisation update" },
-        {
-          value: "new_organisation_created_by_global_admin",
-          text: "New Organisation"
-        },
-        { value: "locations", text: "Location" },
-        {
-          value: "organisation_sign_up_form",
-          text: "Organisation sign up form"
-        },
-        { value: "organisation_events", text: "Event update" },
         {
           value: "new_organisation_event_created_by_org_admin",
           text: "New Event"
         },
-        { value: "pages", text: "Page update" },
+        { value: "organisation_events", text: "Event update" },
+        { value: "locations", text: "Location" },
+        {
+          value: "new_organisation_created_by_global_admin",
+          text: "New Organisation"
+        },
+        { value: "organisations", text: "Organisation update" },
+        {
+          value: "organisation_sign_up_form",
+          text: "Organisation sign up form"
+        },
         { value: "new_page", text: "New Page" },
-        { value: "referrals", text: "Referral" }
+        { value: "pages", text: "Page update" },
+        { value: "referrals", text: "Referral" },
+        {
+          value: "new_service_created_by_global_admin",
+          text: "New Service"
+        },
+        { value: "services", text: "Service update" },
+        { value: "service_locations", text: "Service location" }
       ]
     };
   },
