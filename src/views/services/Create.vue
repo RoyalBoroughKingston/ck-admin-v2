@@ -78,6 +78,7 @@
                 :ends_at.sync="form.ends_at"
                 :gallery_items.sync="form.gallery_items"
                 :tags.sync="form.tags"
+                :logo_file_id="form.logo_file_id"
                 @clear="
                   form.$errors.clear($event);
                   errors = {};
