@@ -102,11 +102,13 @@ export default {
       let socialMedias = this.cloneSocialMedias();
       socialMedias[index].type = value;
       this.$emit("input", socialMedias);
+      this.$emit("clear", `social_medias.${index}.type`);
     },
     onUrlInput({ index, value }) {
       let socialMedias = this.cloneSocialMedias();
       socialMedias[index].url = value;
       this.$emit("input", socialMedias);
+      this.$emit("clear", `social_medias.${index}.url`);
     },
     linkHint(type) {
       return `Copy the link from your browser, e.g. ${
