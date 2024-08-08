@@ -247,6 +247,7 @@
         <ck-social-medias-input
           :social-medias="social_medias"
           @input="$emit('update:social_medias', $event)"
+          @clear="$emit('clear', $event)"
           :errors="errors"
         />
       </gov-grid-column>
