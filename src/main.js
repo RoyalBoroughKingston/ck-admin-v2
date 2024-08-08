@@ -187,7 +187,7 @@ Vue.mixin({
     appServiceOfferingsActive() {
       return process.env.hasOwnProperty("VUE_APP_SERVICE_OFFERINGS")
         ? process.env.VUE_APP_SERVICE_OFFERINGS === "true"
-        : false;
+        : true;
     },
     appHelpSectionActive() {
       return process.env.hasOwnProperty("VUE_APP_HELP_SECTION")
