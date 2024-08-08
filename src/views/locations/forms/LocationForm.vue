@@ -126,11 +126,10 @@
 
     <ck-image-input
       @input="onInput('image_file_id', $event.file_id)"
+      @image-changed="$emit('image-changed', $event)"
       id="image"
       label="Location image"
-      :existing-url="
-        id ? apiUrl(`/locations/${id}/image.png?v=${now}`) : undefined
-      "
+      :file-id="image_file_id"
     />
   </div>
 </template>
@@ -191,6 +190,9 @@ export default {
     has_accessible_toilet: {
       required: true,
       type: Boolean
+    },
+    image_file_id: {
+      type: String
     },
     id: {
       required: false,

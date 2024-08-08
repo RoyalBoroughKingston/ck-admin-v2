@@ -66,10 +66,6 @@
             <gov-tabs @tab-changed="onTabChange" :tabs="allowedTabs" no-router>
               <details-tab
                 v-show="isTabActive('details')"
-                @clear="
-                  form.$errors.clear($event);
-                  errors = {};
-                "
                 :errors="form.$errors"
                 :is-new="true"
                 :name.sync="form.name"
@@ -77,12 +73,18 @@
                 :type.sync="form.type"
                 :organisation_id.sync="form.organisation_id"
                 :url.sync="form.url"
-                @update:logo_file_id="form.logo_file_id = $event"
                 :status.sync="form.status"
                 :score.sync="form.score"
                 :ends_at.sync="form.ends_at"
                 :gallery_items.sync="form.gallery_items"
                 :tags.sync="form.tags"
+                :logo_file_id="form.logo_file_id"
+                @clear="
+                  form.$errors.clear($event);
+                  errors = {};
+                "
+                @update:logo_file_id="form.logo_file_id = $event"
+                @image-changed="imageChanged = $event"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
               </details-tab>
@@ -104,6 +106,7 @@
                 :contact_name.sync="form.contact_name"
                 :contact_phone.sync="form.contact_phone"
                 :contact_email.sync="form.contact_email"
+                :social_medias.sync="form.social_medias"
                 :cqc_location_id.sync="form.cqc_location_id"
               >
                 <gov-button @click="onNext" start>Next</gov-button>
@@ -183,7 +186,11 @@
                 <gov-button v-if="form.$submitting" disabled type="submit"
                   >Creating...</gov-button
                 >
-                <gov-button v-else @click="onSubmit" type="submit"
+                <gov-button
+                  v-else
+                  @click="onSubmit"
+                  :disabled="imageChanged"
+                  type="submit"
                   >Create</gov-button
                 >
                 <ck-submit-error v-if="form.$errors.any()" />
@@ -264,6 +271,7 @@ export default {
           }
         ],
         offerings: [],
+        social_medias: [],
         gallery_items: [],
         tags: [],
         category_taxonomies: [],
@@ -284,7 +292,8 @@ export default {
         { id: "referral", heading: "Referral", active: false }
       ],
       updateRequestCreated: false,
-      updateRequestMessage: null
+      updateRequestMessage: null,
+      imageChanged: false
     };
   },
   computed: {
