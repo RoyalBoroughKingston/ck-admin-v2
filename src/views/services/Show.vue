@@ -130,6 +130,7 @@ export default {
   created() {
     this.updated = this.$route.query.updated || false;
     this.fetchService();
+    this.auth.fetchUser();
   }
 };
 </script>

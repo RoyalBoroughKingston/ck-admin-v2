@@ -94,6 +94,7 @@ export default {
   created() {
     this.updated = this.$route.query.updated || false;
     this.fetchServiceLocation();
+    this.auth.fetchUser();
   }
 };
 </script>

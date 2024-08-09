@@ -18,7 +18,7 @@
               >
             </gov-grid-column>
             <gov-grid-column
-              v-if="auth.canEdit('page', page)"
+              v-if="auth.canEdit('page', page.id)"
               width="one-third"
               class="text-right"
             >
@@ -134,6 +134,7 @@ export default {
   created() {
     this.updated = this.$route.query.updated || false;
     this.fetchPage();
+    this.auth.fetchUser();
   }
 };
 </script>

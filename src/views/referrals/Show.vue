@@ -16,7 +16,7 @@
         </gov-grid-row>
         <gov-section-break size="l" />
         <gov-grid-row
-          v-if="auth.canEdit('referral', referral)"
+          v-if="auth.canEdit('referral', referral.service.id)"
           width="two-thirds"
         >
           <gov-grid-column width="two-thirds">
@@ -222,6 +222,7 @@ export default {
   created() {
     this.fetchReferral();
     this.fetchStatusUpdates();
+    this.auth.fetchUser();
   }
 };
 </script>
